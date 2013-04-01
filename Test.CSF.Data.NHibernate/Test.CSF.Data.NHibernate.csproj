@@ -8,7 +8,7 @@
     <ProjectGuid>{11DCF35A-6E2A-4C62-B536-14B83FF5AE07}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Test.CSF.Data.NHibernate</RootNamespace>
-    <AssemblyName>Test.CSF</AssemblyName>
+    <AssemblyName>Test.CSF.Data.NHibernate</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>2.4.0</ReleaseVersion>
   </PropertyGroup>
