@@ -7,7 +7,6 @@ namespace CSF.Data.NHibernate
   /// <summary>
   /// Extension methods for an NHibernate ISession.
   /// </summary>
-  [Obsolete("This type will be removed in a future version, functionality is now available via the INHLinqWrapper")]
   public static class ISessionExtensions
   {
     /// <summary>
@@ -25,20 +24,26 @@ namespace CSF.Data.NHibernate
     /// <typeparam name='TEntity'>
     /// The type of entity that will be returned by this method.
     /// </typeparam>
-    [Obsolete("This type will be removed in a future version, functionality is now available via the INHLinqWrapper")]
-    public static TEntity GetEntity<TEntity>(this ISession session, IIdentity<TEntity> identity)
+    public static TEntity Get<TEntity>(this ISession session, IIdentity<TEntity> identity)
       where TEntity : IEntity
     {
+      TEntity output;
+
       if(session == null)
       {
         throw new ArgumentNullException("session");
       }
-      else if(identity == null)
+
+      if(identity != null)
       {
-        throw new ArgumentNullException("identity");
+        output = session.Get<TEntity>(identity.Value);
+      }
+      else
+      {
+        output = default(TEntity);
       }
 
-      return session.Get<TEntity>(identity.Value);
+      return output;
     }
 
     /// <summary>
@@ -56,83 +61,23 @@ namespace CSF.Data.NHibernate
     /// <typeparam name='TEntity'>
     /// The type of entity that will be returned by this method.
     /// </typeparam>
-    [Obsolete("This type will be removed in a future version, functionality is now available via the INHLinqWrapper")]
-    public static TEntity LoadEntity<TEntity>(this ISession session, IIdentity<TEntity> identity)
+    public static TEntity Load<TEntity>(this ISession session, IIdentity<TEntity> identity)
       where TEntity : IEntity
     {
+      TEntity output;
+
       if(session == null)
       {
         throw new ArgumentNullException("session");
       }
-      else if(identity == null)
+
+      if(identity != null)
       {
-        throw new ArgumentNullException("identity");
+        output = session.Load<TEntity>(identity.Value);
       }
-
-      return session.Load<TEntity>(identity.Value);
-    }
-
-    /// <summary>
-    /// Attempts to parse an entity identifier and then use that to 'get' a matching entity instance.
-    /// </summary>
-    /// <returns>
-    /// An entity instance, or a null reference if no matching entity could be retrieved.
-    /// </returns>
-    /// <param name='session'>
-    /// An NHibernate ISession
-    /// </param>
-    /// <param name='identifier'>
-    /// The identifier to parse.
-    /// </param>
-    /// <typeparam name='TEntity'>
-    /// The type of the desired entity.
-    /// </typeparam>
-    /// <typeparam name='TIdentifier'>
-    /// The type of the identifier.
-    /// </typeparam>
-    [Obsolete("This type will be removed in a future version, functionality is now available via the INHLinqWrapper")]
-    public static TEntity GetEntity<TEntity,TIdentifier>(this ISession session, object identifier)
-      where TEntity : class,IEntity
-    {
-      IIdentity<TEntity,TIdentifier> identity;
-      TEntity output = null;
-
-      if(Identity.TryParse<TEntity,TIdentifier>(identifier, out identity))
+      else
       {
-        output = session.GetEntity(identity);
-      }
-
-      return output;
-    }
-
-    /// <summary>
-    /// Attempts to parse an entity identifier and then use that to 'load' a matching entity instance.
-    /// </summary>
-    /// <returns>
-    /// An entity instance, or a null reference if no matching entity could be retrieved.
-    /// </returns>
-    /// <param name='session'>
-    /// An NHibernate ISession
-    /// </param>
-    /// <param name='identifier'>
-    /// The identifier to parse.
-    /// </param>
-    /// <typeparam name='TEntity'>
-    /// The type of the desired entity.
-    /// </typeparam>
-    /// <typeparam name='TIdentifier'>
-    /// The type of the identifier.
-    /// </typeparam>
-    [Obsolete("This type will be removed in a future version, functionality is now available via the INHLinqWrapper")]
-    public static TEntity LoadEntity<TEntity,TIdentifier>(this ISession session, object identifier)
-      where TEntity : class,IEntity
-    {
-      IIdentity<TEntity,TIdentifier> identity;
-      TEntity output = null;
-
-      if(Identity.TryParse<TEntity,TIdentifier>(identifier, out identity))
-      {
-        output = session.LoadEntity(identity);
+        output = default(TEntity);
       }
 
       return output;

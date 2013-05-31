@@ -11,6 +11,7 @@ namespace CSF.Data.NHibernate
   /// Default implementation of the <see cref="ISessionWrapper"/>, redirecting calls directly to the NHibernate
   /// extension methods.
   /// </summary>
+  [Obsolete("This type (and the whole concept of this type) is now obsolete and will be removed in v3.x")]
   public sealed class SessionWrapper : ISessionWrapper
   {
     #region fields
