@@ -8,8 +8,10 @@ using CSF.Entities;
 namespace Test.CSF.Data.NHibernate
 {
   [TestFixture]
+  [Ignore("These are tests for a now-obsolete type.")]
   public class TestSessionWrapper
   {
+#pragma warning disable 618
     #region tests
 
     [Test]
@@ -90,6 +92,7 @@ namespace Test.CSF.Data.NHibernate
     }
 
     #endregion
+#pragma warning restore 618
   }
 }
 

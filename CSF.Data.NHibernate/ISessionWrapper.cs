@@ -28,6 +28,7 @@ namespace CSF.Data.NHibernate
   /// including interacting better with entities and identities.
   /// </para>
   /// </remarks>
+  [Obsolete("This type (and the whole concept of this type) is now obsolete and will be removed in v3.x")]
   public interface ISessionWrapper
   {
     #region properties
