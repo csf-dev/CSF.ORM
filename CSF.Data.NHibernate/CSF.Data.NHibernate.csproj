@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,6 @@
     <RootNamespace>CSF.Data.NHibernate</RootNamespace>
     <AssemblyName>CSF.Data.NHibernate</AssemblyName>
     <ReleaseVersion>2.5.3</ReleaseVersion>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -57,10 +56,6 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ISessionExtensions.cs" />
-    <Compile Include="INHLinqWrapper.cs" />
-    <Compile Include="DefaultLinqWrapper.cs" />
-    <Compile Include="ISessionWrapper.cs" />
-    <Compile Include="SessionWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
