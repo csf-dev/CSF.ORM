@@ -16,7 +16,7 @@ namespace Test.CSF.Data.NHibernate
     public void TestGet()
     {
       var session = new Mock<ISession>(MockBehavior.Strict);
-      IIdentity<DummyEntity> identity = Identity.Create<DummyEntity,ulong>(5);
+      IIdentity<DummyEntity> identity = new Identity<DummyEntity,ulong>(5);
       var entity = new DummyEntity();
 
       session.Setup(x => x.Get<DummyEntity>(It.IsAny<object>())).Returns(entity);
@@ -46,7 +46,7 @@ namespace Test.CSF.Data.NHibernate
     public void TestLoad()
     {
       var session = new Mock<ISession>(MockBehavior.Strict);
-      IIdentity<DummyEntity> identity = Identity.Create<DummyEntity,ulong>(5);
+      IIdentity<DummyEntity> identity = new Identity<DummyEntity,ulong>(5);
       var entity = new DummyEntity();
 
       session.Setup(x => x.Load<DummyEntity>(It.IsAny<object>())).Returns(entity);

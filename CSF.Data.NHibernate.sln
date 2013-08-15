@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.CSF.Data.NHibernate", "Test.CSF.Data.NHibernate\Test.CSF.Data.NHibernate.csproj", "{11DCF35A-6E2A-4C62-B536-14B83FF5AE07}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Data.NHibernate", "CSF.Data.NHibernate\CSF.Data.NHibernate.csproj", "{18466B45-F3E5-46D9-808D-EA2896CC7ACD}"
@@ -50,6 +50,6 @@ Global
 		$1.inheritsSet = VisualStudio
 		$1.inheritsScope = text/plain
 		$1.scope = text/plain
-		version = 2.5.3
+		version = 3.0.0
 	EndGlobalSection
 EndGlobal
