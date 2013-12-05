@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="ISessionExtensions.cs" />
     <Compile Include="FractionMap.cs" />
+    <Compile Include="NHibernateQuery.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
