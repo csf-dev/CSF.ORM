@@ -24,8 +24,7 @@ namespace CSF.Data.NHibernate
     /// <typeparam name='TEntity'>
     /// The type of entity that will be returned by this method.
     /// </typeparam>
-    public static TEntity Get<TEntity>(this ISession session, IIdentity<TEntity> identity)
-      where TEntity : IEntity
+    public static TEntity Get<TEntity>(this ISession session, IIdentity<TEntity> identity) where TEntity : IEntity
     {
       TEntity output;
 
@@ -34,7 +33,7 @@ namespace CSF.Data.NHibernate
         throw new ArgumentNullException("session");
       }
 
-      if(identity != null)
+      if(identity != null && identity.Value != null)
       {
         output = session.Get<TEntity>(identity.Value);
       }
@@ -61,8 +60,7 @@ namespace CSF.Data.NHibernate
     /// <typeparam name='TEntity'>
     /// The type of entity that will be returned by this method.
     /// </typeparam>
-    public static TEntity Load<TEntity>(this ISession session, IIdentity<TEntity> identity)
-      where TEntity : IEntity
+    public static TEntity Load<TEntity>(this ISession session, IIdentity<TEntity> identity) where TEntity : IEntity
     {
       TEntity output;
 
@@ -71,7 +69,7 @@ namespace CSF.Data.NHibernate
         throw new ArgumentNullException("session");
       }
 
-      if(identity != null)
+      if(identity != null && identity.Value != null)
       {
         output = session.Load<TEntity>(identity.Value);
       }
