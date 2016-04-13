@@ -52,7 +52,7 @@ Global
 		$1.inheritsSet = VisualStudio
 		$1.inheritsScope = text/plain
 		$1.scope = text/plain
-		version = 3.0.0
+		version = 4.0.0
 		StartupItem = Test.CSF.Data.NHibernate\Test.CSF.Data.NHibernate.csproj
 	EndGlobalSection
 EndGlobal
