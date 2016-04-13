@@ -10,65 +10,94 @@ namespace Test.CSF.Data.NHibernate
   [TestFixture]
   public class TestISessionExtensions
   {
+    #region constants
+
+    private const ulong IDENTITY = 56;
+
+    #endregion
+
+    #region fields
+
+    private DummyEntity _entity;
+    private IIdentity<DummyEntity> _identity;
+    private Mock<ISession> _sut;
+
+    #endregion
+
+    #region setup
+
+    [SetUp]
+    public void Setup()
+    {
+      _sut = new Mock<ISession>(MockBehavior.Strict);
+
+      _entity = new DummyEntity() {
+        Identity = IDENTITY
+      };
+      _identity = _entity.GetIdentity();
+    }
+
+    #endregion
+
     #region tests
 
     [Test]
     public void TestGet()
     {
-      var session = new Mock<ISession>(MockBehavior.Strict);
-      IIdentity<DummyEntity> identity = new Identity<DummyEntity,ulong>(5);
-      var entity = new DummyEntity();
+      // Arrange
+      _sut.Setup(x => x.Get<DummyEntity>(IDENTITY)).Returns(_entity);
 
-      session.Setup(x => x.Get<DummyEntity>(It.IsAny<object>())).Returns(entity);
+      // Act
+      var result = _sut.Object.Get(_identity);
 
-      var result = session.Object.Get(identity);
-
-      session.Verify(x => x.Get<DummyEntity>(It.IsAny<object>()), Times.Once());
-      Assert.AreEqual(entity, result);
+      // Assert
+      _sut.Verify(x => x.Get<DummyEntity>(IDENTITY), Times.Once());
+      Assert.AreEqual(_entity, result);
     }
 
     [Test]
     public void TestGetNull()
     {
-      var session = new Mock<ISession>(MockBehavior.Strict);
+      // Arrange
       IIdentity<DummyEntity> identity = null;
-      var entity = new DummyEntity();
 
-      session.Setup(x => x.Get<DummyEntity>(It.IsAny<object>())).Returns(entity);
+      _sut.Setup(x => x.Get<DummyEntity>(null)).Throws<ArgumentNullException>();
 
-      var result = session.Object.Get(identity);
+      // Act
+      var result = _sut.Object.Get(identity);
 
-      session.Verify(x => x.Get<DummyEntity>(It.IsAny<object>()), Times.Never());
+      // Assert
+      _sut.Verify(x => x.Get<DummyEntity>(null), Times.Never());
       Assert.IsNull(result);
     }
 
     [Test]
     public void TestLoad()
     {
-      var session = new Mock<ISession>(MockBehavior.Strict);
-      IIdentity<DummyEntity> identity = new Identity<DummyEntity,ulong>(5);
-      var entity = new DummyEntity();
+      // Arrange
+      _sut.Setup(x => x.Load<DummyEntity>(IDENTITY)).Returns(_entity);
 
-      session.Setup(x => x.Load<DummyEntity>(It.IsAny<object>())).Returns(entity);
+      // Act
+      var result = _sut.Object.Load(_identity);
 
-      var result = session.Object.Load(identity);
-
-      session.Verify(x => x.Load<DummyEntity>(It.IsAny<object>()), Times.Once());
-      Assert.AreEqual(entity, result);
+      // Assert
+      _sut.Verify(x => x.Load<DummyEntity>(IDENTITY), Times.Once());
+      Assert.AreEqual(_entity, result);
     }
 
     [Test]
     public void TestLoadNull()
     {
-      var session = new Mock<ISession>(MockBehavior.Strict);
+      // Arrange
       IIdentity<DummyEntity> identity = null;
-      var entity = new DummyEntity();
 
-      session.Setup(x => x.Load<DummyEntity>(It.IsAny<object>())).Returns(entity);
+      _sut.Setup(x => x.Load<DummyEntity>(null)).Throws<ArgumentNullException>();
 
-      var result = session.Object.Load(identity);
+      // Act
+      var result = _sut.Object.Load(identity);
 
-      session.Verify(x => x.Load<DummyEntity>(It.IsAny<object>()), Times.Never());
+      // Assert
+      _sut.Verify(x => x.Load<DummyEntity>(null), Times.Never());
       Assert.IsNull(result);
     }
 
@@ -76,7 +105,7 @@ namespace Test.CSF.Data.NHibernate
 
     #region contained types
 
-    class DummyEntity : Entity<DummyEntity,ulong> {}
+    class DummyEntity : Entity<ulong> {}
 
     #endregion
   }
