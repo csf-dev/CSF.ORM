@@ -9,6 +9,7 @@ namespace CSF.Data.NHibernate
   /// NHibernate implementation of the generic <c>IQuery</c> type, which wraps an NHibernate <c>ISession</c>, using it
   /// as the query source.
   /// </summary>
+  [Obsolete("Instead, prefer the non-generic version of this type (with generic methods).")]
   public class NHibernateQuery<TQueried> : IQuery<TQueried>
     where TQueried : class
   {
