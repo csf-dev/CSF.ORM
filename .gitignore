@@ -1,5 +1,6 @@
 bin/
 obj/
+packages/
 TestResult.xml
 *.pidb
 *.VisualState.xml
