@@ -35,7 +35,15 @@ namespace CSF.Entities
   /// </summary>
   public static class Entity
   {
-    private static readonly Type EntityBaseType = typeof(IEntity);
+    #region constants
+
+    private static readonly Type
+      EntityBaseType = typeof(IEntity),
+      GenericEntityType = typeof(Entity<>);
+
+    #endregion
+
+    #region methods
 
     /// <summary>
     /// Gets the identity for a given entity instance.
@@ -127,6 +135,36 @@ namespace CSF.Entities
         throw new ArgumentException(message, nameof(potentialEntityType));
       }
     }
+
+    /// <summary>
+    /// Raises an exception if the <paramref name="potentialEntityType"/> is either <c>null</c> or does not implement
+    /// the generic entity base type.
+    /// </summary>
+    /// <param name="potentialEntityType">A type which may or may not be an entity type.</param>
+    internal static Type GetGenericEntityType(Type potentialEntityType)
+    {
+      if(potentialEntityType == null)
+      {
+        throw new ArgumentNullException(nameof(potentialEntityType));
+      }
+
+      var currentType = potentialEntityType;
+
+      while(currentType != null)
+      {
+        if(currentType.IsGenericType
+           && currentType.GetGenericTypeDefinition() == GenericEntityType)
+        {
+          break;
+        }
+
+        currentType = currentType.BaseType;
+      }
+
+      return currentType;
+    }
+
+    #endregion
   }
 }
 

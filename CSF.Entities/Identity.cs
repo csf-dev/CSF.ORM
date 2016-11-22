@@ -64,6 +64,17 @@ namespace CSF.Entities
     }
 
     /// <summary>
+    /// Create an entity-typed identity instance from a given identity value.
+    /// </summary>
+    /// <param name="identityValue">Identity value.</param>
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    public static IIdentity<TEntity> Create<TEntity>(object identityValue)
+      where TEntity : IEntity
+    {
+      return (IIdentity<TEntity>) Create(typeof(TEntity), GetIdentityType<TEntity>(), identityValue);
+    }
+
+    /// <summary>
     /// Determines whether the two given entity instances are identity-equal or not.
     /// </summary>
     /// <param name="first">The first entity.</param>
@@ -78,6 +89,35 @@ namespace CSF.Entities
       var secondIdentity = second.GetIdentity();
 
       return firstIdentity.Equals(secondIdentity);
+    }
+
+    /// <summary>
+    /// Gets the identity type for a given entity type.
+    /// </summary>
+    /// <returns>The identity type.</returns>
+    /// <param name="entityType">Entity type.</param>
+    public static Type GetIdentityType(Type entityType)
+    {
+      var genericEntityType = Entity.GetGenericEntityType(entityType);
+
+      if(genericEntityType == null)
+      {
+        string message = String.Format(Resources.ExceptionMessages.TypeMustBeGenericEntityTypeFormat,
+                                       entityType.FullName);
+        throw new ArgumentException(message, nameof(entityType));
+      }
+
+      return genericEntityType.GenericTypeArguments[0];
+    }
+
+    /// <summary>
+    /// Gets the identity type for a given entity type.
+    /// </summary>
+    /// <returns>The identity type.</returns>
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    public static Type GetIdentityType<TEntity>() where TEntity : IEntity
+    {
+      return GetIdentityType(typeof(TEntity));
     }
 
     /// <summary>

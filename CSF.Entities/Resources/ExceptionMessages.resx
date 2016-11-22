@@ -15,6 +15,9 @@
   <data name="TypeMustBeEntityTypeFormat" xml:space="preserve">
     <value>The type `{0}' must inherit from `{1}'.</value>
   </data>
+  <data name="TypeMustBeGenericEntityTypeFormat" xml:space="preserve">
+    <value>The type `{0}' must inherit from the generic entity base type.</value>
+  </data>
   <data name="MustNotBeDefaultForDataTypeFormat" xml:space="preserve">
     <value>Identity values may not be the default for their data-type (`{0}').</value>
   </data>

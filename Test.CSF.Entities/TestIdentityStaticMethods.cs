@@ -117,6 +117,49 @@ namespace Test.CSF.Entities
       Assert.IsFalse(result);
     }
 
+    [Test]
+    public void GetIdentityType_non_generic_returns_correct_result()
+    {
+      // Act
+      var result = Identity.GetIdentityType(typeof(Person));
+
+      // Assert
+      Assert.AreEqual(typeof(int), result);
+    }
+
+    [Test]
+    public void GetIdentityType_generic_returns_correct_result()
+    {
+      // Act
+      var result = Identity.GetIdentityType<Person>();
+
+      // Assert
+      Assert.AreEqual(typeof(int), result);
+    }
+
+    [Test]
+    public void Create_generic_returns_correct_result()
+    {
+      // Act
+      var result = Identity.Create<Person>(5);
+
+      // Assert
+      Assert.AreEqual(typeof(Person), result.EntityType, "Entity type");
+      Assert.AreEqual(typeof(int), result.IdentityType, "Identity type");
+      Assert.AreEqual(5, result.Value, "Identity value");
+    }
+
+    [Test]
+    [Description("This method should not use the entity equality type")]
+    public void Create_generic_uses_passed_entity_type()
+    {
+      // Act
+      var result = Identity.Create<Employee>(5);
+
+      // Assert
+      Assert.AreEqual(typeof(Employee), result.EntityType, "Entity type");
+    }
+
     #endregion
   }
 }
