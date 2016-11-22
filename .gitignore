@@ -1,5 +1,6 @@
 bin/
 obj/
+packages/*/
 TestResult.xml
 TestResult.formatted.xml
 *.VisualState.xml
