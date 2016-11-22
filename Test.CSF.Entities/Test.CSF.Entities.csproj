@@ -30,14 +30,31 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stubs\Person.cs" />
+    <Compile Include="Stubs\Employee.cs" />
+    <Compile Include="Stubs\Customer.cs" />
+    <Compile Include="TestEntityStaticMethods.cs" />
+    <Compile Include="Stubs\Animal.cs" />
+    <Compile Include="TestEntity.cs" />
+    <Compile Include="TestIdentityStaticMethods.cs" />
+    <Compile Include="TestIdentity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Stubs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSF.Entities\CSF.Entities.csproj">
+      <Project>{2EE2F785-5655-432E-9726-41349A4FA958}</Project>
+      <Name>CSF.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

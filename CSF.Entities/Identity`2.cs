@@ -41,34 +41,18 @@ namespace CSF.Entities
                                               IEquatable<Identity<TIdentity,TEntity>>
                                               where TEntity : IEntity
   {
-    #region fields
-    
-    private TIdentity _value;
-    
-    #endregion
-    
     #region properties
     
     /// <summary>
     /// <para>Read-only.  A <see cref="System.Type"/> that is associated with this identity instance.</para>
     /// </summary>
-    public Type EntityType
-    {
-      get {
-        return typeof(TEntity);
-      }
-    }
+    public Type EntityType { get { return typeof(TEntity); } }
 
     /// <summary>
     /// Gets the underlying type of <see cref="Value"/>.
     /// </summary>
     /// <value>The identity type.</value>
-    public Type IdentityType
-    {
-      get {
-        return typeof(IIdentity);
-      }
-    }
+    public Type IdentityType { get { return typeof(TIdentity); } }
 
     /// <summary>
     /// <para>
@@ -76,19 +60,9 @@ namespace CSF.Entities
     /// amongst all other entities of the same <see cref="Type"/>.
     /// </para>
     /// </summary>
-    public TIdentity Value
-    {
-      get {
-        return _value;
-      }
-    }
+    public TIdentity Value { get; private set; }
 
-    object IIdentity.Value
-    {
-      get {
-        return this.Value;
-      }
-    }
+    object IIdentity.Value { get { return this.Value; } }
 
     #endregion
 
@@ -113,7 +87,7 @@ namespace CSF.Entities
       }
       else
       {
-        Identity<TIdentity,TEntity> other = obj as Identity<TIdentity,TEntity>;
+        var other = obj as IIdentity;
         output = ((object) other != null)? this.Equals(other) : false;
       }
 
@@ -135,10 +109,14 @@ namespace CSF.Entities
       {
         output = true;
       }
+      else if(((object) obj) == null)
+      {
+        output = false;
+      }
       else
       {
-        Identity<TIdentity,TEntity> other = obj as Identity<TIdentity,TEntity>;
-        output = ((object) other != null)? this.Equals(other) : false;
+        output = (Entity.AreEqualityTypesSame(EntityType, obj.EntityType)
+                  && Object.Equals(Value, obj.Value));
       }
 
       return output;
@@ -153,44 +131,21 @@ namespace CSF.Entities
     /// </returns>
     public bool Equals (IIdentity<TEntity> obj)
     {
-      bool output;
-
-      if(Object.ReferenceEquals(this, obj))
-      {
-        output = true;
-      }
-      else
-      {
-        Identity<TIdentity,TEntity> other = obj as Identity<TIdentity,TEntity>;
-        output = ((object) other != null)? this.Equals(other) : false;
-      }
-
-      return output;
+      return Equals((IIdentity) obj);
     }
 
     /// <summary>
     /// Determines whether the specified identity is equal to the current instance.
     /// </summary>
-    /// <param name='other'>
+    /// <param name='obj'>
     /// The identity to compare with the current instance.
     /// </param>
     /// <returns>
     /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
     /// </returns>
-    public bool Equals (Identity<TIdentity,TEntity> other)
+    public bool Equals (Identity<TIdentity,TEntity> obj)
     {
-      bool output;
-
-      if(Object.ReferenceEquals(this, other))
-      {
-        output = true;
-      }
-      else
-      {
-        output = ((object) other != null)? this.Value.Equals(other.Value) : false;
-      }
-
-      return output;
+      return Equals((IIdentity) obj);
     }
 
     /// <summary>
@@ -217,7 +172,7 @@ namespace CSF.Entities
     /// </returns>
     public override string ToString ()
     {
-      return string.Format ("[{0}#{1}]", this.EntityType.FullName, this.Value.ToString());
+      return string.Format (Identity.IdentityFormat, this.EntityType.Name, this.Value.ToString());
     }
 
     #endregion
@@ -230,7 +185,8 @@ namespace CSF.Entities
     /// <param name="identity">The identity value.</param>
     public Identity(TIdentity identity)
     {
-      _value = identity;
+      Identity.RequireNotDefaultValue(identity);
+      Value = identity;
     }
     
     #endregion
@@ -242,10 +198,16 @@ namespace CSF.Entities
     /// </summary>
     /// <param name="objectA">An identity instance.</param>
     /// <param name="objectB">An identity instance.</param>
-    public static bool operator ==(Identity<TIdentity,TEntity> objectA, Identity<TIdentity,TEntity> objectB)
+    public static bool operator ==(Identity<TIdentity,TEntity> objectA, IIdentity objectB)
     {
-      return ((object) objectA != null || (object) objectB == null)
-             && objectA.Equals(objectB);
+      if((object) objectA == null)
+      {
+        return Object.ReferenceEquals(objectA, objectB);
+      }
+      else
+      {
+        return objectA.Equals(objectB);
+      }
     }
 
     /// <summary>
@@ -253,7 +215,7 @@ namespace CSF.Entities
     /// </summary>
     /// <param name="objectA">An identity instance.</param>
     /// <param name="objectB">An identity instance.</param>
-    public static bool operator !=(Identity<TIdentity,TEntity> objectA, Identity<TIdentity,TEntity> objectB)
+    public static bool operator !=(Identity<TIdentity,TEntity> objectA, IIdentity objectB)
     {
       return !(objectA == objectB);
     }
@@ -263,28 +225,7 @@ namespace CSF.Entities
     /// </summary>
     /// <param name="objectA">An identity instance.</param>
     /// <param name="objectB">An identity instance.</param>
-    public static bool operator ==(Identity<TIdentity,TEntity> objectA, IIdentity<TEntity> objectB)
-    {
-      return ((object) objectA != null || (object) objectB == null)
-             && objectA.Equals(objectB);
-    }
-
-    /// <summary>
-    /// Operator overload for testing inequality between identity instances.
-    /// </summary>
-    /// <param name="objectA">An identity instance.</param>
-    /// <param name="objectB">An identity instance.</param>
-    public static bool operator !=(Identity<TIdentity,TEntity> objectA, IIdentity<TEntity> objectB)
-    {
-      return !(objectA == objectB);
-    }
-
-    /// <summary>
-    /// Operator overload for testing equality between identity instances.
-    /// </summary>
-    /// <param name="objectA">An identity instance.</param>
-    /// <param name="objectB">An identity instance.</param>
-    public static bool operator ==(IIdentity<TEntity> objectA, Identity<TIdentity,TEntity> objectB)
+    public static bool operator ==(IIdentity objectA, Identity<TIdentity,TEntity> objectB)
     {
       return objectB == objectA;
     }
@@ -294,7 +235,7 @@ namespace CSF.Entities
     /// </summary>
     /// <param name="objectA">An identity instance.</param>
     /// <param name="objectB">An identity instance.</param>
-    public static bool operator !=(IIdentity<TEntity> objectA, Identity<TIdentity,TEntity> objectB)
+    public static bool operator !=(IIdentity objectA, Identity<TIdentity,TEntity> objectB)
     {
       return !(objectA == objectB);
     }

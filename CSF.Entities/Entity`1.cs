@@ -37,11 +37,16 @@ namespace CSF.Entities
   /// </summary>
   /// <typeparam name="TIdentity">The identity type for the current instance.</typeparam>
   [Serializable]
-  public class Entity<TIdentity> : IEntity, IEquatable<IEntity>
+  public abstract class Entity<TIdentity> : IEntity
   {
+    #region constants
+
+    private const string NO_IDENTITY = "(no identity)";
+
+    #endregion
+
     #region fields
     
-    private IIdentity _identity;
     private int? _cachedHashCode;
     
     #endregion
@@ -49,34 +54,19 @@ namespace CSF.Entities
     #region properties
 
     /// <summary>
-    /// Gets a value indicating whether this instance has an identity or not.
-    /// </summary>
-    /// <value><c>true</c> if this instance has an identity; otherwise, <c>false</c>.</value>
-    public virtual bool HasIdentity
-    {
-      get {
-        return _identity != null;
-      }
-    }
-    
-    /// <summary>
     /// Gets or sets the identity value for the current instance.
     /// </summary>
-    /// <value>The identity.</value>
-    public virtual TIdentity Identity
+    /// <value>The identity value.</value>
+    protected virtual TIdentity IdentityValue { get; set;  }
+
+    /// <summary>
+    /// Gets a value indicating whether this instance has an identity.
+    /// </summary>
+    /// <value><c>true</c> if this instance has an identity; otherwise, <c>false</c>.</value>
+    protected virtual bool HasIdentity
     {
       get {
-        return (_identity != null)? (TIdentity) _identity.Value : default(TIdentity);
-      }
-      set {
-        if(Object.Equals(value, default(TIdentity)))
-        {
-          _identity = null;
-        }
-        else
-        {
-          _identity = CSF.Entities.Identity.Create<TIdentity>(value, this.GetType());
-        }
+        return !Object.Equals(IdentityValue, default(TIdentity));
       }
     }
 
@@ -95,57 +85,7 @@ namespace CSF.Entities
     /// </returns>
     public override bool Equals(object obj)
     {
-      bool output;
-
-      if(Object.ReferenceEquals(this, obj))
-      {
-        output = true;
-      }
-      else
-      {
-        var other = obj as IEntity;
-        output = ((object) other != null)? this.Equals(other) : false;
-      }
-
-      return output;
-    }
-    
-    /// <summary>
-    /// Determines whether the specified <see cref="CSF.Entities.IEntity"/> is equal to the current
-    /// <see cref="T:CSF.Entities.Entity{TIdentity}"/>.
-    /// </summary>
-    /// <param name="obj">The <see cref="CSF.Entities.IEntity"/> to compare with the current <see cref="T:CSF.Entities.Entity{TIdentity}"/>.</param>
-    /// <returns>
-    /// <c>true</c> if the specified <see cref="CSF.Entities.IEntity"/> is equal to the current
-    /// <see cref="T:CSF.Entities.Entity{TIdentity}"/>; otherwise, <c>false</c>.
-    /// </returns>
-    public virtual bool Equals(IEntity obj)
-    {
-      bool output;
-
-      if(Object.ReferenceEquals(this, obj))
-      {
-        output = true;
-      }
-      else if((object) obj == null)
-      {
-        output = false;
-      }
-      else if(!this.HasIdentity
-              || !obj.HasIdentity)
-      {
-        output = false;
-      }
-      else
-      {
-        IIdentity
-          myIdentity = this.GetRawIdentity(),
-          theirIdentity = obj.GetRawIdentity();
-
-        output = myIdentity.Equals(theirIdentity);
-      }
-
-      return output;
+      return Object.ReferenceEquals(this, obj);
     }
 
     /// <summary>
@@ -161,7 +101,7 @@ namespace CSF.Entities
       {
         if(this.HasIdentity)
         {
-          _cachedHashCode = _identity.GetHashCode();
+          _cachedHashCode = IdentityValue.GetHashCode();
         }
         else
         {
@@ -180,142 +120,19 @@ namespace CSF.Entities
     /// </returns>
     public override string ToString()
     {
-      string output;
-      
-      if(this.HasIdentity)
-      {
-        output = this.GetRawIdentity().ToString();
-      }
-      else
-      {
-        output = String.Format("[{0}#(no identity)]", this.GetType().FullName);
-      }
-      
-      return output;
-    }
-
-    /// <summary>
-    /// Gets the raw identity instance contained within the current entity, favour the extension method 'GetIdentity'
-    /// instead.
-    /// </summary>
-    /// <returns>The identity value.</returns>
-    protected virtual IIdentity GetRawIdentity()
-    {
-      if(!this.HasIdentity)
-      {
-        throw new InvalidOperationException("The current instance must have an identity, check using HasIdentity().");
-      }
-
-      return _identity;
+      string identityPart = HasIdentity? IdentityValue.ToString() : NO_IDENTITY;
+      return String.Format(Identity.IdentityFormat, this.GetType().Name, identityPart);
     }
 
     #endregion
 
     #region explicit interface implementations
 
-    IIdentity IEntity.GetRawIdentity()
-    {
-      return this.GetRawIdentity();
-    }
+    bool IEntity.HasIdentity { get { return HasIdentity; } }
 
-    #endregion
+    object IEntity.IdentityValue { get { return IdentityValue; } }
 
-    #region constructors
-    
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:CSF.Entities.Entity{TIdentity}"/> class.
-    /// </summary>
-    public Entity()
-    {
-      _identity = null;
-      _cachedHashCode = null;
-    }
-    
-    #endregion
-    
-    #region static operator overloads
-
-    /// <summary>
-    /// Operator overload for testing equality between entity instances.
-    /// </summary>
-    /// <param name="objectA">An entity instance.</param>
-    /// <param name="objectB">An entity instance.</param>
-    public static bool operator ==(Entity<TIdentity> objectA, Entity<TIdentity> objectB)
-    {
-      bool output;
-
-      if((object) objectA != null)
-      {
-        output = objectA.Equals(objectB);
-      }
-      else
-      {
-        output = Object.ReferenceEquals(objectA, objectB);
-      }
-
-      return output;
-    }
-
-    /// <summary>
-    /// Operator overload for testing inequality between entity instances.
-    /// </summary>
-    /// <param name="objectA">An entity instance.</param>
-    /// <param name="objectB">An entity instance.</param>
-    public static bool operator !=(Entity<TIdentity> objectA, Entity<TIdentity> objectB)
-    {
-      return !(objectA == objectB);
-    }
-
-    /// <summary>
-    /// Operator overload for testing equality between entity instances.
-    /// </summary>
-    /// <param name="objectA">An entity instance.</param>
-    /// <param name="objectB">An entity instance.</param>
-    public static bool operator ==(Entity<TIdentity> objectA, IEntity objectB)
-    {
-      bool output;
-
-      if((object) objectA != null)
-      {
-        output = objectA.Equals(objectB);
-      }
-      else
-      {
-        output = Object.ReferenceEquals(objectA, objectB);
-      }
-
-      return output;
-    }
-
-    /// <summary>
-    /// Operator overload for testing inequality between entity instances.
-    /// </summary>
-    /// <param name="objectA">An entity instance.</param>
-    /// <param name="objectB">An entity instance.</param>
-    public static bool operator !=(Entity<TIdentity> objectA, IEntity objectB)
-    {
-      return !(objectA == objectB);
-    }
-
-    /// <summary>
-    /// Operator overload for testing equality between entity instances.
-    /// </summary>
-    /// <param name="objectA">An entity instance.</param>
-    /// <param name="objectB">An entity instance.</param>
-    public static bool operator ==(IEntity objectA, Entity<TIdentity> objectB)
-    {
-      return objectB == objectA;
-    }
-
-    /// <summary>
-    /// Operator overload for testing inequality between entity instances.
-    /// </summary>
-    /// <param name="objectA">An entity instance.</param>
-    /// <param name="objectB">An entity instance.</param>
-    public static bool operator !=(IEntity objectA, Entity<TIdentity> objectB)
-    {
-      return !(objectB == objectA);
-    }
+    Type IEntity.GetIdentityType() { return typeof(TIdentity); }
 
     #endregion
   }

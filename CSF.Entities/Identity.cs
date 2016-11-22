@@ -36,25 +36,66 @@ namespace CSF.Entities
     #region constants
 
     private static readonly Type OpenGenericIdentity = typeof(Identity<,>);
+    internal const string IdentityFormat = "[{0}#{1}]";
 
     #endregion
 
+    #region methods
+
     /// <summary>
-    /// Creates an identity instance generically.
+    /// Creates an <see cref="IIdentity"/> for the given entity type, identity type and identity value.
     /// </summary>
+    /// <param name="entityType">Entity type.</param>
+    /// <param name="identityType">Identity type.</param>
     /// <param name="identityValue">Identity value.</param>
-    /// <param name="entityType">The entity type.</param>
-    /// <typeparam name="TIdentity">The identity type.</typeparam>
-    public static IIdentity Create<TIdentity>(TIdentity identityValue, Type entityType)
+    public static IIdentity Create(Type entityType, Type identityType, object identityValue)
     {
       if(entityType == null)
       {
-        throw new ArgumentNullException("entityType");
+        throw new ArgumentNullException(nameof(entityType));
+      }
+      if(identityType == null)
+      {
+        throw new ArgumentNullException(nameof(identityType));
       }
 
-      var closedGenericType = OpenGenericIdentity.MakeGenericType(typeof(TIdentity), entityType);
-      return (IIdentity) Activator.CreateInstance(closedGenericType, new Object[] { identityValue });
+      var closedIdentityType = OpenGenericIdentity.MakeGenericType(identityType, entityType);
+      return (IIdentity) Activator.CreateInstance(closedIdentityType, new [] { identityValue });
     }
+
+    /// <summary>
+    /// Determines whether the two given entity instances are identity-equal or not.
+    /// </summary>
+    /// <param name="first">The first entity.</param>
+    /// <param name="second">The second entity.</param>
+    /// <typeparam name="TFirstEntity">The first entity type.</typeparam>
+    /// <typeparam name="TSecondEntity">The second entity type.</typeparam>
+    public static bool Equals<TFirstEntity,TSecondEntity>(TFirstEntity first, TSecondEntity second)
+      where TFirstEntity : IEntity
+      where TSecondEntity : IEntity
+    {
+      var firstIdentity = first.GetIdentity();
+      var secondIdentity = second.GetIdentity();
+
+      return firstIdentity.Equals(secondIdentity);
+    }
+
+    /// <summary>
+    /// Raises an exception if the <paramref name="value"/> is the default for its data-type.
+    /// </summary>
+    /// <param name="value">The identity value.</param>
+    /// <typeparam name="TIdentity">The data type for the potential identity value.</typeparam>
+    internal static void RequireNotDefaultValue<TIdentity>(TIdentity value)
+    {
+      if(Object.Equals(value, default(TIdentity)))
+      {
+        string message = String.Format(Resources.ExceptionMessages.MustNotBeDefaultForDataTypeFormat,
+                                       typeof(TIdentity).Name);
+        throw new ArgumentException(message, nameof(value));
+      }
+    }
+
+    #endregion
   }
 }
 
