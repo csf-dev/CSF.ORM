@@ -121,6 +121,29 @@ namespace CSF.Entities
     }
 
     /// <summary>
+    /// Casts an identity instance to a more specific entity type.
+    /// </summary>
+    /// <param name="identity">The input identity.</param>
+    /// <typeparam name="TCast">The entity type for which to cast the identity.</typeparam>
+    public static IIdentity<TCast> Cast<TCast>(this IIdentity identity) where TCast : IEntity
+    {
+      if(identity == null)
+      {
+        throw new ArgumentNullException(nameof(identity));
+      }
+
+      if(!identity.EntityType.IsAssignableFrom(typeof(TCast)))
+      {
+        string message = String.Format(Resources.ExceptionMessages.CastTypeMustImplementEntityTypeFormat,
+                                       identity.EntityType.Name,
+                                       typeof(TCast).Name);
+        throw new ArgumentException(message, nameof(identity));
+      }
+
+      return Identity.Create<TCast>(identity.Value);
+    }
+
+    /// <summary>
     /// Raises an exception if the <paramref name="value"/> is the default for its data-type.
     /// </summary>
     /// <param name="value">The identity value.</param>

@@ -63,5 +63,11 @@ namespace CSF.Entities.Resources {
                 return ResourceManager.GetString("MustNotBeDefaultForDataTypeFormat", resourceCulture);
             }
         }
+        
+        internal static string CastTypeMustImplementEntityTypeFormat {
+            get {
+                return ResourceManager.GetString("CastTypeMustImplementEntityTypeFormat", resourceCulture);
+            }
+        }
     }
 }

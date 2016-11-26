@@ -21,4 +21,7 @@
   <data name="MustNotBeDefaultForDataTypeFormat" xml:space="preserve">
     <value>Identity values may not be the default for their data-type (`{0}').</value>
   </data>
+  <data name="CastTypeMustImplementEntityTypeFormat" xml:space="preserve">
+    <value>The cast-to type (`{1}') must implement the identity's entity type: `{0}'</value>
+  </data>
 </root>
