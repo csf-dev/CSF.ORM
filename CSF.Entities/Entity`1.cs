@@ -148,6 +148,63 @@ namespace CSF.Entities
     Type IEntity.GetIdentityType() { return typeof(TIdentity); }
 
     #endregion
+
+    #region operator overloads
+
+    /// <summary>
+    /// Gets a value indicating whether two given entity instances are equal.  For this comparison, entities
+    /// are considered equal if they are either reference equal, or identity equal.
+    /// </summary>
+    /// <param name="one">The first entity</param>
+    /// <param name="two">The second entity</param>
+    public static bool operator ==(Entity<TIdentity> one, IEntity two)
+    {
+      if(Object.ReferenceEquals(one, two))
+      {
+        return true;
+      }
+      if(Object.ReferenceEquals(one, null))
+      {
+        return false;
+      }
+
+      return one.IdentityEquals(two);
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether two given entity instances are equal.  For this comparison, entities
+    /// are considered equal if they are either reference equal, or identity equal.
+    /// </summary>
+    /// <param name="one">The first entity</param>
+    /// <param name="two">The second entity</param>
+    public static bool operator ==(IEntity two, Entity<TIdentity> one)
+    {
+      return one == two;
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether two given entity instances are not equal.  For this comparison, entities
+    /// are considered equal if they are either reference equal, or identity equal.
+    /// </summary>
+    /// <param name="one">The first entity</param>
+    /// <param name="two">The second entity</param>
+    public static bool operator !=(Entity<TIdentity> one, IEntity two)
+    {
+      return !(one == two);
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether two given entity instances are not equal.  For this comparison, entities
+    /// are considered equal if they are either reference equal, or identity equal.
+    /// </summary>
+    /// <param name="one">The first entity</param>
+    /// <param name="two">The second entity</param>
+    public static bool operator !=(IEntity two, Entity<TIdentity> one)
+    {
+      return !(one == two);
+    }
+
+    #endregion
   }
 }
 
