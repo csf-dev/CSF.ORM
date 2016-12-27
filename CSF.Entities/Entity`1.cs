@@ -89,6 +89,25 @@ namespace CSF.Entities
     }
 
     /// <summary>
+    /// Gets a value indicating whether the current instance and a given other entity are identity-equal.
+    /// </summary>
+    /// <returns><c>true</c>, if the current instance is identity-equal to the given instance, <c>false</c> otherwise.</returns>
+    /// <param name="other">Other.</param>
+    public virtual bool IdentityEquals(IEntity other)
+    {
+      if(Object.ReferenceEquals(other, null))
+      {
+        return false;
+      }
+      if(Object.ReferenceEquals(this, other))
+      {
+        return true;
+      }
+
+      return Identity.Equals(this, other);
+    }
+
+    /// <summary>
     /// Serves as a hash function for a <see cref="T:CSF.Entities.Entity{TIdentity}"/> object.
     /// </summary>
     /// <returns>

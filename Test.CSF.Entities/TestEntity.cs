@@ -133,6 +133,108 @@ namespace Test.CSF.Entities
       Assert.AreEqual(typeof(int), result);
     }
 
+    [Test]
+    public void IdentityEquals_returns_true_for_reference_equal_entities()
+    {
+      // Arrange
+      var person = new Person() {
+        Identity = 5
+      };
+
+      // Act
+      var result = person.IdentityEquals(person);
+
+      // Assert
+      Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_true_for_identity_equal_entities()
+    {
+      // Arrange
+      var personOne = new Person() {
+        Identity = 5
+      };
+      var personTwo = new Person() {
+        Identity = 5
+      };
+
+      // Act
+      var result = personOne.IdentityEquals(personTwo);
+
+      // Assert
+      Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_true_for_identity_equal_entities_of_different_types()
+    {
+      // Arrange
+      var personOne = new Person() {
+        Identity = 5
+      };
+      var personTwo = new Customer() {
+        Identity = 5
+      };
+
+      // Act
+      var result = personOne.IdentityEquals(personTwo);
+
+      // Assert
+      Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_false_for_incompatible_entity_types()
+    {
+      // Arrange
+      var personOne = new Person() {
+        Identity = 5
+      };
+      var personTwo = new Animal() {
+        Identity = 5
+      };
+
+      // Act
+      var result = personOne.IdentityEquals(personTwo);
+
+      // Assert
+      Assert.IsFalse(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_false_for_different_identity_values()
+    {
+      // Arrange
+      var personOne = new Person() {
+        Identity = 5
+      };
+      var personTwo = new Person() {
+        Identity = 6
+      };
+
+      // Act
+      var result = personOne.IdentityEquals(personTwo);
+
+      // Assert
+      Assert.IsFalse(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_false_for_comparing_null()
+    {
+      // Arrange
+      var personOne = new Person() {
+        Identity = 5
+      };
+
+      // Act
+      var result = personOne.IdentityEquals(null);
+
+      // Assert
+      Assert.IsFalse(result);
+    }
+
     #endregion
   }
 }
