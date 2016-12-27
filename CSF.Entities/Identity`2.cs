@@ -172,7 +172,7 @@ namespace CSF.Entities
     /// </returns>
     public override string ToString ()
     {
-      return string.Format (Identity.IdentityFormat, this.EntityType.Name, this.Value.ToString());
+      return string.Format (Resources.Strings.IdentityFormat, this.EntityType.Name, this.Value.ToString());
     }
 
     #endregion

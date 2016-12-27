@@ -39,12 +39,6 @@ namespace CSF.Entities
   [Serializable]
   public abstract class Entity<TIdentity> : IEntity
   {
-    #region constants
-
-    private const string NO_IDENTITY = "(no identity)";
-
-    #endregion
-
     #region fields
     
     private int? _cachedHashCode;
@@ -139,8 +133,8 @@ namespace CSF.Entities
     /// </returns>
     public override string ToString()
     {
-      string identityPart = HasIdentity? IdentityValue.ToString() : NO_IDENTITY;
-      return String.Format(Identity.IdentityFormat, this.GetType().Name, identityPart);
+      string identityPart = HasIdentity? IdentityValue.ToString() : Resources.Strings.NoIdentity;
+      return String.Format(Resources.Strings.IdentityFormat, this.GetType().Name, identityPart);
     }
 
     #endregion

@@ -36,7 +36,6 @@ namespace CSF.Entities
     #region constants
 
     private static readonly Type OpenGenericIdentity = typeof(Identity<,>);
-    internal const string IdentityFormat = "[{0}#{1}]";
 
     #endregion
 
