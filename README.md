@@ -45,16 +45,15 @@ public class Animal : Entity<long> { /* Implementation omitted */ }
 Person myPerson = GetMyPerson();
 Employee myEmployee = GetMyEmployee();
 
-// If the two objects have the same identity,
-// because they share the same base entity, they
-// are considered identity-equal.
+// If the two objects have the same identity value then this will be true.
+// This is because they share the same base entity type.
 bool personAndEmployeeAreSame = myPerson.IdentityEquals(myEmployee);
 
 // Compared with:
 Animal myAnimal = GetMyAnimal();
 Employee myEmployee = GetMyEmployee();
 
-// This will NEVER be true, regardless of the identity values
+// This will NEVER be true, regardless of the identity values.
 bool animalAndEmployeeAreSame = myAnimal.IdentityEquals(myEmployee);
 
 ```
