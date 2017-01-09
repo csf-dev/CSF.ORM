@@ -34,12 +34,12 @@ IIdentity<Person> = person.GetIdentity();
 Represent inheritance (and allow equality comparisons across inherited identities) by marking them with an attribute:
 
 ```csharp
-public class Person : Entity<long> { /* Implementation omitted /* }
+public class Person : Entity<long> { /* Implementation omitted */ }
 
 [BaseType(typeof(Person))]
-public class Employee : Person { /* Implementation omitted /* }
+public class Employee : Person { /* Implementation omitted */ }
 
-public class Animal : Entity<long> { /* Implementation omitted /* }
+public class Animal : Entity<long> { /* Implementation omitted */ }
 
 // Then in a code block elsewhere:
 Person myPerson = GetMyPerson();
