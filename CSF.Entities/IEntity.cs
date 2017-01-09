@@ -37,20 +37,32 @@ namespace CSF.Entities
     #region properties
     
     /// <summary>
-    /// <para>Read-only.  Gets whether or not the current instance has an identity or not.</para>
+    /// <para>Gets a value which indicates whether or not the current instance has an identity.</para>
     /// </summary>
     bool HasIdentity { get; }
+
+    /// <summary>
+    /// Gets the identity value for the current instance.
+    /// </summary>
+    /// <value>The identity value.</value>
+    object IdentityValue { get; }
 
     #endregion
 
     #region methods
 
     /// <summary>
-    /// Gets the raw identity instance contained within the current entity, favour the extension method 'GetIdentity'
-    /// instead.
+    /// Gets the <c>System.Type</c> of the identity value represented by <see cref="Identity"/>.
     /// </summary>
-    /// <returns>The identity value.</returns>
-    IIdentity GetRawIdentity();
+    /// <returns>The identity type.</returns>
+    Type GetIdentityType();
+
+    /// <summary>
+    /// Gets a value indicating whether the current instance and a given other entity are identity-equal.
+    /// </summary>
+    /// <returns><c>true</c>, if the current instance is identity-equal to the given instance, <c>false</c> otherwise.</returns>
+    /// <param name="other">Other.</param>
+    bool IdentityEquals(IEntity other);
 
     #endregion
   }

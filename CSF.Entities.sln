@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Entities", "CSF.Entities\CSF.Entities.csproj", "{2EE2F785-5655-432E-9726-41349A4FA958}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.CSF.Entities", "Test.CSF.Entities\Test.CSF.Entities.csproj", "{45C0A71D-3FF3-46B1-8632-BC24431CD80C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EE2F785-5655-432E-9726-41349A4FA958}.Debug|x86.ActiveCfg = Debug|x86
+		{2EE2F785-5655-432E-9726-41349A4FA958}.Debug|x86.Build.0 = Debug|x86
+		{2EE2F785-5655-432E-9726-41349A4FA958}.Release|x86.ActiveCfg = Release|x86
+		{2EE2F785-5655-432E-9726-41349A4FA958}.Release|x86.Build.0 = Release|x86
+		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Debug|x86.Build.0 = Debug|Any CPU
+		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Release|x86.ActiveCfg = Release|Any CPU
+		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		version = 1.0.0
+	EndGlobalSection
+EndGlobal
