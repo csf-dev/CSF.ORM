@@ -52,12 +52,6 @@ namespace CSF.Entities.Resources {
             }
         }
         
-        internal static string TypeMustBeGenericEntityTypeFormat {
-            get {
-                return ResourceManager.GetString("TypeMustBeGenericEntityTypeFormat", resourceCulture);
-            }
-        }
-        
         internal static string MustNotBeDefaultForDataTypeFormat {
             get {
                 return ResourceManager.GetString("MustNotBeDefaultForDataTypeFormat", resourceCulture);

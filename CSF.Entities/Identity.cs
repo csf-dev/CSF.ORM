@@ -35,7 +35,7 @@ namespace CSF.Entities
   {
     #region constants
 
-    private static readonly Type OpenGenericIdentity = typeof(Identity<,>);
+    internal static readonly Type OpenGenericIdentity = typeof(Identity<,>);
 
     #endregion
 
@@ -93,20 +93,39 @@ namespace CSF.Entities
     /// <summary>
     /// Gets the identity type for a given entity type.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method makes two attempts to get the identity type for a given entity,
+    /// If that entity implements <see cref="T:Entity{TIdentity}"/> then the identity type is taken from the generic
+    /// type argument of the base type.
+    /// If the entity does not implement that generic base type, but has a public parameterless constructor, then
+    /// a new instance of the entity type is constructed and the <see cref="IEntity.GetIdentityType()"/> method is used
+    /// to get the identity type.
+    /// </para>
+    /// <para>
+    /// If neither of those two mechanisms are successful, then this method returns <c>null</c>.
+    /// </para>
+    /// </remarks>
     /// <returns>The identity type.</returns>
     /// <param name="entityType">Entity type.</param>
+    /// <exception cref="ArgumentException">If the entity type does not implement <see cref="IEntity"/>.</exception>
     public static Type GetIdentityType(Type entityType)
     {
-      var genericEntityType = Entity.GetGenericEntityType(entityType);
+      Entity.RequireEntityType(entityType);
 
-      if(genericEntityType == null)
+      Type output;
+
+      if(TryGetIdentityTypeFromGenericEntityType(entityType, out output))
       {
-        string message = String.Format(Resources.ExceptionMessages.TypeMustBeGenericEntityTypeFormat,
-                                       entityType.FullName);
-        throw new ArgumentException(message, nameof(entityType));
+        return output;
       }
 
-      return genericEntityType.GenericTypeArguments[0];
+      if(TryGetIdentityTypeFromNewInstance(entityType, out output))
+      {
+        return output;
+      }
+
+      return null;
     }
 
     /// <summary>
@@ -155,6 +174,35 @@ namespace CSF.Entities
                                        typeof(TIdentity).Name);
         throw new ArgumentException(message, nameof(value));
       }
+    }
+
+    private static bool TryGetIdentityTypeFromGenericEntityType(Type entityType, out Type identityType)
+    {
+      var genericEntityType = Entity.GetGenericEntityType(entityType);
+
+      if(genericEntityType == null)
+      {
+        identityType = null;
+        return false;
+      }
+
+      identityType = genericEntityType.GenericTypeArguments[0];
+      return true;
+    }
+
+    private static bool TryGetIdentityTypeFromNewInstance(Type entityType, out Type identityType)
+    {
+      var parameterlessCtor = entityType.GetConstructor(Type.EmptyTypes);
+
+      if(parameterlessCtor == null)
+      {
+        identityType = null;
+        return false;
+      }
+    
+      var instance = (IEntity) Activator.CreateInstance(entityType);
+      identityType = instance.GetIdentityType();
+      return true;
     }
 
     #endregion

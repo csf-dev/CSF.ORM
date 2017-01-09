@@ -37,7 +37,7 @@ namespace CSF.Entities
   {
     #region constants
 
-    private static readonly Type
+    internal static readonly Type
       EntityBaseType = typeof(IEntity),
       GenericEntityType = typeof(Entity<>);
 
