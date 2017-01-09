@@ -43,6 +43,8 @@
     <Compile Include="TestEntity.cs" />
     <Compile Include="TestIdentityStaticMethods.cs" />
     <Compile Include="TestIdentity.cs" />
+    <Compile Include="Stubs\NonGenericEntityType.cs" />
+    <Compile Include="Stubs\NonGenericEntityTypeWithNoParameterlessConstructor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

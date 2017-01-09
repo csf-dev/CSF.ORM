@@ -138,6 +138,33 @@ namespace Test.CSF.Entities
     }
 
     [Test]
+    public void GetIdentityType_with_nongeneric_entity_gets_correct_result()
+    {
+      // Act
+      var result = Identity.GetIdentityType(typeof(NonGenericEntityType));
+
+      // Assert
+      Assert.AreEqual(typeof(string), result);
+    }
+
+    [Test]
+    public void GetIdentityType_with_nongeneric_entity_that_has_no_parameterless_constructor_returns_null()
+    {
+      // Act
+      var result = Identity.GetIdentityType(typeof(NonGenericEntityTypeWithNoParameterlessConstructor));
+
+      // Assert
+      Assert.IsNull(result);
+    }
+
+    [Test]
+    public void GetIdentityType_throws_exception_for_non_entity_types()
+    {
+      // Act & assert
+      Assert.Throws<ArgumentException>(() => Identity.GetIdentityType(typeof(string)));
+    }
+
+    [Test]
     public void Create_generic_returns_correct_result()
     {
       // Act
