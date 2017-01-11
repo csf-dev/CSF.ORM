@@ -1,0 +1,138 @@
+﻿//
+// TestQueryExtensions.cs
+//
+// Author:
+//       Craig Fowler <craig@craigfowler.me.uk>
+//
+// Copyright (c) 2017 Craig Fowler
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+using System;
+using NUnit.Framework;
+using Moq;
+using CSF.Data.Entities;
+using CSF.Data;
+using CSF.Entities;
+using Test.CSF.Stubs;
+
+namespace Test.CSF
+{
+  [TestFixture]
+  public class TestQueryExtensions
+  {
+    #region fields
+
+    private Mock<IQuery> _query;
+
+    #endregion
+
+    #region setup
+
+    [SetUp]
+    public void Setup()
+    {
+      _query = new Mock<IQuery>();
+    }
+
+    #endregion
+
+    #region tests
+
+    [Test]
+    public void Theorise_does_not_use_query_for_null_identity()
+    {
+      // Arrange
+      IIdentity<Person> identity = null;
+
+      // Act
+      _query.Object.Theorise(identity);
+
+      // Assert
+      _query.Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Never());
+    }
+
+    [Test]
+    public void Theorise_uses_query_when_identity_is_not_null()
+    {
+      // Arrange
+      IIdentity<Person> identity = Identity.Create<Person>(5);
+
+      // Act
+      _query.Object.Theorise(identity);
+
+      // Assert
+      _query.Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Once());
+    }
+
+    [Test]
+    public void Theorise_returns_null_for_null_identity()
+    {
+      // Arrange
+      IIdentity<Person> identity = null;
+
+      // Act
+      var result = _query.Object.Theorise(identity);
+
+      // Assert
+      Assert.IsNull(result);
+    }
+
+    [Test]
+    public void Get_does_not_use_query_for_null_identity()
+    {
+      // Arrange
+      IIdentity<Person> identity = null;
+
+      // Act
+      _query.Object.Get(identity);
+
+      // Assert
+      _query.Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Never());
+    }
+
+    [Test]
+    public void Get_uses_query_when_identity_is_not_null()
+    {
+      // Arrange
+      IIdentity<Person> identity = Identity.Create<Person>(5);
+
+      // Act
+      _query.Object.Get(identity);
+
+      // Assert
+      _query.Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Once());
+    }
+
+    [Test]
+    public void Get_returns_null_for_null_identity()
+    {
+      // Arrange
+      IIdentity<Person> identity = null;
+
+      // Act
+      var result = _query.Object.Get(identity);
+
+      // Assert
+      Assert.IsNull(result);
+    }
+
+    #endregion
+  }
+}
+
