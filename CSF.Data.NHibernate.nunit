@@ -1,6 +1,0 @@
-﻿<NUnitProject>
-  <Settings activeconfig="Debug" />
-  <Config name="Debug" appbase="bin/Debug" binpathtype="Auto">
-    <assembly path="Test.CSF.Data.NHibernate.dll" />
-  </Config>
-</NUnitProject>
