@@ -32,7 +32,7 @@ namespace CSF.Data.NHibernate
     /// <returns><c>true</c> if the query would return any items; otherwise, <c>false</c>.</returns>
     /// <param name="query">The query.</param>
     /// <typeparam name="T">The queried type.</typeparam>
-    public static int AnyCount<T>(this IQueryable<T> query)
+    public static bool AnyCount<T>(this IQueryable<T> query)
     {
       if(query == null)
       {
