@@ -32,38 +32,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit">
-      <HintPath>..\packages\NUnit.3.2.0\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi">
-      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="..\Common\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="TestISessionExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\CSF.Data.NHibernate\CSF.Data.NHibernate.csproj">
       <Project>{18466B45-F3E5-46D9-808D-EA2896CC7ACD}</Project>
       <Name>CSF.Data.NHibernate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CSF.Core\CSF\CSF.csproj">
-      <Project>{E563D7BC-1AB1-4AFB-8533-51315437C6E6}</Project>
-      <Name>CSF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

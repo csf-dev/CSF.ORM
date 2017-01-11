@@ -39,36 +39,28 @@
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentNHibernate">
-      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi">
+    <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.1.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="CSF.Data">
+      <HintPath>..\packages\CSF.Data.1.0.0\lib\net45\CSF.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MonoNHibernateSqlLiteDriver.cs" />
-    <Compile Include="SQLiteConfigurationExtensions.cs" />
-    <Compile Include="..\Common\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="ISessionExtensions.cs" />
-    <Compile Include="FractionMap.cs" />
-    <Compile Include="NHibernateQuery`1.cs" />
     <Compile Include="NHibernateQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\CSF.Core\CSF\CSF.csproj">
-      <Project>{E563D7BC-1AB1-4AFB-8533-51315437C6E6}</Project>
-      <Name>CSF</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="SQLiteConfigurationExtensions.cs" />
+    <None Include="FractionMap.cs" />
   </ItemGroup>
 </Project>
