@@ -48,11 +48,15 @@
     <Reference Include="CSF.Data">
       <HintPath>..\packages\CSF.Data.1.0.0\lib\net45\CSF.Data.dll</HintPath>
     </Reference>
+    <Reference Include="CSF.Utils">
+      <HintPath>..\packages\CSF.Utils.6.0.0\lib\net45\CSF.Utils.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MonoNHibernateSqlLiteDriver.cs" />
     <Compile Include="NHibernateQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FractionMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -61,6 +65,5 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="SQLiteConfigurationExtensions.cs" />
-    <None Include="FractionMap.cs" />
   </ItemGroup>
 </Project>

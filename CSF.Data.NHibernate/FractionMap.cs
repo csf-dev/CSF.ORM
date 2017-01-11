@@ -1,24 +1,22 @@
 using System;
 using CSF;
-using FluentNHibernate.Mapping;
+using NHibernate.Mapping.ByCode.Conformist;
 
 namespace CSF.Data.NHibernate
 {
   /// <summary>
-  /// Pre-created FluentNHibernate component mapping for the <see cref="Fraction"/> type.
+  /// Pre-created component mapping for the <see cref="Fraction"/> type.
   /// </summary>
-  public class FractionMap : ComponentMap<Fraction>
+  public class FractionMap : ComponentMapping<Fraction>
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="CSF.Data.NHibernate.FractionMap"/> class.
     /// </summary>
     public FractionMap ()
     {
-      Map(x => x.Numerator)
-        .Column("numerator");
+      Property(x => x.Numerator);
 
-      Map(x => x.Denominator)
-        .Column("denominator");
+      Property(x => x.Denominator);
     }
   }
 }
