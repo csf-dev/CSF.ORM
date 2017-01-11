@@ -33,6 +33,8 @@ namespace CSF.Data.Entities
   /// </summary>
   public static class QueryExtensions
   {
+    #region extension methods
+
     /// <summary>
     /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
     /// </summary>
@@ -47,25 +49,10 @@ namespace CSF.Data.Entities
     /// <param name="identity">An identity instance.</param>
     /// <typeparam name="TEntity">The type of object to retrieve.</typeparam>
     public static TEntity Theorise<TEntity>(this IQuery query,
-                                            IIdentity<TEntity> identity) where TEntity : class,IEntity
+                                            IIdentity<TEntity> identity)
+      where TEntity : class,IEntity
     {
-      if(query == null)
-      {
-        throw new ArgumentNullException(nameof(query));
-      }
-
-      TEntity output;
-
-      if(identity == null || identity.Value == null)
-      {
-        output = null;
-      }
-      else
-      {
-        output = query.Theorise<TEntity>(identity.Value);
-      }
-
-      return output;
+      return GetSingleInstance<TEntity>(query, identity, (q, i) => q.Theorise<TEntity>(i.Value));
     }
 
     /// <summary>
@@ -80,7 +67,28 @@ namespace CSF.Data.Entities
     /// <param name="identity">An identity instance.</param>
     /// <typeparam name="TEntity">The type of object to retrieve.</typeparam>
     public static TEntity Get<TEntity>(this IQuery query,
-                                       IIdentity<TEntity> identity) where TEntity : class,IEntity
+                                       IIdentity<TEntity> identity)
+      where TEntity : class,IEntity
+    {
+      return GetSingleInstance<TEntity>(query, identity, (q, i) => q.Get<TEntity>(i.Value));
+    }
+
+    #endregion
+
+    #region methods
+
+    /// <summary>
+    /// Gets a single item from a query, using a getter delegate.
+    /// </summary>
+    /// <returns>The entity instance.</returns>
+    /// <param name="query">The query.</param>
+    /// <param name="identity">The identity.</param>
+    /// <param name="getter">The getter delete.</param>
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    private static TEntity GetSingleInstance<TEntity>(IQuery query,
+                                                      IIdentity<TEntity> identity,
+                                                      Func<IQuery,IIdentity<TEntity>,TEntity> getter)
+      where TEntity : class,IEntity
     {
       if(query == null)
       {
@@ -95,11 +103,13 @@ namespace CSF.Data.Entities
       }
       else
       {
-        output = query.Get<TEntity>(identity.Value);
+        output = getter(query, identity);
       }
 
       return output;
     }
+
+    #endregion
   }
 }
 
