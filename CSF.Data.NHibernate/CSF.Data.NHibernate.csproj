@@ -58,10 +58,10 @@
     <Compile Include="MonoNHibernateSqlLiteDriver.cs" />
     <Compile Include="NHibernateQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FractionMap.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="DbIntegrationConfigurationPropertiesExtensions.cs" />
     <Compile Include="SessionExtensions.cs" />
+    <Compile Include="FractionComponentMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

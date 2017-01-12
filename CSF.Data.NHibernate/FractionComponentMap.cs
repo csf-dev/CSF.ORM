@@ -7,12 +7,12 @@ namespace CSF.Data.NHibernate
   /// <summary>
   /// Pre-created component mapping for the <see cref="Fraction"/> type.
   /// </summary>
-  public class FractionMap : ComponentMapping<Fraction>
+  public class FractionComponentMap : ComponentMapping<Fraction>
   {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CSF.Data.NHibernate.FractionMap"/> class.
+    /// Initializes a new instance of the <see cref="CSF.Data.NHibernate.FractionComponentMap"/> class.
     /// </summary>
-    public FractionMap ()
+    public FractionComponentMap ()
     {
       Property(x => x.Numerator);
 
