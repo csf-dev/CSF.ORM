@@ -62,6 +62,7 @@
     <Compile Include="DbIntegrationConfigurationPropertiesExtensions.cs" />
     <Compile Include="SessionExtensions.cs" />
     <Compile Include="FractionComponentMap.cs" />
+    <Compile Include="BinaryGuidType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
