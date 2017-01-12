@@ -172,34 +172,12 @@ namespace CSF.Entities
     }
 
     /// <summary>
-    /// Gets a value indicating whether two given entity instances are equal.  For this comparison, entities
-    /// are considered equal if they are either reference equal, or identity equal.
-    /// </summary>
-    /// <param name="one">The first entity</param>
-    /// <param name="two">The second entity</param>
-    public static bool operator ==(IEntity two, Entity<TIdentity> one)
-    {
-      return one == two;
-    }
-
-    /// <summary>
     /// Gets a value indicating whether two given entity instances are not equal.  For this comparison, entities
     /// are considered equal if they are either reference equal, or identity equal.
     /// </summary>
     /// <param name="one">The first entity</param>
     /// <param name="two">The second entity</param>
     public static bool operator !=(Entity<TIdentity> one, IEntity two)
-    {
-      return !(one == two);
-    }
-
-    /// <summary>
-    /// Gets a value indicating whether two given entity instances are not equal.  For this comparison, entities
-    /// are considered equal if they are either reference equal, or identity equal.
-    /// </summary>
-    /// <param name="one">The first entity</param>
-    /// <param name="two">The second entity</param>
-    public static bool operator !=(IEntity two, Entity<TIdentity> one)
     {
       return !(one == two);
     }
