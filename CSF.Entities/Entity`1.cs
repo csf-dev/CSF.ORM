@@ -168,7 +168,7 @@ namespace CSF.Entities
         return false;
       }
 
-      return one.IdentityEquals(two);
+      return Identity.Equals(one, two);
     }
 
     /// <summary>
