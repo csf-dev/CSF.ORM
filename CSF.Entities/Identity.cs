@@ -92,7 +92,13 @@ namespace CSF.Entities
       var firstIdentity = first.GetIdentity();
       var secondIdentity = second.GetIdentity();
 
-      return firstIdentity.Equals(secondIdentity);
+      if(firstIdentity == null
+         || secondIdentity == null)
+      {
+        return false;
+      }
+
+      return Object.Equals(firstIdentity, secondIdentity);
     }
 
     /// <summary>
