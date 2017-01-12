@@ -5,3 +5,4 @@ using System;
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyTitle("CSF.Data.NHibernate")]
 [assembly: AssemblyDescription("Useful types specific to making use of NHibernate")]
+[assembly: InternalsVisibleTo("Test.CSF.Data.NHibernate")]
