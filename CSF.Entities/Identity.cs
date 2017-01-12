@@ -58,6 +58,11 @@ namespace CSF.Entities
         throw new ArgumentNullException(nameof(identityType));
       }
 
+      if(Object.Equals(GetDefaultValue(identityType), identityValue))
+      {
+        return null;
+      }
+
       var closedIdentityType = OpenGenericIdentity.MakeGenericType(identityType, entityType);
       return (IIdentity) Activator.CreateInstance(closedIdentityType, new [] { identityValue });
     }
@@ -203,6 +208,26 @@ namespace CSF.Entities
       var instance = (IEntity) Activator.CreateInstance(entityType);
       identityType = instance.GetIdentityType();
       return true;
+    }
+
+    /// <summary>
+    /// Gets the default value for a given <c>System.Type</c>.
+    /// </summary>
+    /// <returns>The default value.</returns>
+    /// <param name="type">Type.</param>
+    private static object GetDefaultValue(Type type)
+    {
+      if(type == null)
+      {
+        throw new ArgumentNullException(nameof(type));
+      }
+
+      if(type.IsValueType)
+      {
+        return Activator.CreateInstance(type);
+      }
+
+      return null;
     }
 
     #endregion
