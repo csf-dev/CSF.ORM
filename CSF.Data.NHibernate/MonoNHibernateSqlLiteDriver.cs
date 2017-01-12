@@ -1,6 +1,5 @@
 using System;
 using NHibernate.Driver;
-using Mono.Data.Sqlite;
 
 namespace CSF.Data.NHibernate
 {
@@ -16,9 +15,10 @@ namespace CSF.Data.NHibernate
   {
     #region constants
 
-    private static readonly Type
-      CONNECTION_TYPE                   = typeof(SqliteConnection),
-      COMMAND_TYPE                      = typeof(SqliteCommand);
+    private const string
+      NAMESPACE         = "Mono.Data.Sqlite",
+      CONNECTION_TYPE   = "Mono.Data.Sqlite.SqliteConnection",
+      COMMAND_TYPE      = "Mono.Data.Sqlite.SqliteCommand";
 
     #endregion
 
@@ -78,10 +78,7 @@ namespace CSF.Data.NHibernate
     /// <summary>
     /// Initializes a new instance of the <see cref="CSF.Data.NHibernate.MonoNHibernateSqlLiteDriver"/> class.
     /// </summary>
-    public MonoNHibernateSqlLiteDriver () : base(CONNECTION_TYPE.Namespace,
-                                                 CONNECTION_TYPE.Namespace,
-                                                 CONNECTION_TYPE.FullName,
-                                                 COMMAND_TYPE.FullName)
+    public MonoNHibernateSqlLiteDriver () : base(NAMESPACE, NAMESPACE, CONNECTION_TYPE, COMMAND_TYPE)
     {
     }
 
