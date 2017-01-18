@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using NHibernate.Linq;
+using System.Collections.Generic;
 
 namespace CSF.Data.NHibernate
 {
@@ -76,6 +78,162 @@ namespace CSF.Data.NHibernate
       var count = (predicate != null)? query.Count(predicate) : query.Count();
 
       return count > 0;
+    }
+
+    public static IFetchRequest<TOriginating, TRelated> Fetch<TOriginating, TRelated>(this IQueryable<TOriginating> query,
+                                                                                      Expression<Func<TOriginating, TRelated>> relatedObjectSelector)
+    {
+      IFetchRequest<TOriginating, TRelated> output;
+
+      if(query != null
+         && query.Provider is DefaultQueryProvider)
+      {
+        var trueQuery = GetTrueQuery(query);
+        var fetch = EagerFetchingExtensionMethods.Fetch(trueQuery, relatedObjectSelector);
+        output = new NHibernateFetchRequestWrapper<TOriginating, TRelated>(fetch);
+      }
+      else
+      {
+        output = new FetchRequestWrapper<TOriginating, TRelated>(query);
+      }
+
+      return output;
+    }
+
+    public static IFetchRequest<TOriginating, TRelated> FetchMany<TOriginating, TRelated>(this IQueryable<TOriginating> query,
+                                                                                              Expression<Func<TOriginating, IEnumerable<TRelated>>> relatedObjectSelector)
+    {
+      IFetchRequest<TOriginating, TRelated> output;
+
+      if(query != null
+               && query.Provider is DefaultQueryProvider)
+      {
+        var trueQuery = GetTrueQuery(query);
+        var fetch = EagerFetchingExtensionMethods.FetchMany(trueQuery, relatedObjectSelector);
+        output = new NHibernateFetchRequestWrapper<TOriginating, TRelated>(fetch);
+      }
+      else
+      {
+        output = new FetchRequestWrapper<TOriginating, TRelated>(query);
+      }
+
+      return output;
+    }
+
+    public static IFetchRequest<TQueried, TRelated> ThenFetch<TQueried, TFetch, TRelated>(this IFetchRequest<TQueried, TFetch> query,
+                                                                                              Expression<Func<TFetch, TRelated>> relatedObjectSelector)
+    {
+      IFetchRequest<TQueried, TRelated> output;
+
+      if(query != null
+               && query.Provider is DefaultQueryProvider)
+      {
+        var parentFetch = GetFetchRequest<TQueried,TFetch>(query);
+        var fetch = EagerFetchingExtensionMethods.ThenFetch(parentFetch, relatedObjectSelector);
+        output = new NHibernateFetchRequestWrapper<TQueried, TRelated>(fetch);
+      }
+      else
+      {
+        output = new FetchRequestWrapper<TQueried, TRelated>(query);
+      }
+
+      return output;
+    }
+
+    public static IFetchRequest<TQueried, TRelated> ThenFetchMany<TQueried, TFetch, TRelated>(this IFetchRequest<TQueried, TFetch> query,
+                                                                                                  Expression<Func<TFetch, IEnumerable<TRelated>>> relatedObjectSelector)
+    {
+      IFetchRequest<TQueried, TRelated> output;
+
+      if(query != null
+               && query.Provider is DefaultQueryProvider)
+      {
+        var parentFetch = GetFetchRequest<TQueried,TFetch>(query);
+        var fetch = EagerFetchingExtensionMethods.ThenFetchMany(parentFetch, relatedObjectSelector);
+        output = new NHibernateFetchRequestWrapper<TQueried, TRelated>(fetch);
+      }
+      else
+      {
+        output = new FetchRequestWrapper<TQueried, TRelated>(query);
+      }
+
+      return output;
+    }
+
+    public static IEnumerable<TQueried> ToFuture<TQueried>(this IQueryable<TQueried> query)
+    {
+      IEnumerable<TQueried> output;
+
+      if(query != null && query.Provider is DefaultQueryProvider)
+      {
+        output = LinqExtensionMethods.ToFuture(query);
+      }
+      else
+      {
+        output = query.AsEnumerable();
+      }
+
+      return output;
+    }
+
+    public static IFutureValue<TQueried> ToFutureValue<TQueried>(this IQueryable<TQueried> query)
+    {
+      NHibernate.IFutureValue<TQueried> output;
+
+      if(query != null && query.Provider is DefaultQueryProvider)
+      {
+        output = new FutureValueWrapper<TQueried>(() => LinqExtensionMethods.ToFutureValue(query).Value);
+      }
+      else
+      {
+        output = new EnumerableFutureValueWrapper<TQueried>(() => query.AsEnumerable());
+      }
+
+      return output;
+    }
+
+    public static IFutureValue<TValue> ToFutureValue<TQueried,TValue>(this IQueryable<TQueried> query,
+                                                                        Expression<Func<IQueryable<TQueried>,TValue>> expression)
+    {
+      IFutureValue<TValue> output;
+
+      if(query != null && query.Provider is DefaultQueryProvider)
+      {
+        output = new FutureValueWrapper<TValue>(() => LinqExtensionMethods.ToFutureValue(query,expression).Value);
+      }
+      else
+      {
+        output = new FutureValueWrapper<TValue>(() => expression.Compile().Invoke(query));
+      }
+
+      return output;
+    }
+
+
+    #endregion
+
+    #region methods
+
+    private static IQueryable<TQueried> GetTrueQuery<TQueried>(IQueryable<TQueried> query)
+    {
+      if(query == null)
+      {
+        throw new ArgumentNullException(nameof(query));
+      }
+
+      var request = query as IFetchRequest<TQueried>;
+      return (request != null)? request.GetOriginalQuery() : query;
+    }
+
+    private static INhFetchRequest<TQueried,TFetch> GetFetchRequest<TQueried,TFetch>(IQueryable<TQueried> query)
+    {
+      if(query == null)
+      {
+        throw new ArgumentNullException(nameof(query));
+      }
+
+      var output = GetTrueQuery(query);
+      return output as INhFetchRequest<TQueried,TFetch>;
     }
 
     #endregion

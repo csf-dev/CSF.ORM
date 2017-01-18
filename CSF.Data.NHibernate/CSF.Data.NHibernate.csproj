@@ -64,6 +64,12 @@
     <Compile Include="FractionComponentMap.cs" />
     <Compile Include="BinaryGuidType.cs" />
     <Compile Include="FractionType.cs" />
+    <Compile Include="IFetchRequest.cs" />
+    <Compile Include="FetchRequestWrapper.cs" />
+    <Compile Include="NHibernateFetchRequestWrapper.cs" />
+    <Compile Include="IFutureValue.cs" />
+    <Compile Include="FutureValueWrapper.cs" />
+    <Compile Include="EnumerableFutureValueWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
