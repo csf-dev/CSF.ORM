@@ -17,6 +17,7 @@ namespace CSF.Data.NHibernate
 
     private const string
       NAMESPACE         = "Mono.Data.Sqlite",
+      ASSEMBLY_NAME     = "Mono.Data.Sqlite, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756",
       CONNECTION_TYPE   = "Mono.Data.Sqlite.SqliteConnection",
       COMMAND_TYPE      = "Mono.Data.Sqlite.SqliteCommand";
 
@@ -78,7 +79,7 @@ namespace CSF.Data.NHibernate
     /// <summary>
     /// Initializes a new instance of the <see cref="CSF.Data.NHibernate.MonoNHibernateSqlLiteDriver"/> class.
     /// </summary>
-    public MonoNHibernateSqlLiteDriver () : base(NAMESPACE, NAMESPACE, CONNECTION_TYPE, COMMAND_TYPE)
+    public MonoNHibernateSqlLiteDriver () : base(NAMESPACE, ASSEMBLY_NAME, CONNECTION_TYPE, COMMAND_TYPE)
     {
     }
 
