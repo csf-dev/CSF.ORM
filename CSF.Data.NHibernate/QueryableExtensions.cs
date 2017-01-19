@@ -80,6 +80,19 @@ namespace CSF.Data.NHibernate
       return count > 0;
     }
 
+    /// <summary>
+    /// Provides a wrapper for NHibernate's Linq <c>Fetch</c> functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method deals gracefully with scenarios in which the queryable instance is not an NHibernate queryable,
+    /// and becomes a no-op under those situations.
+    /// </para>
+    /// </remarks>
+    /// <param name="query">The source query.</param>
+    /// <param name="relatedObjectSelector">Related object selector.</param>
+    /// <typeparam name="TOriginating">The queried type.</typeparam>
+    /// <typeparam name="TRelated">The related object type.</typeparam>
     public static IFetchRequest<TOriginating, TRelated> Fetch<TOriginating, TRelated>(this IQueryable<TOriginating> query,
                                                                                       Expression<Func<TOriginating, TRelated>> relatedObjectSelector)
     {
@@ -100,6 +113,19 @@ namespace CSF.Data.NHibernate
       return output;
     }
 
+    /// <summary>
+    /// Provides a wrapper for NHibernate's Linq <c>FetchMany</c> functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method deals gracefully with scenarios in which the queryable instance is not an NHibernate queryable,
+    /// and becomes a no-op under those situations.
+    /// </para>
+    /// </remarks>
+    /// <param name="query">The source query.</param>
+    /// <param name="relatedObjectSelector">Related object selector.</param>
+    /// <typeparam name="TOriginating">The queried type.</typeparam>
+    /// <typeparam name="TRelated">The related object type.</typeparam>
     public static IFetchRequest<TOriginating, TRelated> FetchMany<TOriginating, TRelated>(this IQueryable<TOriginating> query,
                                                                                               Expression<Func<TOriginating, IEnumerable<TRelated>>> relatedObjectSelector)
     {
@@ -120,6 +146,20 @@ namespace CSF.Data.NHibernate
       return output;
     }
 
+    /// <summary>
+    /// Provides a wrapper for NHibernate's Linq <c>FetchMany</c> functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method deals gracefully with scenarios in which the queryable instance is not an NHibernate queryable,
+    /// and becomes a no-op under those situations.
+    /// </para>
+    /// </remarks>
+    /// <param name="query">The source query.</param>
+    /// <param name="relatedObjectSelector">Related object selector.</param>
+    /// <typeparam name="TQueried">The queried type.</typeparam>
+    /// <typeparam name="TFetch">The previously-fetched type.</typeparam>
+    /// <typeparam name="TRelated">The related object type.</typeparam>
     public static IFetchRequest<TQueried, TRelated> ThenFetch<TQueried, TFetch, TRelated>(this IFetchRequest<TQueried, TFetch> query,
                                                                                               Expression<Func<TFetch, TRelated>> relatedObjectSelector)
     {
@@ -140,6 +180,20 @@ namespace CSF.Data.NHibernate
       return output;
     }
 
+    /// <summary>
+    /// Provides a wrapper for NHibernate's Linq <c>ThenFetchMany</c> functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method deals gracefully with scenarios in which the queryable instance is not an NHibernate queryable,
+    /// and becomes a no-op under those situations.
+    /// </para>
+    /// </remarks>
+    /// <param name="query">The source query.</param>
+    /// <param name="relatedObjectSelector">Related object selector.</param>
+    /// <typeparam name="TQueried">The queried type.</typeparam>
+    /// <typeparam name="TFetch">The previously-fetched type.</typeparam>
+    /// <typeparam name="TRelated">The related object type.</typeparam>
     public static IFetchRequest<TQueried, TRelated> ThenFetchMany<TQueried, TFetch, TRelated>(this IFetchRequest<TQueried, TFetch> query,
                                                                                                   Expression<Func<TFetch, IEnumerable<TRelated>>> relatedObjectSelector)
     {
@@ -160,6 +214,18 @@ namespace CSF.Data.NHibernate
       return output;
     }
 
+    /// <summary>
+    /// Provides a wrapper for NHibernate's Linq <c>ToFuture</c> functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method deals gracefully with scenarios in which the queryable instance is not an NHibernate queryable,
+    /// and becomes a no-op under those situations.
+    /// </para>
+    /// </remarks>
+    /// <returns>An enumerable object which represents a future query.</returns>
+    /// <param name="query">The source query.</param>
+    /// <typeparam name="TQueried">The queried type.</typeparam>
     public static IEnumerable<TQueried> ToFuture<TQueried>(this IQueryable<TQueried> query)
     {
       IEnumerable<TQueried> output;
@@ -176,6 +242,18 @@ namespace CSF.Data.NHibernate
       return output;
     }
 
+    /// <summary>
+    /// Provides a wrapper for NHibernate's Linq <c>ToFutureValue</c> functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method deals gracefully with scenarios in which the queryable instance is not an NHibernate queryable,
+    /// and becomes a no-op under those situations.
+    /// </para>
+    /// </remarks>
+    /// <returns>A future value object.</returns>
+    /// <param name="query">The source query.</param>
+    /// <typeparam name="TQueried">The queried type.</typeparam>
     public static IFutureValue<TQueried> ToFutureValue<TQueried>(this IQueryable<TQueried> query)
     {
       NHibernate.IFutureValue<TQueried> output;
@@ -192,6 +270,20 @@ namespace CSF.Data.NHibernate
       return output;
     }
 
+    /// <summary>
+    /// Provides a wrapper for NHibernate's Linq <c>ToFutureValue</c> functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method deals gracefully with scenarios in which the queryable instance is not an NHibernate queryable,
+    /// and becomes a no-op under those situations.
+    /// </para>
+    /// </remarks>
+    /// <returns>A future value object.</returns>
+    /// <param name="query">The source query.</param>
+    /// <param name="expression">A value selector, which creates the future value.</param>
+    /// <typeparam name="TQueried">The queried type.</typeparam>
+    /// <typeparam name="TValue">The value type.</typeparam>
     public static IFutureValue<TValue> ToFutureValue<TQueried,TValue>(this IQueryable<TQueried> query,
                                                                         Expression<Func<IQueryable<TQueried>,TValue>> expression)
     {

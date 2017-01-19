@@ -44,6 +44,23 @@
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.4.1.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="CSF.Entities">
+      <HintPath>..\packages\CSF.Entities.1.0.0\lib\net45\CSF.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="CSF.Data.Entities">
+      <HintPath>..\packages\CSF.Data.Entities.1.0.0\lib\net45\CSF.Data.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.3.50.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="CSF.Data">
+      <HintPath>..\packages\CSF.Data.1.0.0\lib\net45\CSF.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -54,9 +71,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestQueryableExtensions.cs" />
     <Compile Include="TestDbIntegrationConfigurationPropertiesExtensions.cs" />
+    <Compile Include="Entities\Store.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\Sale.cs" />
+    <Compile Include="Entities\InventoryItem.cs" />
+    <Compile Include="Mappings\CustomerMap.cs" />
+    <Compile Include="Entities\EntityBase.cs" />
+    <Compile Include="Mappings\InventoryItemMap.cs" />
+    <Compile Include="Mappings\ProductMap.cs" />
+    <Compile Include="Mappings\SaleMap.cs" />
+    <Compile Include="Mappings\StoreMap.cs" />
+    <Compile Include="Mappings\IMappingNamespace.cs" />
+    <Compile Include="TestNHibernateIntegration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\NHibernateQueryingModel.cs" />
+    <Compile Include="Config\NHibernateProvider.cs" />
+    <Compile Include="Config\LoggingInterceptor.cs" />
+    <Compile Include="Entities\Batch.cs" />
+    <Compile Include="Mappings\BatchMap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Config\" />
+    <Folder Include="Properties\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
