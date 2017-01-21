@@ -3,6 +3,7 @@ using NHibernate;
 using Test.CSF.Data.NHibernate.Entities;
 using Ploeh.AutoFixture;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Test.CSF.Data.NHibernate.Models
 {
@@ -18,41 +19,50 @@ namespace Test.CSF.Data.NHibernate.Models
 
     public void CreateModel(ISession session)
     {
-      var stores = _autoFixture
-        .Build<Store>()
-        .Without(x => x.Identity)
-        .CreateMany(3)
-        .ToArray();
+      var stores = CreateStores();
 
-      var inventories = _autoFixture
-        .Build<InventoryItem>()
-        .Without(x => x.Identity)
-        .Without(x => x.Store)
-        .Without(x => x.Product)
-        .Do(x => {
-          var batches = _autoFixture
-            .Build<Batch>()
-            .Without(b => b.Identity)
-            .Without(b => b.Item)
-            .Do(b => b.Item = x)
-            .CreateMany(2);
-
-          x.Batches.UnionWith(batches);
-
-          x.Product = _autoFixture
-            .Build<Product>()
-            .Without(p => p.Identity)
-            .Create();
-          x.Store = stores[0];
-        })
-        .CreateMany(9);
-
-      stores[0].Inventory.UnionWith(inventories);
+      CreateInventoryItems(stores[0]);
 
       foreach(var store in stores)
       {
         session.Save(store);
       }
+    }
+
+    public Store[] CreateStores()
+    {
+      return _autoFixture
+        .Build<Store>()
+        .CreateMany(3)
+        .ToArray();
+    }
+
+    public InventoryItem[] CreateInventoryItems(Store forStore)
+    {
+      var output = _autoFixture
+        .Build<InventoryItem>()
+        .Without(x => x.Store)
+        .Without(x => x.Product)
+        .Do(x => {
+        var batches = _autoFixture
+          .Build<Batch>()
+          .Without(b => b.Item)
+          .Do(b => b.Item = x)
+          .CreateMany(2);
+
+        x.Batches.UnionWith(batches);
+
+        x.Product = _autoFixture
+          .Build<Product>()
+          .Create();
+        x.Store = forStore;
+      })
+        .CreateMany(9)
+        .ToArray();
+
+      forStore.Inventory.UnionWith(output);
+
+      return output;
     }
 
     #endregion

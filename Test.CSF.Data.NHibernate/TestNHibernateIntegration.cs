@@ -63,6 +63,26 @@ namespace Test.CSF.Data.NHibernate
     #region tests
 
     [Test]
+    public void AnyCount_returns_true_for_results()
+    {
+      // Act
+      var result = _query.Query<Store>().AnyCount();
+
+      // Assert
+      Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void AnyCount_returns_false_for_empty_set()
+    {
+      // Act
+      var result = _query.Query<Store>().Where(x => x.Name == "Non-matching name").AnyCount();
+
+      // Assert
+      Assert.IsFalse(result);
+    }
+
+    [Test]
     public void FetchMany_does_not_raise_exception()
     {
       // Arrange

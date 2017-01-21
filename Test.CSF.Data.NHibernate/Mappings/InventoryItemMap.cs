@@ -10,7 +10,7 @@ namespace Test.CSF.Data.NHibernate.Mappings
     public InventoryItemMap()
     {
       Id(x => x.Identity, m => {
-        m.Generator(Generators.Native);
+        m.Generator(Generators.Assigned);
       });
 
       Property(x => x.Quantity, m => {
