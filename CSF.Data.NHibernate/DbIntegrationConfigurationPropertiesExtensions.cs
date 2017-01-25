@@ -10,6 +10,12 @@ namespace CSF.Data.NHibernate
   /// </summary>
   public static class DbIntegrationConfigurationPropertiesExtensions
   {
+    #region fields
+
+    private static object _syncRoot;
+
+    #endregion
+
     #region extension methods
 
     /// <summary>
@@ -64,12 +70,38 @@ namespace CSF.Data.NHibernate
 
       if(mono)
       {
+        ConfigureMonoSqliteAssembly();
         dbConfig.Driver<MonoNHibernateSqlLiteDriver>();
       }
       else
       {
         dbConfig.Driver<SQLite20Driver>();
       }
+    }
+
+    private static void ConfigureMonoSqliteAssembly()
+    {
+      lock(_syncRoot)
+      {
+        if(MonoNHibernateSqlLiteDriver.MonoDataSqliteAssembly == null)
+        {
+          var finder = new MonoSqliteAssemblyFinder();
+          var assembly = finder.Find();
+          MonoNHibernateSqlLiteDriver.MonoDataSqliteAssembly = assembly;
+        }
+      }
+    }
+
+    #endregion
+
+    #region constructor
+
+    /// <summary>
+    /// Initializes the <see cref="CSF.Data.NHibernate.DbIntegrationConfigurationPropertiesExtensions"/> class.
+    /// </summary>
+    static DbIntegrationConfigurationPropertiesExtensions()
+    {
+      _syncRoot = new object();
     }
 
     #endregion

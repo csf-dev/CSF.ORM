@@ -61,6 +61,9 @@
     <Reference Include="CSF.Data">
       <HintPath>..\packages\CSF.Data.1.0.0\lib\net45\CSF.Data.dll</HintPath>
     </Reference>
+    <Reference Include="CSF.Reflection">
+      <HintPath>..\packages\CSF.Reflection.1.0.1\lib\net45\CSF.Reflection.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -95,6 +98,7 @@
     <Compile Include="Config\LoggingInterceptor.cs" />
     <Compile Include="Entities\Batch.cs" />
     <Compile Include="Mappings\BatchMap.cs" />
+    <Compile Include="TestMonoSqliteAssemblyFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
