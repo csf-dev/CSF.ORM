@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>CSF.Data.NHibernate</id>
+    <version>5.0.0</version>
+    <title>CSF.Data.NHibernate</title>
+    <authors>CSF Software Ltd</authors>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>http://csf-dev.github.io/CSF.Entities/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Useful types related to the use of the NHibernate ORM.</description>
+    <copyright>Copyright 2017</copyright>
+  </metadata>
+  <files>
+    <file src="bin/Release/CSF.Data.NHibernate.dll" target="lib/net45" />
+    <file src="bin/Release/CSF.Data.NHibernate.xml" target="lib/net45" />
+  </files>
+</package>
