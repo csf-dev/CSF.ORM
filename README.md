@@ -34,27 +34,26 @@ IIdentity<Person> = person.GetIdentity();
 Represent inheritance (and allow equality comparisons across inherited identities) by marking them with an attribute:
 
 ```csharp
-public class Person : Entity<long> { /* Implementation omitted /* }
+public class Person : Entity<long> { /* Implementation omitted */ }
 
 [BaseType(typeof(Person))]
-public class Employee : Person { /* Implementation omitted /* }
+public class Employee : Person { /* Implementation omitted */ }
 
-public class Animal : Entity<long> { /* Implementation omitted /* }
+public class Animal : Entity<long> { /* Implementation omitted */ }
 
 // Then in a code block elsewhere:
 Person myPerson = GetMyPerson();
 Employee myEmployee = GetMyEmployee();
 
-// If the two objects have the same identity,
-// because they share the same base entity, they
-// are considered identity-equal.
+// If the two objects have the same identity value then this will be true.
+// This is because they share the same base entity type.
 bool personAndEmployeeAreSame = myPerson.IdentityEquals(myEmployee);
 
 // Compared with:
 Animal myAnimal = GetMyAnimal();
 Employee myEmployee = GetMyEmployee();
 
-// This will NEVER be true, regardless of the identity values
+// This will NEVER be true, regardless of the identity values.
 bool animalAndEmployeeAreSame = myAnimal.IdentityEquals(myEmployee);
 
 ```

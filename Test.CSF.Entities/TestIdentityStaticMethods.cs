@@ -23,6 +23,16 @@ namespace Test.CSF.Entities
     }
 
     [Test]
+    public void Create_returns_null_for_default_identity_value()
+    {
+      // Act
+      var result = Identity.Create(typeof(Person), typeof(int), 0);
+
+      // Assert
+      Assert.IsNull(result);
+    }
+
+    [Test]
     [Description("This method should not use the entity equality type")]
     public void Create_uses_passed_entity_type()
     {

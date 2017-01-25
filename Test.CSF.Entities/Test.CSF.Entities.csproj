@@ -8,7 +8,7 @@
     <RootNamespace>Test.CSF.Entities</RootNamespace>
     <AssemblyName>Test.CSF.Entities</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
+    <ReleaseVersion>1.0.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +45,7 @@
     <Compile Include="TestIdentity.cs" />
     <Compile Include="Stubs\NonGenericEntityType.cs" />
     <Compile Include="Stubs\NonGenericEntityTypeWithNoParameterlessConstructor.cs" />
+    <Compile Include="Stubs\ProhibitVirtualMethodsEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
