@@ -1,6 +1,6 @@
 using System;
 using NHibernate.Driver;
-using Mono.Data.Sqlite;
+using System.Reflection;
 
 namespace CSF.Data.NHibernate
 {
@@ -16,9 +16,12 @@ namespace CSF.Data.NHibernate
   {
     #region constants
 
-    private static readonly Type
-      CONNECTION_TYPE                   = typeof(SqliteConnection),
-      COMMAND_TYPE                      = typeof(SqliteCommand);
+    private const string
+      NAMESPACE         = "Mono.Data.Sqlite",
+      CONNECTION_TYPE   = "Mono.Data.Sqlite.SqliteConnection",
+      COMMAND_TYPE      = "Mono.Data.Sqlite.SqliteCommand";
+
+    private static Assembly _monoDataSqliteAssembly;
 
     #endregion
 
@@ -73,16 +76,26 @@ namespace CSF.Data.NHibernate
 
     #endregion
 
-    #region constructor
+    #region constructors
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CSF.Data.NHibernate.MonoNHibernateSqlLiteDriver"/> class.
     /// </summary>
-    public MonoNHibernateSqlLiteDriver () : base(CONNECTION_TYPE.Namespace,
-                                                 CONNECTION_TYPE.Namespace,
-                                                 CONNECTION_TYPE.FullName,
-                                                 COMMAND_TYPE.FullName)
+    public MonoNHibernateSqlLiteDriver ()
+      : base(NAMESPACE, MonoDataSqliteAssembly.FullName, CONNECTION_TYPE, COMMAND_TYPE) { }
+
+    #endregion
+
+    #region static properties
+
+    /// <summary>
+    /// Gets or sets a reference to the the Mono.Data.Sqlite assembly.
+    /// </summary>
+    /// <value>The Mono Sqlite assembly.</value>
+    internal static Assembly MonoDataSqliteAssembly
     {
+      get { return _monoDataSqliteAssembly; }
+      set { _monoDataSqliteAssembly = value; }
     }
 
     #endregion

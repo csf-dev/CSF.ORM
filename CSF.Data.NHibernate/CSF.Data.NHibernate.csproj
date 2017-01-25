@@ -9,66 +9,75 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CSF.Data.NHibernate</RootNamespace>
     <AssemblyName>CSF.Data.NHibernate</AssemblyName>
-    <ReleaseVersion>4.0.0</ReleaseVersion>
+    <ReleaseVersion>5.0.0</ReleaseVersion>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DocumentationFile>..\bin\Debug\CSF.Data.NHibernate.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\CSF.Data.NHibernate.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release</OutputPath>
+    <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DocumentationFile>..\bin\Release\CSF.Data.NHibernate.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\CSF.Data.NHibernate.xml</DocumentationFile>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentNHibernate">
-      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi">
+    <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.1.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="CSF.Data">
+      <HintPath>..\packages\CSF.Data.1.0.0\lib\net45\CSF.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="CSF.Utils">
+      <HintPath>..\packages\CSF.Utils.6.0.0\lib\net45\CSF.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="CSF.Reflection">
+      <HintPath>..\packages\CSF.Reflection.1.0.0\lib\net45\CSF.Reflection.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MonoNHibernateSqlLiteDriver.cs" />
-    <Compile Include="SQLiteConfigurationExtensions.cs" />
-    <Compile Include="..\Common\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="ISessionExtensions.cs" />
-    <Compile Include="FractionMap.cs" />
-    <Compile Include="NHibernateQuery`1.cs" />
     <Compile Include="NHibernateQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryableExtensions.cs" />
+    <Compile Include="DbIntegrationConfigurationPropertiesExtensions.cs" />
+    <Compile Include="SessionExtensions.cs" />
+    <Compile Include="FractionComponentMap.cs" />
+    <Compile Include="BinaryGuidType.cs" />
+    <Compile Include="FractionType.cs" />
+    <Compile Include="IFetchRequest.cs" />
+    <Compile Include="FetchRequestWrapper.cs" />
+    <Compile Include="NHibernateFetchRequestWrapper.cs" />
+    <Compile Include="IFutureValue.cs" />
+    <Compile Include="FutureValueWrapper.cs" />
+    <Compile Include="EnumerableFutureValueWrapper.cs" />
+    <Compile Include="MonoSqliteAssemblyFinder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\CSF.Core\CSF\CSF.csproj">
-      <Project>{E563D7BC-1AB1-4AFB-8533-51315437C6E6}</Project>
-      <Name>CSF</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="CSF.Data.NHibernate.nuspec" />
   </ItemGroup>
 </Project>
