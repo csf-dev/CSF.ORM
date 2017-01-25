@@ -70,6 +70,7 @@
     <Compile Include="IFutureValue.cs" />
     <Compile Include="FutureValueWrapper.cs" />
     <Compile Include="EnumerableFutureValueWrapper.cs" />
+    <Compile Include="MonoSqliteAssemblyFinder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
