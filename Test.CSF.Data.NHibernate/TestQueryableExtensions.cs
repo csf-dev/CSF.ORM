@@ -208,9 +208,7 @@ namespace Test.CSF.Data.NHibernate
       // Arrange
       var query1 = (from store in _query.Query<Store>()
                     from item in store.Inventory
-                    #pragma warning disable 253
-                    where item != (object) null
-                    #pragma warning restore 253
+                    where item != null
                     select store.Name)
         .ToFutureValue();
       var query2 = (from item in _query.Query<InventoryItem>()
@@ -228,9 +226,7 @@ namespace Test.CSF.Data.NHibernate
       // Arrange
       var query1 = (from store in _query.Query<Store>()
                     from item in store.Inventory
-                    #pragma warning disable 253
-                    where item != (object) null
-                    #pragma warning restore 253
+                    where item != null
                     select store.Name)
         .ToFutureValue();
       var query2 = (from item in _query.Query<InventoryItem>()
