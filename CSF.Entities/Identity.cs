@@ -89,6 +89,19 @@ namespace CSF.Entities
       where TFirstEntity : IEntity
       where TSecondEntity : IEntity
     {
+      bool
+        firstNull = ReferenceEquals(first, null),
+        secondNull = ReferenceEquals(second, null);
+
+      if(firstNull && secondNull)
+      {
+        return true;
+      }
+      else if(firstNull || secondNull)
+      {
+        return false;
+      }
+
       var firstIdentity = first.GetIdentity();
       var secondIdentity = second.GetIdentity();
 
