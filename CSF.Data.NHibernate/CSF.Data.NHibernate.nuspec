@@ -10,6 +10,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Useful types related to the use of the NHibernate ORM.</description>
     <copyright>Copyright 2017</copyright>
+    <dependencies>
+      <dependency id="CSF.Data" version="[1.0.0,2.0.0)" />
+      <dependency id="CSF.Reflection" version="[1.0.0,2.0.0)" />
+      <dependency id="CSF.Utils" version="[6.0.0,7.0.0)" />
+      <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0.0)" />
+      <dependency id="NHibernate" version="[4.1.0.4000,5.0.0.0)" />
+    </dependencies>
   </metadata>
   <files>
     <file src="bin/Release/CSF.Data.NHibernate.dll" target="lib/net45" />
