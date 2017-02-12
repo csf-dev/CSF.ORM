@@ -61,7 +61,6 @@
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="DbIntegrationConfigurationPropertiesExtensions.cs" />
     <Compile Include="SessionExtensions.cs" />
-    <Compile Include="FractionComponentMap.cs" />
     <Compile Include="BinaryGuidType.cs" />
     <Compile Include="FractionType.cs" />
     <Compile Include="IFetchRequest.cs" />
