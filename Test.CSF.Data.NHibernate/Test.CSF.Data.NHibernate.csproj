@@ -41,9 +41,6 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.4.1.0.4000\lib\net40\NHibernate.dll</HintPath>
-    </Reference>
     <Reference Include="CSF.Data.Entities">
       <HintPath>..\packages\CSF.Data.Entities.1.0.0\lib\net45\CSF.Data.Entities.dll</HintPath>
     </Reference>
@@ -63,6 +60,9 @@
     </Reference>
     <Reference Include="CSF.Entities">
       <HintPath>..\packages\CSF.Entities.1.0.2\lib\net45\CSF.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
