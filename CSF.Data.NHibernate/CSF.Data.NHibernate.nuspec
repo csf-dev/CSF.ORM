@@ -6,7 +6,7 @@
     <title>CSF.Data.NHibernate</title>
     <authors>CSF Software Ltd</authors>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>http://csf-dev.github.io/CSF.Entities/</projectUrl>
+    <projectUrl>https://github.com/csf-dev/CSF.Data.NHibernate</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Useful types related to the use of the NHibernate ORM.</description>
     <copyright>Copyright 2017</copyright>
