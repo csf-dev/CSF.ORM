@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CSF.Data.NHibernate</id>
-    <version>5.0.0</version>
+    <version>6.0.0</version>
     <title>CSF.Data.NHibernate</title>
     <authors>CSF Software Ltd</authors>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
