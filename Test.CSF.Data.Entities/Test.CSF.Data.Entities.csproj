@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="TestQueryExtensions.cs" />
     <Compile Include="Stubs\Person.cs" />
+    <Compile Include="TestInMemoryQueryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Stubs\" />
