@@ -34,6 +34,11 @@ namespace Test.CSF.Entities.Stubs
     {
       throw new NotSupportedException("This entity does not support any virtual method calls.");
     }
+
+    public override void SetIdentityValue (long identity)
+    {
+      throw new NotSupportedException("This entity does not support any virtual method calls.");
+    }
   }
 }
 
