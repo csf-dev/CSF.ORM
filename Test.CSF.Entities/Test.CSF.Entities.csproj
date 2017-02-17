@@ -8,7 +8,7 @@
     <RootNamespace>Test.CSF.Entities</RootNamespace>
     <AssemblyName>Test.CSF.Entities</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.2</ReleaseVersion>
+    <ReleaseVersion>1.1.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +32,7 @@
     <Reference Include="System" />
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Package>nunit</Package>
     </Reference>
   </ItemGroup>
   <ItemGroup>

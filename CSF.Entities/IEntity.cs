@@ -47,6 +47,18 @@ namespace CSF.Entities
     /// <value>The identity value.</value>
     object IdentityValue { get; }
 
+    /// <summary>
+    /// Sets the identity for the current instance.
+    /// </summary>
+    /// <param name="identity">Identity.</param>
+    void SetIdentity(object identity);
+
+    /// <summary>
+    /// Sets the identity for the current instance.
+    /// </summary>
+    /// <param name="identity">Identity.</param>
+    void SetIdentity(IIdentity identity);
+
     #endregion
 
     #region methods
