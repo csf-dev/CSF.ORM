@@ -137,6 +137,15 @@ namespace CSF.Entities
       return String.Format(Resources.Strings.IdentityFormat, this.GetType().Name, identityPart);
     }
 
+    /// <summary>
+    /// Sets the identity for the current instance.
+    /// </summary>
+    /// <param name="identity">Identity.</param>
+    public void SetIdentityValue(TIdentity identity)
+    {
+      IdentityValue = identity;
+    }
+
     #endregion
 
     #region explicit interface implementations
@@ -146,6 +155,16 @@ namespace CSF.Entities
     object IEntity.IdentityValue { get { return IdentityValue; } }
 
     Type IEntity.GetIdentityType() { return typeof(TIdentity); }
+
+    void IEntity.SetIdentity(object identity)
+    {
+      SetIdentity((TIdentity) identity);
+    }
+
+    void IEntity.SetIdentity(IIdentity identity)
+    {
+      SetIdentity((TIdentity) identity.Value);
+    }
 
     #endregion
 
