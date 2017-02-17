@@ -6,9 +6,9 @@
     <title>CSF.Data.Entities</title>
     <authors>CSF Software Ltd</authors>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>https://github.com/csf-dev/CSF.Utils</projectUrl>
+    <projectUrl>https://github.com/csf-dev/CSF.Data.Entities</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Extension method to query CSF.Data.IQuery using CSF.Entities.IIdentity&lt;T&gt;</description>
+    <description>Extension methods for CSF.Data and CSF.Entities libraries</description>
     <copyright>Copyright 2017</copyright>
   </metadata>
   <files>
