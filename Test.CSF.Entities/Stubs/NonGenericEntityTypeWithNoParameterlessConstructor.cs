@@ -22,6 +22,10 @@ namespace Test.CSF.Entities.Stubs
 
     public bool IdentityEquals(IEntity other) { throw new NotSupportedException(); }
 
+    void IEntity.SetIdentity(object identity) { throw new NotSupportedException(); }
+
+    void IEntity.SetIdentity(IIdentity identity) { throw new NotSupportedException(); }
+
     #endregion
 
     #region constructor

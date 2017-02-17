@@ -158,12 +158,12 @@ namespace CSF.Entities
 
     void IEntity.SetIdentity(object identity)
     {
-      SetIdentity((TIdentity) identity);
+      SetIdentityValue((TIdentity) identity);
     }
 
     void IEntity.SetIdentity(IIdentity identity)
     {
-      SetIdentity((TIdentity) identity.Value);
+      SetIdentityValue((TIdentity) identity.Value);
     }
 
     #endregion
