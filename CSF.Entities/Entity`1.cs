@@ -141,7 +141,7 @@ namespace CSF.Entities
     /// Sets the identity for the current instance.
     /// </summary>
     /// <param name="identity">Identity.</param>
-    public void SetIdentityValue(TIdentity identity)
+    public virtual void SetIdentityValue(TIdentity identity)
     {
       IdentityValue = identity;
     }
@@ -158,12 +158,12 @@ namespace CSF.Entities
 
     void IEntity.SetIdentity(object identity)
     {
-      SetIdentity((TIdentity) identity);
+      SetIdentityValue((TIdentity) identity);
     }
 
     void IEntity.SetIdentity(IIdentity identity)
     {
-      SetIdentity((TIdentity) identity.Value);
+      SetIdentityValue((TIdentity) identity.Value);
     }
 
     #endregion
