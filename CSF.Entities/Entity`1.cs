@@ -141,7 +141,7 @@ namespace CSF.Entities
     /// Sets the identity for the current instance.
     /// </summary>
     /// <param name="identity">Identity.</param>
-    public void SetIdentityValue(TIdentity identity)
+    public virtual void SetIdentityValue(TIdentity identity)
     {
       IdentityValue = identity;
     }
