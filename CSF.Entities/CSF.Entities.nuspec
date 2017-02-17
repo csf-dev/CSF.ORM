@@ -6,7 +6,7 @@
     <title>Base types for entity-based applications</title>
     <authors>CSF Software Ltd</authors>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>http://csf-dev.github.io/CSF.Entities/</projectUrl>
+    <projectUrl>https://github.com/csf-dev/CSF.Entities/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A number of base types and extension methods for applications which deal with entities and ORMs such as NHibernate.</description>
     <copyright>Copyright 2017</copyright>
