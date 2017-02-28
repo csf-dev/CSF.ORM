@@ -50,6 +50,12 @@ namespace CSF.Entities
     /// </summary>
     /// <value>The identity value.</value>
     object Value { get; }
+
+    /// <summary>
+    /// Gets the identity value and converts it to a string.
+    /// </summary>
+    /// <returns>The value as a string.</returns>
+    string GetValueAsString();
   }
 }
 
