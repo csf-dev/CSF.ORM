@@ -72,6 +72,7 @@
     <Compile Include="MonoSqliteAssemblyFinder.cs" />
     <Compile Include="QueryObjectBase.cs" />
     <Compile Include="ScalarQueryObjectBase.cs" />
+    <Compile Include="Persister.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
