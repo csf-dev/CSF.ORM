@@ -70,8 +70,6 @@
     <Compile Include="FutureValueWrapper.cs" />
     <Compile Include="EnumerableFutureValueWrapper.cs" />
     <Compile Include="MonoSqliteAssemblyFinder.cs" />
-    <Compile Include="QueryObjectBase.cs" />
-    <Compile Include="ScalarQueryObjectBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
