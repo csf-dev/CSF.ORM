@@ -175,6 +175,21 @@ namespace CSF.Entities
       return string.Format (Resources.Strings.IdentityFormat, this.EntityType.Name, this.Value.ToString());
     }
 
+
+    /// <summary>
+    /// Gets the identity value and converts it to a string.
+    /// </summary>
+    /// <returns>The value as a string.</returns>
+    public string GetValueAsString()
+    {
+      if(Equals(default(TIdentity), Value))
+      {
+        return null;
+      }
+
+      return Value.ToString();
+    }
+
     #endregion
     
     #region constructor

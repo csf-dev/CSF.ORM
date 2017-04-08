@@ -186,6 +186,44 @@ namespace CSF.Entities
     }
 
     /// <summary>
+    /// Converts a string identity value into an entity identity.
+    /// </summary>
+    /// <param name="value">The string identity value.</param>
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    public static IIdentity<TEntity> Parse<TEntity>(string value) where TEntity : IEntity
+    {
+      if(value == null)
+      {
+        throw new ArgumentNullException(nameof(value));
+      }
+
+      var identityType = GetIdentityType(typeof(TEntity));
+      var identityValue = Convert.ChangeType(value, identityType);
+      return Create<TEntity>(identityValue);
+    }
+
+    /// <summary>
+    /// Converts a string identity value into an entity identity.
+    /// </summary>
+    /// <param name="entityType">The entity type.</param>
+    /// <param name="value">The string identity value.</param>
+    public static IIdentity Parse(Type entityType, string value)
+    {
+      if(entityType == null)
+      {
+        throw new ArgumentNullException(nameof(entityType));
+      }
+      if(value == null)
+      {
+        throw new ArgumentNullException(nameof(value));
+      }
+
+      var identityType = GetIdentityType(entityType);
+      var identityValue = Convert.ChangeType(value, identityType);
+      return Create(entityType, identityType, identityValue);
+    }
+
+    /// <summary>
     /// Raises an exception if the <paramref name="value"/> is the default for its data-type.
     /// </summary>
     /// <param name="value">The identity value.</param>

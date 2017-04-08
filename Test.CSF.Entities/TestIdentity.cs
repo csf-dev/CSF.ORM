@@ -77,6 +77,19 @@ namespace Test.CSF.Entities
       Assert.AreEqual(5, person.Value, "Identity value as expected");
     }
 
+    [Test]
+    public void GetValueAsString_returns_string_value()
+    {
+      // Arrange
+      var identity = new Identity<int,Person>(20);
+
+      // Act
+      var result = identity.GetValueAsString();
+
+      // Assert
+      Assert.AreEqual("20", result);
+    }
+
     #endregion
   }
 }

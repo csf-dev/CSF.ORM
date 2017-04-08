@@ -197,6 +197,34 @@ namespace Test.CSF.Entities
       Assert.AreEqual(typeof(Employee), result.EntityType, "Entity type");
     }
 
+    [Test]
+    public void Parse_generic_returns_correct_identity()
+    {
+      // Arrange
+      var stringValue = "20";
+
+      // Act
+      var result = Identity.Parse<Person>(stringValue);
+
+      // Assert
+      var expected = new Identity<int,Person>(20);
+      Assert.AreEqual(expected, result);
+    }
+
+    [Test]
+    public void Parse_non_generic_returns_correct_identity()
+    {
+      // Arrange
+      var stringValue = "20";
+
+      // Act
+      var result = Identity.Parse(typeof(Person), stringValue);
+
+      // Assert
+      var expected = new Identity<int,Person>(20);
+      Assert.AreEqual(expected, result);
+    }
+
     #endregion
   }
 }
