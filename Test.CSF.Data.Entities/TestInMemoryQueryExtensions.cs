@@ -64,5 +64,20 @@ namespace Test.CSF
       // Assert
       Mock.Get(query).Verify(x => x.Add(collection, It.IsAny<Func<IEntity,object>>()), Times.Once());
     }
+
+    [Test,AutoMoqData]
+    public void Delete_deletes_an_entity_by_its_identity([AlwaysMock] InMemoryQuery query,
+                                                         IIdentity<Person> identity,
+                                                         object identityValue)
+    {
+      // Arrange
+      Mock.Get(identity).SetupGet(x => x.Value).Returns(identityValue);
+
+      // Act
+      query.DeleteEntity(identity);
+
+      // Assert
+      Mock.Get(query).Verify(x => x.Delete<Person>(identityValue), Times.Once());
+    }
   }
 }
