@@ -29,7 +29,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyTitle("CSF.Data.Entities")]
-[assembly: AssemblyDescription("Currently, just extension methods for querying a CSF.Data.IQuery using identities")]
+[assembly: AssemblyDescription("Functionality related to the integration of CSF.Data and CSF.Entities")]
 [assembly: AssemblyCompany("CSF Software Limited")]
 [assembly: AssemblyProduct("CSF Software Utilities")]
 [assembly: AssemblyCopyright("CSF Software Limited")]
@@ -40,5 +40,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyVersion("1.1.0")]
+[assembly: AssemblyVersion("1.2.0")]
 
