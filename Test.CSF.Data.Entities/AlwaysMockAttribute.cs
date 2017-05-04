@@ -1,5 +1,5 @@
 ﻿//
-// Test.cs
+// AlwaysMockAttribute.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,45 +24,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using CSF.Data;
-using CSF.Entities;
-using CSF.Data.Entities;
+using System.Reflection;
 using Moq;
-using NUnit.Framework;
-using System.Collections.Generic;
-using Test.CSF.Stubs;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.NUnit3;
 
 namespace Test.CSF
 {
-  public class TestInMemoryQueryExtensions
+  public class AlwaysMockAttribute : CustomizeAttribute
   {
-    [Test,AutoMoqData]
-    public void Add_adds_an_entity_with_its_identity([AlwaysMock] InMemoryQuery query,
-                                                     Person entity)
+    public override ICustomization GetCustomization(ParameterInfo parameter)
     {
-      // Arrange
-      var identityValue = entity.Identity;
-
-      // Act
-      query.Add(entity);
-
-      // Assert
-      Mock.Get(query).Verify(x => x.Add(entity, identityValue), Times.Once());
+      var customizationType = typeof(AlwaysMockCustomization<>).MakeGenericType(parameter.ParameterType);
+      return (ICustomization) Activator.CreateInstance(customizationType);
     }
 
-    [Test,AutoMoqData]
-    public void Add_adds_collection_of_entities_with_their_identities([AlwaysMock] InMemoryQuery query,
-                                                                      Person entityOne,
-                                                                      Person entityTwo)
+    class AlwaysMockCustomization<T> : ICustomization
+      where T : class
     {
-      // Arrange
-      IEnumerable<IEntity> collection = new [] { entityOne, entityTwo };
-
-      // Act
-      query.Add(collection);
-
-      // Assert
-      Mock.Get(query).Verify(x => x.Add(collection, It.IsAny<Func<IEntity,object>>()), Times.Once());
+      public void Customize(IFixture fixture)
+      {
+        fixture.Customize<T>(x => x.FromFactory(() => new Mock<T>().Object));
+      }
     }
   }
 }

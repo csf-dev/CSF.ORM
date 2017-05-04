@@ -1,5 +1,5 @@
 ﻿//
-// Test.cs
+// AutoMoqDataAttribute.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,45 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using CSF.Data;
-using CSF.Entities;
-using CSF.Data.Entities;
-using Moq;
-using NUnit.Framework;
-using System.Collections.Generic;
-using Test.CSF.Stubs;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoMoq;
+using Ploeh.AutoFixture.NUnit3;
 
 namespace Test.CSF
 {
-  public class TestInMemoryQueryExtensions
+  public class AutoMoqDataAttribute : AutoDataAttribute
   {
-    [Test,AutoMoqData]
-    public void Add_adds_an_entity_with_its_identity([AlwaysMock] InMemoryQuery query,
-                                                     Person entity)
+    public AutoMoqDataAttribute() : base(new Fixture().Customize(new AutoMoqCustomization()))
     {
-      // Arrange
-      var identityValue = entity.Identity;
-
-      // Act
-      query.Add(entity);
-
-      // Assert
-      Mock.Get(query).Verify(x => x.Add(entity, identityValue), Times.Once());
-    }
-
-    [Test,AutoMoqData]
-    public void Add_adds_collection_of_entities_with_their_identities([AlwaysMock] InMemoryQuery query,
-                                                                      Person entityOne,
-                                                                      Person entityTwo)
-    {
-      // Arrange
-      IEnumerable<IEntity> collection = new [] { entityOne, entityTwo };
-
-      // Act
-      query.Add(collection);
-
-      // Assert
-      Mock.Get(query).Verify(x => x.Add(collection, It.IsAny<Func<IEntity,object>>()), Times.Once());
     }
   }
 }
