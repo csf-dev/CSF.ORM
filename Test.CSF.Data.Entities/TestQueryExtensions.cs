@@ -36,103 +36,83 @@ namespace Test.CSF
   [TestFixture]
   public class TestQueryExtensions
   {
-    #region fields
-
-    private Mock<IQuery> _query;
-
-    #endregion
-
-    #region setup
-
-    [SetUp]
-    public void Setup()
-    {
-      _query = new Mock<IQuery>();
-    }
-
-    #endregion
-
-    #region tests
-
-    [Test]
-    public void Theorise_does_not_use_query_for_null_identity()
+    [Test,AutoMoqData]
+    public void Theorise_does_not_usequery_for_null_identity(IQuery query)
     {
       // Arrange
       IIdentity<Person> identity = null;
 
       // Act
-      _query.Object.Theorise(identity);
+      query.Theorise(identity);
 
       // Assert
-      _query.Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Never());
+      Mock.Get(query).Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Never());
     }
 
-    [Test]
-    public void Theorise_uses_query_when_identity_is_not_null()
+    [Test,AutoMoqData]
+    public void Theorise_usesquery_when_identity_is_not_null(IQuery query)
     {
       // Arrange
       IIdentity<Person> identity = Identity.Create<Person>(5);
 
       // Act
-      _query.Object.Theorise(identity);
+      query.Theorise(identity);
 
       // Assert
-      _query.Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Once());
+      Mock.Get(query).Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Once());
     }
 
-    [Test]
-    public void Theorise_returns_null_for_null_identity()
+    [Test,AutoMoqData]
+    public void Theorise_returns_null_for_null_identity(IQuery query)
     {
       // Arrange
       IIdentity<Person> identity = null;
 
       // Act
-      var result = _query.Object.Theorise(identity);
+      var result = query.Theorise(identity);
 
       // Assert
       Assert.IsNull(result);
     }
 
-    [Test]
-    public void Get_does_not_use_query_for_null_identity()
+    [Test,AutoMoqData]
+    public void Get_does_not_usequery_for_null_identity(IQuery query)
     {
       // Arrange
       IIdentity<Person> identity = null;
 
       // Act
-      _query.Object.Get(identity);
+      query.Get(identity);
 
       // Assert
-      _query.Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Never());
+      Mock.Get(query).Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Never());
     }
 
-    [Test]
-    public void Get_uses_query_when_identity_is_not_null()
+    [Test,AutoMoqData]
+    public void Get_usesquery_when_identity_is_not_null(IQuery query)
     {
       // Arrange
       IIdentity<Person> identity = Identity.Create<Person>(5);
 
       // Act
-      _query.Object.Get(identity);
+      query.Get(identity);
 
       // Assert
-      _query.Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Once());
+      Mock.Get(query).Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Once());
     }
 
-    [Test]
-    public void Get_returns_null_for_null_identity()
+    [Test,AutoMoqData]
+    public void Get_returns_null_for_null_identity(IQuery query)
     {
       // Arrange
       IIdentity<Person> identity = null;
 
       // Act
-      var result = _query.Object.Get(identity);
+      var result = query.Get(identity);
 
       // Assert
       Assert.IsNull(result);
     }
-
-    #endregion
   }
 }
 

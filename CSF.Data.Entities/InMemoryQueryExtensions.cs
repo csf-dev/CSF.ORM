@@ -70,6 +70,24 @@ namespace CSF.Data.Entities
       query.Add(entity, entity.IdentityValue);
     }
 
+    /// <summary>
+    /// Deletes an entity from the given query using its identity.
+    /// </summary>
+    /// <param name="query">Query.</param>
+    /// <param name="identity">Identity.</param>
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    public static void DeleteEntity<TEntity>(this InMemoryQuery query,
+                                             IIdentity<TEntity> identity)
+      where TEntity : class,IEntity
+    {
+      if(identity == null)
+        throw new ArgumentNullException(nameof(identity));
+      if(query == null)
+        throw new ArgumentNullException(nameof(query));
+
+      query.Delete<TEntity>(identity.Value);
+    }
+
     #endregion
   }
 }

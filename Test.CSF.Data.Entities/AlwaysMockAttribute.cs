@@ -1,10 +1,10 @@
 ﻿//
-// AssemblyInfo.cs
+// AlwaysMockAttribute.cs
 //
 // Author:
-//       Craig Fowler <craig@craigfowler.me.uk>
+//       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2016 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,20 +25,27 @@
 // THE SOFTWARE.
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using Moq;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.NUnit3;
 
-[assembly: CLSCompliant(true)]
-[assembly: AssemblyTitle("CSF.Data.Entities")]
-[assembly: AssemblyDescription("Functionality related to the integration of CSF.Data and CSF.Entities")]
-[assembly: AssemblyCompany("CSF Software Limited")]
-[assembly: AssemblyProduct("CSF Software Utilities")]
-[assembly: AssemblyCopyright("CSF Software Limited")]
+namespace Test.CSF
+{
+  public class AlwaysMockAttribute : CustomizeAttribute
+  {
+    public override ICustomization GetCustomization(ParameterInfo parameter)
+    {
+      var customizationType = typeof(AlwaysMockCustomization<>).MakeGenericType(parameter.ParameterType);
+      return (ICustomization) Activator.CreateInstance(customizationType);
+    }
 
-#if DEBUG
-[assembly: AssemblyConfiguration("Debug")]
-#else
-[assembly: AssemblyConfiguration("Release")]
-#endif
-
-[assembly: AssemblyVersion("1.2.0")]
-
+    class AlwaysMockCustomization<T> : ICustomization
+      where T : class
+    {
+      public void Customize(IFixture fixture)
+      {
+        fixture.Customize<T>(x => x.FromFactory(() => new Mock<T>().Object));
+      }
+    }
+  }
+}

@@ -30,59 +30,54 @@ using CSF.Data.Entities;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Test.CSF.Stubs;
 
 namespace Test.CSF
 {
   public class TestInMemoryQueryExtensions
   {
-    #region fields
-
-    InMemoryQuery sut;
-
-    #endregion
-
-    #region setup
-
-    [SetUp]
-    public void Setup ()
-    {
-      sut = new Mock<InMemoryQuery>() { CallBase = true }.Object;
-    }
-
-    #endregion
-
-    #region tests
-
-    [Test]
-    public void Add_adds_an_entity_with_its_identity ()
+    [Test,AutoMoqData]
+    public void Add_adds_an_entity_with_its_identity([AlwaysMock] InMemoryQuery query,
+                                                     Person entity)
     {
       // Arrange
-      object identityValue = 5;
-      var entity = Mock.Of<IEntity>(x => x.IdentityValue == identityValue);
+      var identityValue = entity.Identity;
 
       // Act
-      sut.Add(entity);
+      query.Add(entity);
 
       // Assert
-      Mock.Get(sut).Verify(x => x.Add(entity, identityValue), Times.Once());
+      Mock.Get(query).Verify(x => x.Add(entity, identityValue), Times.Once());
     }
 
-    [Test]
-    public void Add_adds_collection_of_entities_with_their_identities ()
+    [Test,AutoMoqData]
+    public void Add_adds_collection_of_entities_with_their_identities([AlwaysMock] InMemoryQuery query,
+                                                                      Person entityOne,
+                                                                      Person entityTwo)
     {
       // Arrange
-      object identityValueOne = 6, identityValueTwo = 7;
-      var entityOne = Mock.Of<IEntity>(x => x.IdentityValue == identityValueOne);
-      var entityTwo = Mock.Of<IEntity>(x => x.IdentityValue == identityValueTwo);
       IEnumerable<IEntity> collection = new [] { entityOne, entityTwo };
 
       // Act
-      sut.Add(collection);
+      query.Add(collection);
 
       // Assert
-      Mock.Get(sut).Verify(x => x.Add(collection, It.IsAny<Func<IEntity,object>>()), Times.Once());
+      Mock.Get(query).Verify(x => x.Add(collection, It.IsAny<Func<IEntity,object>>()), Times.Once());
     }
 
-    #endregion
+    [Test,AutoMoqData]
+    public void Delete_deletes_an_entity_by_its_identity([AlwaysMock] InMemoryQuery query,
+                                                         IIdentity<Person> identity,
+                                                         object identityValue)
+    {
+      // Arrange
+      Mock.Get(identity).SetupGet(x => x.Value).Returns(identityValue);
+
+      // Act
+      query.DeleteEntity(identity);
+
+      // Assert
+      Mock.Get(query).Verify(x => x.Delete<Person>(identityValue), Times.Once());
+    }
   }
 }
