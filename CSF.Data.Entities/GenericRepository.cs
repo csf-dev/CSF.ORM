@@ -46,7 +46,7 @@ namespace CSF.Data.Entities
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
       
-      persister.Add(entity, entity.GetIdentity().Value);
+      persister.Add(entity, entity.GetIdentity()?.Value);
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ namespace CSF.Data.Entities
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
 
-      persister.Delete(entity, entity.GetIdentity().Value);
+      persister.Delete(entity, entity.GetIdentity()?.Value);
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ namespace CSF.Data.Entities
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
 
-      persister.Update(entity, entity.GetIdentity().Value);
+      persister.Update(entity, entity.GetIdentity()?.Value);
     }
 
     /// <summary>
