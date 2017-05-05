@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CSF.Data.NHibernate</RootNamespace>
     <AssemblyName>CSF.Data.NHibernate</AssemblyName>
-    <ReleaseVersion>5.0.0</ReleaseVersion>
+    <ReleaseVersion>6.1.0</ReleaseVersion>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -41,9 +41,6 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="CSF.Data">
-      <HintPath>..\packages\CSF.Data.1.0.0\lib\net45\CSF.Data.dll</HintPath>
-    </Reference>
     <Reference Include="CSF.Utils">
       <HintPath>..\packages\CSF.Utils.6.0.0\lib\net45\CSF.Utils.dll</HintPath>
     </Reference>
@@ -52,6 +49,9 @@
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="CSF.Data">
+      <HintPath>..\packages\CSF.Data.1.1.0\lib\net45\CSF.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -70,13 +70,28 @@
     <Compile Include="FutureValueWrapper.cs" />
     <Compile Include="EnumerableFutureValueWrapper.cs" />
     <Compile Include="MonoSqliteAssemblyFinder.cs" />
+    <Compile Include="NHibernatePersister.cs" />
+    <Compile Include="SubordinateTransactionWrapper.cs" />
+    <Compile Include="InvalidTransactionOperationException.cs" />
+    <Compile Include="Resources\ExceptionMessages.Designer.cs">
+      <DependentUpon>ExceptionMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionWrapper.cs" />
+    <Compile Include="TransactionCreator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="CSF.Data.NHibernate.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ExceptionMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

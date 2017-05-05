@@ -33,7 +33,6 @@ There are some other miscellaneous small types in this library:
 
 * **BinaryGuidType** - an `IUserType` for storing `System.Guid` instances as binary data.
 * **FractionType** - an `IUserType` for storing `CSF.Fraction` instances.
-* **FractionComponentMap** - a `ComponentMapping` for storing `CSF.Fraction` instances.
 * An extension method for `IDbIntegrationConfigurationProperties` - `SelectSQLiteDriver()` - which chooses either the Windows or Mono version of the driver.
 
 ## Open source license
