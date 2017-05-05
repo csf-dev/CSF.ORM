@@ -10,8 +10,16 @@ namespace CSF.Data.NHibernate
   {
     readonly nh.ITransaction underlyingTransaction;
 
+    /// <summary>
+    /// Gets the underlying transaction.
+    /// </summary>
+    /// <value>The underlying transaction.</value>
     protected nh.ITransaction UnderlyingTransaction => underlyingTransaction;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the current instance has been disposed.
+    /// </summary>
+    /// <value><c>true</c> if the current instance has been disposed; otherwise, <c>false</c>.</value>
     protected bool DisposedValue
     {
       get { return disposedValue; }
