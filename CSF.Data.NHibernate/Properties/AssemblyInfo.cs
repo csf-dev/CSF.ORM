@@ -40,5 +40,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyVersion("6.0.0")]
+[assembly: AssemblyVersion("6.1.0")]
 
