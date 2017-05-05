@@ -71,13 +71,26 @@
     <Compile Include="EnumerableFutureValueWrapper.cs" />
     <Compile Include="MonoSqliteAssemblyFinder.cs" />
     <Compile Include="NHibernatePersister.cs" />
+    <Compile Include="SubordinateTransactionWrapper.cs" />
+    <Compile Include="InvalidTransactionOperationException.cs" />
+    <Compile Include="Resources\ExceptionMessages.Designer.cs">
+      <DependentUpon>ExceptionMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="CSF.Data.NHibernate.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ExceptionMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
