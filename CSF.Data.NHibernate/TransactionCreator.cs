@@ -16,7 +16,7 @@ namespace CSF.Data.NHibernate
     /// <returns>The transaction.</returns>
     public ITransaction BeginTransaction()
     {
-      if(session.Transaction != null)
+      if(session.Transaction != null && session.Transaction.IsActive)
       {
         return new SubordinateTransactionWrapper(session.Transaction);
       }
