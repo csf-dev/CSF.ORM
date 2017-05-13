@@ -101,6 +101,7 @@
     <Compile Include="Entities\Batch.cs" />
     <Compile Include="Mappings\BatchMap.cs" />
     <Compile Include="TestMonoSqliteAssemblyFinder.cs" />
+    <Compile Include="TestTransactionCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
