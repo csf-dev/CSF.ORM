@@ -32,6 +32,7 @@ namespace CSF.Data.Entities
   /// <summary>
   /// Generic repository service which non-generic methods for a single entity type.
   /// </summary>
+  [Obsolete("This is not a true repository, instead use IEntityData and its concrete implementatin EntityData.  See issue #10.")]
   public interface IRepository<TEntity> where TEntity : class,IEntity
   {
     /// <summary>

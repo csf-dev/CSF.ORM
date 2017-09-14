@@ -32,6 +32,7 @@ namespace CSF.Data.Entities
   /// <summary>
   /// Generic repository implementation, which uses a query and a persister to provide the underlying functionality.
   /// </summary>
+  [Obsolete("This is not a true repository, instead use IEntityData and its concrete implementatin EntityData.  See issue #10.")]
   public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class,IEntity
   {
     readonly IQuery query;
