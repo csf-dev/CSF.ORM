@@ -34,6 +34,7 @@ using Test.CSF.Stubs;
 
 namespace Test.CSF
 {
+  [TestFixture,Parallelizable(ParallelScope.Children | ParallelScope.Self)]
   public class TestInMemoryQueryExtensions
   {
     [Test,AutoMoqData]

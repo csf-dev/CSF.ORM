@@ -32,7 +32,7 @@ using Test.CSF.Stubs;
 
 namespace Test.CSF
 {
-  [TestFixture]
+  [TestFixture,Parallelizable(ParallelScope.Children | ParallelScope.Self)]
   public class InMemoryIdentityGeneratorTests
   {
     [Test,AutoMoqData]
