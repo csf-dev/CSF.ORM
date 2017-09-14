@@ -39,6 +39,18 @@ namespace CSF.Data.Entities
     readonly IPersister persister;
 
     /// <summary>
+    /// Gets the query service.
+    /// </summary>
+    /// <value>The query service.</value>
+    protected IQuery QueryService => query;
+
+    /// <summary>
+    /// Gets the persister.
+    /// </summary>
+    /// <value>The persister.</value>
+    protected IPersister Persister => persister;
+
+    /// <summary>
     /// Add the specified entity.
     /// </summary>
     /// <param name="entity">Entity.</param>
@@ -48,7 +60,7 @@ namespace CSF.Data.Entities
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
 
-      persister.Add(entity, entity.GetIdentity()?.Value);
+      Persister.Add(entity, entity.GetIdentity()?.Value);
     }
 
     /// <summary>
@@ -61,7 +73,7 @@ namespace CSF.Data.Entities
       if(identity == null)
         throw new ArgumentNullException(nameof(identity));
 
-      return query.Get(identity);
+      return QueryService.Get(identity);
     }
 
     /// <summary>
@@ -70,7 +82,7 @@ namespace CSF.Data.Entities
     /// <typeparam name="TEntity">The entity type.</typeparam>
     public IQueryable<TEntity> Query<TEntity>() where TEntity : class,IEntity
     {
-      return query.Query<TEntity>();
+      return QueryService.Query<TEntity>();
     }
 
     /// <summary>
@@ -83,7 +95,7 @@ namespace CSF.Data.Entities
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
 
-      persister.Delete(entity, entity.GetIdentity()?.Value);
+      Persister.Delete(entity, entity.GetIdentity()?.Value);
     }
 
     /// <summary>
@@ -97,7 +109,7 @@ namespace CSF.Data.Entities
       if(identity == null)
         throw new ArgumentNullException(nameof(identity));
 
-      return query.Theorise(identity);
+      return QueryService.Theorise(identity);
     }
 
     /// <summary>
@@ -110,7 +122,7 @@ namespace CSF.Data.Entities
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
 
-      persister.Update(entity, entity.GetIdentity()?.Value);
+      Persister.Update(entity, entity.GetIdentity()?.Value);
     }
 
     /// <summary>
