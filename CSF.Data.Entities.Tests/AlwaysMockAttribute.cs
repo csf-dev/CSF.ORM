@@ -1,8 +1,8 @@
 ﻿//
-// Person.cs
+// AlwaysMockAttribute.cs
 //
 // Author:
-//       Craig Fowler <craig@craigfowler.me.uk>
+//       Craig Fowler <craig@csf-dev.com>
 //
 // Copyright (c) 2017 Craig Fowler
 //
@@ -24,21 +24,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using CSF.Entities;
+using System.Reflection;
+using Moq;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.NUnit3;
 
-namespace Test.CSF.Stubs
+namespace CSF.Data.Entities.Tests
 {
-  public class Person : Entity<long>
+  public class AlwaysMockAttribute : CustomizeAttribute
   {
-    public virtual long Identity
+    public override ICustomization GetCustomization(ParameterInfo parameter)
     {
-      get {
-        return base.IdentityValue;
-      }
-      set {
-        base.IdentityValue = value;
+      var customizationType = typeof(AlwaysMockCustomization<>).MakeGenericType(parameter.ParameterType);
+      return (ICustomization) Activator.CreateInstance(customizationType);
+    }
+
+    class AlwaysMockCustomization<T> : ICustomization
+      where T : class
+    {
+      public void Customize(IFixture fixture)
+      {
+        fixture.Customize<T>(x => x.FromFactory(() => new Mock<T>().Object));
       }
     }
   }
 }
-

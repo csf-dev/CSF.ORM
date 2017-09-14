@@ -1,5 +1,5 @@
 ﻿//
-// AlwaysMockAttribute.cs
+// AutoMoqDataAttribute.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,28 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Reflection;
-using Moq;
 using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoMoq;
 using Ploeh.AutoFixture.NUnit3;
 
-namespace Test.CSF
+namespace CSF.Data.Entities.Tests
 {
-  public class AlwaysMockAttribute : CustomizeAttribute
+  public class AutoMoqDataAttribute : AutoDataAttribute
   {
-    public override ICustomization GetCustomization(ParameterInfo parameter)
+    public AutoMoqDataAttribute() : base(new Fixture().Customize(new AutoMoqCustomization()))
     {
-      var customizationType = typeof(AlwaysMockCustomization<>).MakeGenericType(parameter.ParameterType);
-      return (ICustomization) Activator.CreateInstance(customizationType);
-    }
-
-    class AlwaysMockCustomization<T> : ICustomization
-      where T : class
-    {
-      public void Customize(IFixture fixture)
-      {
-        fixture.Customize<T>(x => x.FromFactory(() => new Mock<T>().Object));
-      }
     }
   }
 }

@@ -23,20 +23,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using NUnit.Framework;
 using Moq;
-using CSF.Data.Entities;
-using CSF.Data;
 using CSF.Entities;
-using Test.CSF.Stubs;
+using CSF.Data.Entities.Tests.Stubs;
 
-namespace Test.CSF
+namespace CSF.Data.Entities.Tests
 {
-  [TestFixture,Parallelizable(ParallelScope.Children | ParallelScope.Self)]
+  [TestFixture, Parallelizable(ParallelScope.Children | ParallelScope.Self)]
   public class TestQueryExtensions
   {
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Theorise_does_not_usequery_for_null_identity(IQuery query)
     {
       // Arrange
@@ -49,7 +46,7 @@ namespace Test.CSF
       Mock.Get(query).Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Never());
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Theorise_usesquery_when_identity_is_not_null(IQuery query)
     {
       // Arrange
@@ -62,7 +59,7 @@ namespace Test.CSF
       Mock.Get(query).Verify(x => x.Theorise<Person>(It.IsAny<object>()), Times.Once());
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Theorise_returns_null_for_null_identity(IQuery query)
     {
       // Arrange
@@ -75,7 +72,7 @@ namespace Test.CSF
       Assert.IsNull(result);
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Get_does_not_usequery_for_null_identity(IQuery query)
     {
       // Arrange
@@ -88,7 +85,7 @@ namespace Test.CSF
       Mock.Get(query).Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Never());
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Get_usesquery_when_identity_is_not_null(IQuery query)
     {
       // Arrange
@@ -101,7 +98,7 @@ namespace Test.CSF
       Mock.Get(query).Verify(x => x.Get<Person>(It.IsAny<object>()), Times.Once());
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Get_returns_null_for_null_identity(IQuery query)
     {
       // Arrange
