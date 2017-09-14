@@ -1,19 +1,19 @@
 # CSF.Data.Entities
-Right now this project only contains two extension methods for `IQuery<T>`.
-These allow you to use the `Get` and `Theorise` method with generic `IIdentity<T>` instances, returning an appropriate entity type.
-It also enables generic type inference (of the Get/Theorise result) from the identity generic type.
+This small library contains types which ease the integration of [CSF.Entities] and [CSF.Data].
 
-```csharp
-private CSF.Data.IQuery _query;
+[CSF.Entities]: https://github.com/csf-dev/CSF.Entities/
+[CSF.Data]: https://github.com/csf-dev/CSF.Data/
 
-Person GetPerson(CSF.Entities.IIdentity<Person> id)
-{
-  // The extension method will deal with the generics and null-handling for you.
-  return _query.Get(id);
-}
-```
+## IEntityData
+`IEntityData` and its implementations `EntityData` and `IdentityGeneratingEntityData` provide access to an underlying data store. This is typically an ORM-backed database but it could equally be an in-memory data-store for testing scenarios. The API provided by this is similar to that of a repository, *although the name repository has intentionally been avoided*.  Please note that this service exposes a `Query<T>()` method which means that it is *not a true repository*.
 
-It's nothing spectacular but it cuts down on boilerplate generic parameters.
+If you wish to build a repository (which exposes methods returning `IReadOnlyCollection<T>` or `IReadOnlyList<T>` etc) then you may build them atop this data access service.
+
+## `IQuery<T>` extension methods
+This library contains extension methods for `IQuery<T>`, permitting generic type inference of the return type from a generic `IIdentity<T>` instance.
+
+## `InMemoryQuery` extension methods
+The library also contains extension methods for `InMemoryQuery`, automatically providing the appropriate identity value to the `Add` method.
 
 ## Open source license
 All source files within this project are released as open source software,
