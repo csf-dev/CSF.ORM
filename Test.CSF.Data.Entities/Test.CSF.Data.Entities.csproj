@@ -76,6 +76,7 @@
     <Compile Include="TestInMemoryQueryExtensions.cs" />
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="AlwaysMockAttribute.cs" />
+    <Compile Include="InMemoryIdentityGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Stubs\" />
