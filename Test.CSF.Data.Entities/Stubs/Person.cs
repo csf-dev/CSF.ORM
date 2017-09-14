@@ -26,7 +26,7 @@
 using System;
 using CSF.Entities;
 
-namespace Test.CSF.Stubs
+namespace CSF.Data.Entities.Tests.Stubs
 {
   public class Person : Entity<long>
   {

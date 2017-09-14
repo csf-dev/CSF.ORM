@@ -29,7 +29,7 @@ using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.NUnit3;
 
-namespace Test.CSF
+namespace CSF.Data.Entities.Tests
 {
   public class AlwaysMockAttribute : CustomizeAttribute
   {

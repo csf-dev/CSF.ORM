@@ -25,17 +25,16 @@
 // THE SOFTWARE.
 using System;
 using NUnit.Framework;
-using CSF.Data.Entities;
 using Ploeh.AutoFixture.NUnit3;
 using Moq;
-using Test.CSF.Stubs;
+using CSF.Data.Entities.Tests.Stubs;
 
-namespace Test.CSF
+namespace CSF.Data.Entities.Tests
 {
-  [TestFixture,Parallelizable(ParallelScope.Children | ParallelScope.Self)]
+  [TestFixture, Parallelizable(ParallelScope.Children | ParallelScope.Self)]
   public class InMemoryIdentityGeneratorTests
   {
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void GenerateIdentity_string_creates_string_formatted_as_a_guid(InMemoryIdentityGenerator sut)
     {
       // Act
@@ -45,7 +44,7 @@ namespace Test.CSF
       Assert.That(result, Does.Match(@"^[0-9a-f-]{36}$"));
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void GenerateIdentity_guid_creates_a_non_empty_guid(InMemoryIdentityGenerator sut)
     {
       // Act
@@ -55,7 +54,7 @@ namespace Test.CSF
       Assert.That(result, Is.Not.EqualTo(Guid.Empty));
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void GenerateIdentity_byte_uses_generator([Frozen] INumberGenerator generator,
                                                      InMemoryIdentityGenerator sut,
                                                      byte number)
@@ -70,7 +69,7 @@ namespace Test.CSF
       Assert.That(result, Is.EqualTo(number));
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void GenerateIdentity_int_uses_generator([Frozen] INumberGenerator generator,
                                                     InMemoryIdentityGenerator sut,
                                                     int number)
@@ -85,7 +84,7 @@ namespace Test.CSF
       Assert.That(result, Is.EqualTo(number));
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void GenerateIdentity_long_uses_generator([Frozen] INumberGenerator generator,
                                                      InMemoryIdentityGenerator sut,
                                                      long number)
@@ -100,7 +99,7 @@ namespace Test.CSF
       Assert.That(result, Is.EqualTo(number));
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void GenerateIdentity_for_entity_replaces_value_on_entity([Frozen] INumberGenerator generator,
                                                                      InMemoryIdentityGenerator sut,
                                                                      long number,
