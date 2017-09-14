@@ -32,6 +32,7 @@ namespace CSF.Data.Entities
   /// <summary>
   /// Non-generic repository type, suitable for any entity type (via generic methods).
   /// </summary>
+  [Obsolete("This is not a true repository, instead use IEntityData and its concrete implementatin EntityData.  See issue #10.")]
   public class Repository : IRepository
   {
     readonly IQuery query;

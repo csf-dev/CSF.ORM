@@ -1,5 +1,5 @@
 ﻿//
-// IRepository1.cs
+// IEntityData.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -30,45 +30,50 @@ using CSF.Entities;
 namespace CSF.Data.Entities
 {
   /// <summary>
-  /// Generic repository service which non-generic methods for a single entity type.
+  /// An abstraction exposing a data-source for entities.
   /// </summary>
-  [Obsolete("This is not a true repository, instead use IEntityData and its concrete implementatin EntityData.  See issue #10.")]
-  public interface IRepository<TEntity> where TEntity : class,IEntity
+  public interface IEntityData
   {
     /// <summary>
     /// Add the specified entity.
     /// </summary>
     /// <param name="entity">Entity.</param>
-    void Add(TEntity entity);
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    void Add<TEntity>(TEntity entity) where TEntity : class,IEntity;
 
     /// <summary>
     /// Update the specified entity.
     /// </summary>
     /// <param name="entity">Entity.</param>
-    void Update(TEntity entity);
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    void Update<TEntity>(TEntity entity) where TEntity : class,IEntity;
 
     /// <summary>
     /// Remove the specified entity.
     /// </summary>
     /// <param name="entity">Entity.</param>
-    void Remove(TEntity entity);
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    void Remove<TEntity>(TEntity entity) where TEntity : class,IEntity;
 
     /// <summary>
     /// Get an entity using the specified identity.
     /// </summary>
     /// <param name="identity">Identity.</param>
-    TEntity Get(IIdentity<TEntity> identity);
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    TEntity Get<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity;
 
     /// <summary>
-    /// Create a theory object which assumes that an entity exists with the specified entity.
+    /// Create an object instance which assumes that an entity exists with the specified identity.
     /// This operation will never return <c>null</c> but will not neccesarily make use of the underlying data-store.
     /// </summary>
     /// <param name="identity">Identity.</param>
-    TEntity Theorise(IIdentity<TEntity> identity);
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity;
 
     /// <summary>
     /// Create a query for entities.
     /// </summary>
-    IQueryable<TEntity> Query();
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    IQueryable<TEntity> Query<TEntity>() where TEntity : class,IEntity;
   }
 }

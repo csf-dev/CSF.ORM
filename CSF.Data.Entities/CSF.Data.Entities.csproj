@@ -50,6 +50,8 @@
     <Compile Include="IRepository`1.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="IEntityData.cs" />
+    <Compile Include="EntityData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
