@@ -55,7 +55,7 @@ namespace CSF.Data.Entities
     /// </summary>
     /// <param name="entity">Entity.</param>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public void Add<TEntity>(TEntity entity) where TEntity : class,IEntity
+    public virtual void Add<TEntity>(TEntity entity) where TEntity : class,IEntity
     {
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
@@ -68,7 +68,7 @@ namespace CSF.Data.Entities
     /// </summary>
     /// <param name="identity">Identity.</param>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public TEntity Get<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity
+    public virtual TEntity Get<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity
     {
       if(identity == null)
         throw new ArgumentNullException(nameof(identity));
@@ -80,7 +80,7 @@ namespace CSF.Data.Entities
     /// Create a query for entities.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public IQueryable<TEntity> Query<TEntity>() where TEntity : class,IEntity
+    public virtual IQueryable<TEntity> Query<TEntity>() where TEntity : class,IEntity
     {
       return QueryService.Query<TEntity>();
     }
@@ -90,7 +90,7 @@ namespace CSF.Data.Entities
     /// </summary>
     /// <param name="entity">Entity.</param>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public void Remove<TEntity>(TEntity entity) where TEntity : class,IEntity
+    public virtual void Remove<TEntity>(TEntity entity) where TEntity : class,IEntity
     {
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
@@ -104,7 +104,7 @@ namespace CSF.Data.Entities
     /// </summary>
     /// <param name="identity">Identity.</param>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity
+    public virtual TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity
     {
       if(identity == null)
         throw new ArgumentNullException(nameof(identity));
@@ -117,7 +117,7 @@ namespace CSF.Data.Entities
     /// </summary>
     /// <param name="entity">Entity.</param>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public void Update<TEntity>(TEntity entity) where TEntity : class,IEntity
+    public virtual void Update<TEntity>(TEntity entity) where TEntity : class,IEntity
     {
       if(entity == null)
         throw new ArgumentNullException(nameof(entity));
