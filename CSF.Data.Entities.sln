@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.CSF.Data.Entities", "Test.CSF.Data.Entities\Test.CSF.Data.Entities.csproj", "{11DCF35A-6E2A-4C62-B536-14B83FF5AE07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Data.Entities.Tests", "CSF.Data.Entities.Tests\CSF.Data.Entities.Tests.csproj", "{11DCF35A-6E2A-4C62-B536-14B83FF5AE07}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Data.Entities", "CSF.Data.Entities\CSF.Data.Entities.csproj", "{3EF001E2-A559-42DB-A2DB-1A8629E7486D}"
 EndProject
@@ -164,6 +164,6 @@ Global
 		$25.NamingStyle = PascalCase
 		$25.IncludeInstanceMembers = True
 		$25.IncludeStaticEntities = True
-		version = 1.2.1
+		version = 1.3.0
 	EndGlobalSection
 EndGlobal

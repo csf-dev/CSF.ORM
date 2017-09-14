@@ -1,8 +1,8 @@
 ﻿//
-// Person.cs
+// IncrementalNumberGenerator.cs
 //
 // Author:
-//       Craig Fowler <craig@craigfowler.me.uk>
+//       Craig Fowler <craig@csf-dev.com>
 //
 // Copyright (c) 2017 Craig Fowler
 //
@@ -24,21 +24,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using CSF.Entities;
+using System.Threading;
 
-namespace Test.CSF.Stubs
+namespace CSF.Data.Entities
 {
-  public class Person : Entity<long>
+  /// <summary>
+  /// Implementation of <see cref="INumberGenerator"/> which generates numeric values incrementally.
+  /// </summary>
+  public class IncrementalNumberGenerator : INumberGenerator
   {
-    public virtual long Identity
-    {
-      get {
-        return base.IdentityValue;
-      }
-      set {
-        base.IdentityValue = value;
-      }
-    }
+    long nextNumber = 1;
+
+    /// <summary>
+    /// Gets a 64 bit integer.
+    /// </summary>
+    /// <returns>The generated number.</returns>
+    public long GetLong() => Interlocked.Increment(ref nextNumber);
+
+    /// <summary>
+    /// Gets a 32 bit integer.
+    /// </summary>
+    /// <returns>The generated number.</returns>
+    public int GetInt() => unchecked((int) GetLong());
+
+    /// <summary>
+    /// Gets an 8 bit integer.
+    /// </summary>
+    /// <returns>The generated number.</returns>
+    public byte GetByte() => unchecked((byte) GetLong());
   }
 }
-

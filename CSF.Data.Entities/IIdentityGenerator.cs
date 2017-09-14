@@ -1,5 +1,5 @@
 ﻿//
-// AlwaysMockAttribute.cs
+// IIdentityGenerator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,28 +24,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Reflection;
-using Moq;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.NUnit3;
+using CSF.Entities;
 
-namespace Test.CSF
+namespace CSF.Data.Entities
 {
-  public class AlwaysMockAttribute : CustomizeAttribute
+  /// <summary>
+  /// Generator service which creates new identifiers for entities.
+  /// </summary>
+  public interface IIdentityGenerator
   {
-    public override ICustomization GetCustomization(ParameterInfo parameter)
-    {
-      var customizationType = typeof(AlwaysMockCustomization<>).MakeGenericType(parameter.ParameterType);
-      return (ICustomization) Activator.CreateInstance(customizationType);
-    }
+    /// <summary>
+    /// Generates a new identity.
+    /// </summary>
+    /// <returns>The generated identity.</returns>
+    /// <typeparam name="T">The identity type.</typeparam>
+    T GenerateIdentity<T>();
 
-    class AlwaysMockCustomization<T> : ICustomization
-      where T : class
-    {
-      public void Customize(IFixture fixture)
-      {
-        fixture.Customize<T>(x => x.FromFactory(() => new Mock<T>().Object));
-      }
-    }
+    /// <summary>
+    /// Generates a new identity.
+    /// </summary>
+    /// <returns>The generated identity.</returns>
+    /// <param name="identityType">The identity type.</param>
+    object GenerateIdentity(Type identityType);
+
+    /// <summary>
+    /// Generates an identity for the given entity and stores it within that entity instance.
+    /// </summary>
+    /// <param name="entity">An entity for which to generate an identity.</param>
+    void GenerateIdentity(IEntity entity);
   }
 }

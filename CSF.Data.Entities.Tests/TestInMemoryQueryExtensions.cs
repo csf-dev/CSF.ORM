@@ -24,19 +24,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using CSF.Data;
 using CSF.Entities;
-using CSF.Data.Entities;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
-using Test.CSF.Stubs;
+using CSF.Data.Entities.Tests.Stubs;
 
-namespace Test.CSF
+namespace CSF.Data.Entities.Tests
 {
+  [TestFixture, Parallelizable(ParallelScope.Children | ParallelScope.Self)]
   public class TestInMemoryQueryExtensions
   {
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Add_adds_an_entity_with_its_identity([AlwaysMock] InMemoryQuery query,
                                                      Person entity)
     {
@@ -50,22 +49,22 @@ namespace Test.CSF
       Mock.Get(query).Verify(x => x.Add(entity, identityValue), Times.Once());
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Add_adds_collection_of_entities_with_their_identities([AlwaysMock] InMemoryQuery query,
                                                                       Person entityOne,
                                                                       Person entityTwo)
     {
       // Arrange
-      IEnumerable<IEntity> collection = new [] { entityOne, entityTwo };
+      IEnumerable<IEntity> collection = new[] { entityOne, entityTwo };
 
       // Act
       query.Add(collection);
 
       // Assert
-      Mock.Get(query).Verify(x => x.Add(collection, It.IsAny<Func<IEntity,object>>()), Times.Once());
+      Mock.Get(query).Verify(x => x.Add(collection, It.IsAny<Func<IEntity, object>>()), Times.Once());
     }
 
-    [Test,AutoMoqData]
+    [Test, AutoMoqData]
     public void Delete_deletes_an_entity_by_its_identity([AlwaysMock] InMemoryQuery query,
                                                          IIdentity<Person> identity,
                                                          object identityValue)

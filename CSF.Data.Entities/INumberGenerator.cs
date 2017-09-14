@@ -1,5 +1,5 @@
 ﻿//
-// AutoMoqDataAttribute.cs
+// INumberGenerator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,16 +24,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
-using Ploeh.AutoFixture.NUnit3;
-
-namespace Test.CSF
+namespace CSF.Data.Entities
 {
-  public class AutoMoqDataAttribute : AutoDataAttribute
+  /// <summary>
+  /// A number generation service which creates integral numeric values.
+  /// </summary>
+  public interface INumberGenerator
   {
-    public AutoMoqDataAttribute() : base(new Fixture().Customize(new AutoMoqCustomization()))
-    {
-    }
+    /// <summary>
+    /// Gets a 64 bit integer.
+    /// </summary>
+    /// <returns>The generated number.</returns>
+    long GetLong();
+
+    /// <summary>
+    /// Gets a 32 bit integer.
+    /// </summary>
+    /// <returns>The generated number.</returns>
+    int GetInt();
+
+    /// <summary>
+    /// Gets an 8 bit integer.
+    /// </summary>
+    /// <returns>The generated number.</returns>
+    byte GetByte();
   }
 }
