@@ -175,6 +175,45 @@ namespace Test.CSF.Entities
     }
 
     [Test]
+    public void GetEntityType_returns_correct_entity_type_for_a_proper_identity_type()
+    {
+      // Arrange
+      var identityType = typeof(Identity<int,Animal>);
+
+      // Act
+      var result = Identity.GetEntityType(identityType);
+
+      // Assert
+      Assert.That(result, Is.EqualTo(typeof(Animal)));
+    }
+
+    [Test]
+    public void GetEntityType_returns_null_for_a_non_identity_type()
+    {
+      // Arrange
+      var identityType = typeof(string);
+
+      // Act
+      var result = Identity.GetEntityType(identityType);
+
+      // Assert
+      Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void GetEntityType_returns_null_for_a_null_input()
+    {
+      // Arrange
+      var identityType = typeof(string);
+
+      // Act
+      var result = Identity.GetEntityType(identityType);
+
+      // Assert
+      Assert.That(result, Is.Null);
+    }
+
+    [Test]
     public void Create_generic_returns_correct_result()
     {
       // Act

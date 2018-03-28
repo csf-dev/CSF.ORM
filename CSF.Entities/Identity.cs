@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Linq;
 
 namespace CSF.Entities
 {
@@ -35,7 +36,9 @@ namespace CSF.Entities
   {
     #region constants
 
-    internal static readonly Type OpenGenericIdentity = typeof(Identity<,>);
+    internal static readonly Type
+      OpenGenericIdentityWithIdentityType = typeof(Identity<,>),
+      OpenGenericIdentity = typeof(IIdentity<>);
 
     #endregion
 
@@ -63,7 +66,7 @@ namespace CSF.Entities
         return null;
       }
 
-      var closedIdentityType = OpenGenericIdentity.MakeGenericType(identityType, entityType);
+      var closedIdentityType = OpenGenericIdentityWithIdentityType.MakeGenericType(identityType, entityType);
       return (IIdentity) Activator.CreateInstance(closedIdentityType, new [] { identityValue });
     }
 
@@ -221,6 +224,31 @@ namespace CSF.Entities
       var identityType = GetIdentityType(entityType);
       var identityValue = Convert.ChangeType(value, identityType);
       return Create(entityType, identityType, identityValue);
+    }
+
+    /// <summary>
+    /// Given a <c>System.Type</c> which which implements <see cref="IIdentity{TEntity}"/>,
+    /// gets the corresponding entity type (<c>TEntity</c>).
+    /// </summary>
+    /// <returns>The entity type, or a <c>null</c> reference if the <paramref name="identityType"/> is not a generic identity type.</returns>
+    /// <param name="identityType">The identity type to analyse.</param>
+    public static Type GetEntityType(Type identityType)
+    {
+      if(identityType == null) return null;
+
+      var implementedInterfaces = identityType.GetInterfaces().Union(new [] { identityType });
+
+      var genericIdentityInterface = (from iface in implementedInterfaces
+                                      where
+                                        iface.IsInterface
+                                        && iface.IsGenericType
+                                        && iface.GetGenericTypeDefinition() == OpenGenericIdentity
+                                      select iface)
+        .SingleOrDefault();
+
+      if(genericIdentityInterface == null) return null;
+
+      return genericIdentityInterface.GenericTypeArguments[0];
     }
 
     /// <summary>
