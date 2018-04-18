@@ -23,14 +23,12 @@ Global
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
 		$0.TextStylePolicy = $1
-		$1.FileWidth = 120
 		$1.TabWidth = 2
 		$1.IndentWidth = 2
 		$1.NoTabsAfterNonTabs = True
-		$1.inheritsSet = VisualStudio
-		$1.inheritsScope = text/plain
 		$1.scope = text/plain
-		version = 6.1.1
+		$1.TabsToSpaces = True
+		version = 6.1.2
 		StartupItem = Test.CSF.Data.NHibernate\Test.CSF.Data.NHibernate.csproj
 	EndGlobalSection
 EndGlobal
