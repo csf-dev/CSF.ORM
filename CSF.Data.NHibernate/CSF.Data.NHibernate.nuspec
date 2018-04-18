@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CSF.Data.NHibernate</id>
-    <version>6.1.1</version>
+    <version>6.1.2</version>
     <title>CSF.Data.NHibernate</title>
     <authors>CSF Software Ltd</authors>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
@@ -11,9 +11,9 @@
     <description>Useful types related to the use of the NHibernate ORM.</description>
     <copyright>Copyright 2017</copyright>
     <dependencies>
-      <dependency id="CSF.Data" version="[1.1.0,2.0.0)" />
-      <dependency id="CSF.Reflection" version="[1.0.0,2.0.0)" />
-      <dependency id="CSF.Utils" version="[6.0.0,7.0.0)" />
+      <dependency id="CSF.Data" version="[1.2.0,2.0.0)" />
+      <dependency id="CSF.Reflection" version="[1.0.2,2.0.0)" />
+      <dependency id="CSF.Utils" version="[6.1.0,7.0.0)" />
       <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0.0)" />
       <dependency id="NHibernate" version="[4.0.0.4000,5.0.0.0)" />
     </dependencies>

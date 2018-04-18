@@ -32,7 +32,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("Useful types specific to making use of NHibernate")]
 [assembly: AssemblyCompany("CSF Software Limited")]
 [assembly: AssemblyCopyright("CSF Software Limited")]
-[assembly: InternalsVisibleTo("Test.CSF.Data.NHibernate")]
+[assembly: InternalsVisibleTo("Test.CSF.Data.NHibernate, PublicKey=002400000480000094000000060200000024000052534131000400000100010003331100a00b920774957d74ffb893246965b5bf7e7ad64ce0de1b64ba9deab730823c1106dcecf7b7c44f495111be41fe1566f1bc80756da0ddfebad47ea40dc6f3cd53ca0bb802907376bf4f52d531ba3a44355cba907ffa3c6269c2db5e55f5f9a92fc87047f3a980afa0efcc369be9f754a0fad2eef1d35cb4b84469b0a8")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
@@ -40,5 +40,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyVersion("6.1.1")]
+[assembly: AssemblyVersion("6.1.2")]
 
