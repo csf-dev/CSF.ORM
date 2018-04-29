@@ -28,7 +28,7 @@ Global
 		$1.NoTabsAfterNonTabs = True
 		$1.scope = text/plain
 		$1.TabsToSpaces = True
-		version = 6.1.2
+		version = 6.1.3
 		StartupItem = Test.CSF.Data.NHibernate\Test.CSF.Data.NHibernate.csproj
 	EndGlobalSection
 EndGlobal
