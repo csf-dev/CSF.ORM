@@ -11,8 +11,8 @@
     <description>Functionality related to the integration of CSF.Data and CSF.Entities</description>
     <copyright>Copyright 2017</copyright>
     <dependencies>
-      <dependency id="CSF.Data" version="[1.2.0,2.0.0)" />
-      <dependency id="CSF.Entities" version="[1.2.0,2.0.0)" />
+      <dependency id="CSF.Data" version="[1.2.1,2.0.0)" />
+      <dependency id="CSF.Entities" version="[1.2.1,2.0.0)" />
     </dependencies>
   </metadata>
   <files>
