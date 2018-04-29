@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CSF.Data.NHibernate</RootNamespace>
     <AssemblyName>CSF.Data.NHibernate</AssemblyName>
-    <ReleaseVersion>6.1.2</ReleaseVersion>
+    <ReleaseVersion>6.1.3</ReleaseVersion>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
@@ -47,13 +47,13 @@
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="CSF.Data">
-      <HintPath>..\packages\CSF.Data.1.2.0\lib\net45\CSF.Data.dll</HintPath>
+      <HintPath>..\packages\CSF.Data.1.2.1\lib\net45\CSF.Data.dll</HintPath>
     </Reference>
     <Reference Include="CSF.Reflection">
-      <HintPath>..\packages\CSF.Reflection.1.0.2\lib\net45\CSF.Reflection.dll</HintPath>
+      <HintPath>..\packages\CSF.Reflection.1.0.3\lib\net45\CSF.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="CSF.Utils">
-      <HintPath>..\packages\CSF.Utils.6.1.0\lib\net45\CSF.Utils.dll</HintPath>
+      <HintPath>..\packages\CSF.Utils.6.1.1\lib\net45\CSF.Utils.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
