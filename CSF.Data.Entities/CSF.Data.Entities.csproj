@@ -38,10 +38,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="CSF.Data">
-      <HintPath>..\packages\CSF.Data.1.2.0\lib\net45\CSF.Data.dll</HintPath>
+      <HintPath>..\packages\CSF.Data.1.2.1\lib\net45\CSF.Data.dll</HintPath>
     </Reference>
     <Reference Include="CSF.Entities">
-      <HintPath>..\packages\CSF.Entities.1.2.0\lib\net45\CSF.Entities.dll</HintPath>
+      <HintPath>..\packages\CSF.Entities.1.2.1\lib\net45\CSF.Entities.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
