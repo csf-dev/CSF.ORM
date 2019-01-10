@@ -33,6 +33,7 @@ namespace CSF.Data.Specifications
   /// A class which contains a number of extension methods which relate to <see cref="ISpecification{T}"/> and
   /// <see cref="ISpecificationExpression{T}"/>.
   /// </summary>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public static class SpecificationExtensions
   {
     #region IQueryable extensions

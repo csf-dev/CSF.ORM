@@ -38,6 +38,7 @@ namespace CSF.Data.Specifications
   /// specification expression classes.
   /// </para>
   /// </remarks>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public class DynamicSpecificationExpression<T> : SpecificationExpression<T>
   {
     readonly Expression<Func<T, bool>> expression;

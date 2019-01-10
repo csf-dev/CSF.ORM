@@ -31,6 +31,7 @@ namespace CSF.Data.Specifications
   /// <summary>
   /// Base type for implementations of the generic <see cref="Specification{T}"/> type.
   /// </summary>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public abstract class Specification<T> : ISpecification<T>, ISpecification
   {
     /// <summary>
