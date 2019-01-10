@@ -33,6 +33,7 @@ namespace CSF.Data.Specifications
   /// Specialisation of an <see cref="ISpecification{T}" /> which uses a Linq predicate expression as its underlying
   /// source of logic.
   /// </summary>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public interface ISpecificationExpression<T> : ISpecification<T>
   {
     /// <summary>

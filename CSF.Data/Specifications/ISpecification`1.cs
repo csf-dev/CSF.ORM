@@ -32,6 +32,7 @@ namespace CSF.Data.Specifications
   /// A generic implementation of <see cref="ISpecification"/>, which may additionally be used with an
   /// <c>IQueryable&lt;T&gt;</c>.
   /// </summary>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public interface ISpecification<T> : ISpecification
   {
     /// <summary>
