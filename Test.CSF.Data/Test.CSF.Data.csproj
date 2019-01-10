@@ -63,14 +63,6 @@
     <Compile Include="Stubs\Employee.cs" />
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="Stubs\Animal.cs" />
-    <Compile Include="PredicateTests.cs" />
-    <Compile Include="Specifications\SpecificationTests.cs" />
-    <Compile Include="Stubs\PersonNameSpecificationExpression.cs" />
-    <Compile Include="Stubs\PersonNameSpecification.cs" />
-    <Compile Include="Specifications\SpecificationExpressionTests.cs" />
-    <Compile Include="Specifications\SpecificationTestBase.cs" />
-    <Compile Include="Specifications\SpecificationExtensionsTests.cs" />
-    <Compile Include="Stubs\PersonIdentifierSpecificationExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -85,6 +77,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Stubs\" />
-    <Folder Include="Specifications\" />
   </ItemGroup>
 </Project>
