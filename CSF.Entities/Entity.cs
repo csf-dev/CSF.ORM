@@ -26,7 +26,6 @@
 
 using System;
 using System.Reflection;
-using System.Linq;
 
 namespace CSF.Entities
 {
@@ -39,7 +38,8 @@ namespace CSF.Entities
 
     internal static readonly Type
       EntityBaseType = typeof(IEntity),
-      GenericEntityType = typeof(Entity<>);
+      GenericEntityType = typeof(Entity<>),
+      ObjectType = typeof(Object);
 
     #endregion
 
@@ -86,10 +86,15 @@ namespace CSF.Entities
     /// <param name="entityType">Entity type.</param>
     public static Type GetEqualityType(Type entityType)
     {
-      Entity.RequireEntityType(entityType);
+      RequireEntityType(entityType);
 
-      var attrib = entityType.GetCustomAttribute<BaseTypeAttribute>(true);
-      return (attrib != null)? attrib.Type : entityType;
+      Type output = GetEqualityTypeFromBaseTypeAttribute(entityType);
+      if(output != null) return output;
+
+      output = GetEqualityTypeFromTypeHierarchy(entityType);
+      if(output != null) return output;
+
+      return entityType;
     }
 
     /// <summary>
@@ -101,13 +106,9 @@ namespace CSF.Entities
     public static bool AreEqualityTypesSame(Type firstType, Type secondType)
     {
       if(firstType == null)
-      {
         throw new ArgumentNullException(nameof(firstType));
-      }
       if(secondType == null)
-      {
         throw new ArgumentNullException(nameof(secondType));
-      }
 
       Type
         firstEntityType = GetEqualityType(firstType),
@@ -124,9 +125,8 @@ namespace CSF.Entities
     internal static void RequireEntityType(Type potentialEntityType)
     {
       if(potentialEntityType == null)
-      {
         throw new ArgumentNullException(nameof(potentialEntityType));
-      }
+
       if(!EntityBaseType.IsAssignableFrom(potentialEntityType))
       {
         string message = String.Format(Resources.ExceptionMessages.TypeMustBeEntityTypeFormat,
@@ -144,24 +144,44 @@ namespace CSF.Entities
     internal static Type GetGenericEntityType(Type potentialEntityType)
     {
       if(potentialEntityType == null)
-      {
         throw new ArgumentNullException(nameof(potentialEntityType));
-      }
 
       var currentType = potentialEntityType;
 
       while(currentType != null)
       {
-        if(currentType.IsGenericType
-           && currentType.GetGenericTypeDefinition() == GenericEntityType)
-        {
-          break;
-        }
+        if(currentType.IsGenericType && currentType.GetGenericTypeDefinition() == GenericEntityType)
+          return currentType;
 
         currentType = currentType.BaseType;
       }
 
-      return currentType;
+      return null;
+    }
+
+    static Type GetEqualityTypeFromBaseTypeAttribute(Type entityType)
+    {
+#pragma warning disable CS0618 // Type or member is obsolete
+      return entityType.GetCustomAttribute<BaseTypeAttribute>(true)?.Type;
+#pragma warning restore CS0618 // Type or member is obsolete
+    }
+
+    static Type GetEqualityTypeFromTypeHierarchy(Type entityType)
+    {
+      Type bestMatch = null, current = entityType.BaseType;
+
+      while(current != ObjectType)
+      {
+        var isEntity = EntityBaseType.IsAssignableFrom(current);
+        var isEligibleAsEqualityType = current.GetCustomAttribute<IgnoreForIdentityEqualityAttribute>(false) == null;
+
+        if(isEntity && isEligibleAsEqualityType)
+          bestMatch = current;
+
+        current = current.BaseType;
+      }
+
+      return bestMatch;
     }
 
     #endregion

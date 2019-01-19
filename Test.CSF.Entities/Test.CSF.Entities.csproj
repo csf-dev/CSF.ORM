@@ -39,14 +39,16 @@
     <Compile Include="Stubs\Person.cs" />
     <Compile Include="Stubs\Employee.cs" />
     <Compile Include="Stubs\Customer.cs" />
-    <Compile Include="TestEntityStaticMethods.cs" />
+    <Compile Include="StaticEntityTests.cs" />
     <Compile Include="Stubs\Animal.cs" />
-    <Compile Include="TestEntity.cs" />
-    <Compile Include="TestIdentityStaticMethods.cs" />
-    <Compile Include="TestIdentity.cs" />
+    <Compile Include="EntityTests.cs" />
+    <Compile Include="StaticIdentityTests.cs" />
+    <Compile Include="IdentityTests.cs" />
     <Compile Include="Stubs\NonGenericEntityType.cs" />
     <Compile Include="Stubs\NonGenericEntityTypeWithNoParameterlessConstructor.cs" />
     <Compile Include="Stubs\ProhibitVirtualMethodsEntity.cs" />
+    <Compile Include="Stubs\Cat.cs" />
+    <Compile Include="Stubs\Dog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

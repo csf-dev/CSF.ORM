@@ -52,6 +52,7 @@
     <Compile Include="Resources\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="IgnoreForIdentityEqualityAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />

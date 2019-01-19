@@ -47,6 +47,10 @@ namespace CSF.Entities
     /// <value>The identity value.</value>
     object IdentityValue { get; }
 
+    #endregion
+
+    #region methods
+
     /// <summary>
     /// Sets the identity for the current instance.
     /// </summary>
@@ -59,15 +63,28 @@ namespace CSF.Entities
     /// <param name="identity">Identity.</param>
     void SetIdentity(IIdentity identity);
 
-    #endregion
-
-    #region methods
-
     /// <summary>
     /// Gets the <c>System.Type</c> of the identity value represented by <see cref="Identity"/>.
     /// </summary>
     /// <returns>The identity type.</returns>
     Type GetIdentityType();
+
+    /// <summary>
+    /// Gets a <c>System.Type</c> of the current <see cref="IEntity"/> for the purpose of entity equality testing.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Consider a hierarchy of Person -&gt; Employee.  Employee is a subclass of Person and both are entities.
+    /// Employee ID=5 should be equal to Person ID=5.  Even though the entity types are different, "an employee is a
+    /// person" so the equality test should consider them to be equivalent.
+    /// </para>
+    /// <para>
+    /// This method gets the entity type which the current instance should use for purposes of this equality test.
+    /// In the example above, for both the Employee and Person classes, it would return Person.
+    /// </para>
+    /// </remarks>
+    /// <returns>The entity equality type.</returns>
+    Type GetIdentityEqualityEntityType();
 
     /// <summary>
     /// Gets a value indicating whether the current instance and a given other entity are identity-equal.

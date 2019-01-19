@@ -5,6 +5,7 @@ namespace CSF.Entities
   /// <summary>
   /// Attribute used to demark the base type for an entity, where it is a subclass of another entity type.
   /// </summary>
+  [Obsolete("Deprecated: Identity equality types are now determined automatically.")]
   public class BaseTypeAttribute : Attribute
   {
     #region properties

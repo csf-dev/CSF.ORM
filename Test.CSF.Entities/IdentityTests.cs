@@ -6,7 +6,7 @@ using Test.CSF.Entities.Stubs;
 namespace Test.CSF.Entities
 {
   [TestFixture]
-  public class TestIdentity
+  public class IdentityTests
   {
     #region tests
 

@@ -6,7 +6,7 @@ using CSF.Entities;
 namespace Test.CSF.Entities
 {
   [TestFixture]
-  public class TestEntity
+  public class EntityTests
   {
     #region tests
 
@@ -167,7 +167,7 @@ namespace Test.CSF.Entities
     }
 
     [Test]
-    public void IdentityEquals_returns_true_for_identity_equal_entities_of_different_types()
+    public void IdentityEquals_returns_true_for_identity_equal_entities_of_different_types_when_decorated_with_BaseType()
     {
       // Arrange
       var personOne = new Person() {
@@ -185,7 +185,7 @@ namespace Test.CSF.Entities
     }
 
     [Test]
-    public void IdentityEquals_returns_false_for_incompatible_entity_types()
+    public void IdentityEquals_returns_false_for_incompatible_entity_types_when_decorated_with_BaseType()
     {
       // Arrange
       var personOne = new Person() {
@@ -230,6 +230,60 @@ namespace Test.CSF.Entities
 
       // Act
       var result = personOne.IdentityEquals(null);
+
+      // Assert
+      Assert.IsFalse(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_true_for_identity_equal_entities_not_decorated_with_BaseType()
+    {
+      // Arrange
+      var animalOne = new Animal() {
+        Identity = 5
+      };
+      var animalTwo = new Animal() {
+        Identity = 5
+      };
+
+      // Act
+      var result = animalOne.IdentityEquals(animalTwo);
+
+      // Assert
+      Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_true_for_identity_equal_entities_of_different_types_not_decorated_with_BaseType()
+    {
+      // Arrange
+      var animalOne = new Animal() {
+        Identity = 5
+      };
+      var animalTwo = new Cat() {
+        Identity = 5
+      };
+
+      // Act
+      var result = animalOne.IdentityEquals(animalTwo);
+
+      // Assert
+      Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void IdentityEquals_returns_false_for_incompatible_entity_types_not_decorated_with_BaseType()
+    {
+      // Arrange
+      var animalOne = new Animal() {
+        Identity = 5
+      };
+      var personOne = new Person() {
+        Identity = 5
+      };
+
+      // Act
+      var result = animalOne.IdentityEquals(personOne);
 
       // Assert
       Assert.IsFalse(result);

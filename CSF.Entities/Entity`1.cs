@@ -36,12 +36,12 @@ namespace CSF.Entities
   /// Generic base type for an entity object which may be stored in a persistent data source.
   /// </summary>
   /// <typeparam name="TIdentity">The identity type for the current instance.</typeparam>
-  [Serializable]
+  [Serializable,IgnoreForIdentityEquality]
   public abstract class Entity<TIdentity> : IEntity
   {
     #region fields
     
-    private int? _cachedHashCode;
+    int? _cachedHashCode;
     
     #endregion
     
@@ -51,7 +51,7 @@ namespace CSF.Entities
     /// Gets or sets the identity value for the current instance.
     /// </summary>
     /// <value>The identity value.</value>
-    protected virtual TIdentity IdentityValue { get; set;  }
+    protected virtual TIdentity IdentityValue { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether this instance has an identity.
@@ -79,7 +79,7 @@ namespace CSF.Entities
     /// </returns>
     public override bool Equals(object obj)
     {
-      return Object.ReferenceEquals(this, obj);
+      return ReferenceEquals(this, obj);
     }
 
     /// <summary>
@@ -89,14 +89,8 @@ namespace CSF.Entities
     /// <param name="other">Other.</param>
     public virtual bool IdentityEquals(IEntity other)
     {
-      if(Object.ReferenceEquals(other, null))
-      {
-        return false;
-      }
-      if(Object.ReferenceEquals(this, other))
-      {
-        return true;
-      }
+      if(ReferenceEquals(other, null)) return false;
+      if(ReferenceEquals(this, other)) return true;
 
       return Identity.Equals(this, other);
     }
@@ -112,14 +106,10 @@ namespace CSF.Entities
     {
       if(!_cachedHashCode.HasValue)
       {
-        if(this.HasIdentity)
-        {
+        if(HasIdentity)
           _cachedHashCode = IdentityValue.GetHashCode();
-        }
         else
-        {
           _cachedHashCode = base.GetHashCode();
-        }
       }
 
       return _cachedHashCode.Value;
@@ -156,6 +146,8 @@ namespace CSF.Entities
 
     Type IEntity.GetIdentityType() { return typeof(TIdentity); }
 
+    Type IEntity.GetIdentityEqualityEntityType() { return Entity.GetEqualityType(GetType()); }
+
     void IEntity.SetIdentity(object identity)
     {
       SetIdentityValue((TIdentity) identity);
@@ -178,14 +170,8 @@ namespace CSF.Entities
     /// <param name="two">The second entity</param>
     public static bool operator ==(Entity<TIdentity> one, IEntity two)
     {
-      if(Object.ReferenceEquals(one, two))
-      {
-        return true;
-      }
-      if(Object.ReferenceEquals(one, null))
-      {
-        return false;
-      }
+      if(ReferenceEquals(one, two)) return true;
+      if(ReferenceEquals(one, null)) return false;
 
       return Identity.Equals(one, two);
     }
