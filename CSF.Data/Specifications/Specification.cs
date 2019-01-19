@@ -31,6 +31,7 @@ namespace CSF.Data.Specifications
   /// <summary>
   /// Helper type for the creation of dynamic specifications from expressions.
   /// </summary>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public static class Specification
   {
     /// <summary>

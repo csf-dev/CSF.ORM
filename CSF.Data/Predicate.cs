@@ -42,6 +42,7 @@ namespace CSF.Data
   /// Some (largely cosmetic) modifications have been made afterwards.
   /// </para>
   /// </remarks>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public static class Predicate
   {
     /// <summary>

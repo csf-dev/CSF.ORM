@@ -30,6 +30,7 @@ namespace CSF.Data.Specifications
   /// A type which acts as a specification, and may be used to test object instances to determine whether or not they
   /// conform to that specification.
   /// </summary>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public interface ISpecification
   {
     /// <summary>

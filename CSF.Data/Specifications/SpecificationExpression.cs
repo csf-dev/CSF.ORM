@@ -33,6 +33,7 @@ namespace CSF.Data.Specifications
   /// Base type for implementations of <see cref="ISpecificationExpression{T}"/> implementations, which
   /// create a specification based upon a Linq Expression type.
   /// </summary>
+  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
   public abstract class SpecificationExpression<T> : Specification<T>, ISpecificationExpression<T>
   {
     /// <summary>
