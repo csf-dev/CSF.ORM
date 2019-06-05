@@ -2,10 +2,10 @@
 <package>
   <metadata>
     <id>CSF.Data.Entities</id>
-    <version>1.3.2</version>
+    <version>1.3.3</version>
     <title>CSF.Data.Entities</title>
     <authors>CSF Software Ltd</authors>
-    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://github.com/csf-dev/CSF.Data.Entities</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Functionality related to the integration of CSF.Data and CSF.Entities</description>
