@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CSF.Data.Entities</id>
-    <version>1.3.2</version>
+    <version>1.3.3</version>
     <title>CSF.Data.Entities</title>
     <authors>CSF Software Ltd</authors>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
