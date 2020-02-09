@@ -24,14 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.Data
+
+namespace CSF.ORM
 {
   /// <summary>
   /// Exception raised when a transaction has been rolled back.
   /// Note that this is not always thrown, only in specific scenarios in which it must.
   /// As a rule of thumb, if you don't need to throw this, don't!
   /// </summary>
-  [System.Serializable]
+  [Serializable]
   public class TransactionRollbackException : Exception
   {
     /// <summary>

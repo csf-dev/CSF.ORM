@@ -1,8 +1,8 @@
 ﻿//
-// ITransactionCreator.cs
+// Employee.cs
 //
 // Author:
-//       Craig Fowler <craig@csf-dev.com>
+//       Craig Fowler <craig@craigfowler.me.uk>
 //
 // Copyright (c) 2017 Craig Fowler
 //
@@ -24,17 +24,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.Data
+
+namespace CSF.ORM.Tests.Stubs
 {
-  /// <summary>
-  /// Service which creates transactions.
-  /// </summary>
-  public interface ITransactionCreator
+  public class Employee : Person
   {
-    /// <summary>
-    /// Attempts to begin a new transaction.
-    /// </summary>
-    /// <returns>The transaction.</returns>
-    ITransaction BeginTransaction();
   }
 }
+

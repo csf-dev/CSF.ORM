@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageId>CSF.ORM</PackageId>
+    <Authors>Craig Fowler</Authors>
+    <Summary>Types related to abstracting the usage of an ORM</Summary>
+    <Title>CSF.ORM</Title>
+    <Description>Types which relate to the usage of an ORM, so that a business logic project does not need to depend upon the ORM directly.</Description>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+    <PackageVersion>$(ReleaseVersion)</PackageVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
+    <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\netstandard1.0\CSF.ORM.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+    <DocumentationFile>bin\Release\netstandard1.0\CSF.ORM.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

@@ -25,12 +25,10 @@
 // THE SOFTWARE.
 using System;
 using NUnit.Framework;
-using CSF.Data;
-using Test.CSF.Data.Stubs;
-using Ploeh.AutoFixture;
+using CSF.ORM.Tests.Stubs;
 using System.Linq;
 
-namespace Test.CSF.Data
+namespace CSF.ORM.Tests
 {
   [TestFixture,Parallelizable]
   public class TestInMemoryQuery

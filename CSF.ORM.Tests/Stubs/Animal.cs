@@ -1,8 +1,8 @@
 ﻿//
-// Employee.cs
+// Animal.cs
 //
 // Author:
-//       Craig Fowler <craig@craigfowler.me.uk>
+//       Craig Fowler <craig@csf-dev.com>
 //
 // Copyright (c) 2017 Craig Fowler
 //
@@ -24,11 +24,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-
-namespace Test.CSF.Data.Stubs
+namespace CSF.ORM.Tests.Stubs
 {
-  public class Employee : Person
+  public class Animal
   {
+    public long Identity
+    {
+      get;
+      set;
+    }
+
+    public string Name
+    {
+      get;
+      set;
+    }
   }
 }
-

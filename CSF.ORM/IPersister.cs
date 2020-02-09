@@ -1,10 +1,10 @@
 ﻿//
-// Specification.cs
+// IPersister.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2018 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,32 +24,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq.Expressions;
-
-namespace CSF.Data.Specifications
+namespace CSF.ORM
 {
   /// <summary>
-  /// Helper type for the creation of dynamic specifications from expressions.
+  /// A service which makes changes to a back-end data-store.
   /// </summary>
-  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
-  public static class Specification
+  public interface IPersister
   {
     /// <summary>
-    /// Creates a new dynamic specification from a given expression.
+    /// Adds the specified item to the data-store.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This is intended for use when creating specifications dynamically, such as when composing/combining other
-    /// expressions.  It is not designed for use as the main mechanism of creating first-class specifications.
-    /// For that purpose, create an explicit specification implementation which encapsulates your logic within a class.
-    /// </para>
-    /// </remarks>
-    /// <returns>A specification instance.</returns>
-    /// <param name="expression">The expression which represents the specification.</param>
-    /// <typeparam name="T">The type of object to which the specification applies.</typeparam>
-    public static ISpecificationExpression<T> Create<T>(Expression<Func<T,bool>> expression)
-    {
-      return new DynamicSpecificationExpression<T>(expression);
-    }
+    /// <param name="item">The item.</param>
+    /// <param name="identity">The item's identity.</param>
+    /// <typeparam name="T">The item type.</typeparam>
+    void Add<T>(T item, object identity) where T : class;
+
+    /// <summary>
+    /// Updates the specified item in the data-store.
+    /// </summary>
+    /// <param name="item">The item.</param>
+    /// <param name="identity">The item's identity.</param>
+    /// <typeparam name="T">The item type.</typeparam>
+    void Update<T>(T item, object identity) where T : class;
+
+    /// <summary>
+    /// Deletes the specified item from the data-store.
+    /// </summary>
+    /// <param name="item">The item.</param>
+    /// <param name="identity">The item's identity.</param>
+    /// <typeparam name="T">The item type.</typeparam>
+    void Delete<T>(T item, object identity) where T : class;
   }
 }

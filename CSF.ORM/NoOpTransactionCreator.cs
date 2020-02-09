@@ -1,5 +1,5 @@
 ﻿//
-// Animal.cs
+// NoOpTransactionCreator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,20 +24,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace Test.CSF.Data.Stubs
+namespace CSF.ORM
 {
-  public class Animal
+  /// <summary>
+  /// A no-operation dummy/fake transaction creator.
+  /// </summary>
+  public class NoOpTransactionCreator : ITransactionCreator
   {
-    public long Identity
+    bool throwOnRollback;
+
+    /// <summary>
+    /// Begins the transaction.
+    /// </summary>
+    /// <returns>The transaction.</returns>
+    public ITransaction BeginTransaction()
     {
-      get;
-      set;
+      return new NoOpTransaction(throwOnRollback);
     }
 
-    public string Name
+    /// <summary>
+    /// Initializes a new instance of the <see cref="T:CSF.Data.NoOpTransactionCreator"/> class.
+    /// </summary>
+    /// <param name="throwOnRollback">If set to <c>true</c> throw on rollback.</param>
+    public NoOpTransactionCreator(bool throwOnRollback = false)
     {
-      get;
-      set;
+      this.throwOnRollback = throwOnRollback;
     }
   }
 }

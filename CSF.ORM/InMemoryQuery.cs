@@ -27,7 +27,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace CSF.Data
+namespace CSF.ORM
 {
   /// <summary>
   /// An implementation of <see cref="IQuery"/> which represents a transient in-memory data-set.
@@ -233,7 +233,7 @@ namespace CSF.Data
     #region constructor
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CSF.Data.InMemoryQuery"/> class.
+    /// Initializes a new instance of the <see cref="CSF.ORM.InMemoryQuery"/> class.
     /// </summary>
     public InMemoryQuery()
     {

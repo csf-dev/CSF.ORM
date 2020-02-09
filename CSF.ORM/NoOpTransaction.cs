@@ -24,7 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.Data
+namespace CSF.ORM
 {
   /// <summary>
   /// A no-operation (dummy/fake) transaction implementation.

@@ -1,8 +1,8 @@
 ﻿//
-// Person.cs
+// ITransaction.cs
 //
 // Author:
-//       Craig Fowler <craig@craigfowler.me.uk>
+//       Craig Fowler <craig@csf-dev.com>
 //
 // Copyright (c) 2017 Craig Fowler
 //
@@ -24,22 +24,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-
-namespace Test.CSF.Data.Stubs
+namespace CSF.ORM
 {
-  public class Person
+  /// <summary>
+  /// Represents a transaction, against some form of data backend.
+  /// </summary>
+  public interface ITransaction : IDisposable
   {
-    public long Identity
-    {
-      get;
-      set;
-    }
+    /// <summary>
+    /// Commit this transaction to the back-end.
+    /// </summary>
+    void Commit();
 
-    public string Name
-    {
-      get;
-      set;
-    }
+    /// <summary>
+    /// Roll the transaction back and abort changes.
+    /// </summary>
+    void Rollback();
   }
 }
-

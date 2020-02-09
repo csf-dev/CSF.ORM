@@ -1,10 +1,10 @@
 ﻿//
-// ISpecification.cs
+// Person.cs
 //
 // Author:
-//       Craig Fowler <craig@csf-dev.com>
+//       Craig Fowler <craig@craigfowler.me.uk>
 //
-// Copyright (c) 2018 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,20 +24,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.Data.Specifications
+
+namespace CSF.ORM.Tests.Stubs
 {
-  /// <summary>
-  /// A type which acts as a specification, and may be used to test object instances to determine whether or not they
-  /// conform to that specification.
-  /// </summary>
-  [Obsolete("Specification-related types have been moved to a new NuGet package: CSF.Specifications")]
-  public interface ISpecification
+  public class Person
   {
-    /// <summary>
-    /// Gets a value which indicates whether or not the given object matches this specification instance or not.
-    /// </summary>
-    /// <returns><c>true</c> if the object matches this specification; <c>false</c> otherwise.</returns>
-    /// <param name="obj">The object instance to test against the specification.</param>
-    bool Matches(object obj);
+    public long Identity
+    {
+      get;
+      set;
+    }
+
+    public string Name
+    {
+      get;
+      set;
+    }
   }
 }
+

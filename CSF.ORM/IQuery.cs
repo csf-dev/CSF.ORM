@@ -26,7 +26,7 @@
 using System;
 using System.Linq;
 
-namespace CSF.Data
+namespace CSF.ORM
 {
   /// <summary>
   /// Interface for a query component that is capable of returning a queryable data source.
