@@ -26,9 +26,9 @@
 using NUnit.Framework;
 using Moq;
 using CSF.Entities;
-using CSF.Data.Entities.Tests.Stubs;
+using CSF.ORM.Entities.Tests.Stubs;
 
-namespace CSF.Data.Entities.Tests
+namespace CSF.ORM.Entities.Tests
 {
   [TestFixture, Parallelizable(ParallelScope.Children | ParallelScope.Self)]
   public class TestQueryExtensions
