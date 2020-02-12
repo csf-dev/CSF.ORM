@@ -1,7 +1,3 @@
-﻿version: '{branch}-{build}'
+version: '{branch}-{build}'
 build:
   verbosity: minimal
-test:
-  assemblies:
-    except:
-    - '**\Ploeh.AutoFixture.NUnit3.dll'
