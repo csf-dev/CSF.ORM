@@ -13,6 +13,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
     <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
     
   <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />

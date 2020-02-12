@@ -34,7 +34,8 @@ namespace CSF.PersistenceTester.Tests.NHibernate
                     db.Driver<SQLite20Driver>();
 
                 db.Dialect<SQLiteDialect>();
-                db.ConnectionStringName = "IntegrationTest";
+              //db.ConnectionStringName = "IntegrationTest";
+                db.ConnectionString = "Data Source=CSF.PersistenceTester.IntegrationTests.db;Version=3;";
                 db.ConnectionReleaseMode = ConnectionReleaseMode.OnClose;
             });
 
