@@ -1,10 +1,10 @@
 ﻿//
-// ITransactionCreator.cs
+// IProvidesQueryable.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
+using System.Linq;
 
 namespace CSF.ORM
 {
   /// <summary>
-  /// An object which can begin a new transaction within a data-store.
+  /// An object which can provide a queryable object, for a given queried type.
   /// </summary>
-  public interface IBeginsTransaction
+  public interface IProvidesQueryable<T>
   {
     /// <summary>
-    /// Attempts to begin a new transaction.
+    /// Gets the querable.
     /// </summary>
-    /// <returns>The transaction.</returns>
-    ITransaction BeginTransaction();
+    /// <returns>The querable.</returns>
+    IQueryable<T> GetQuerable();
   }
 }

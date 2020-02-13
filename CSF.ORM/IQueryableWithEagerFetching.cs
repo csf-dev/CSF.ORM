@@ -1,10 +1,10 @@
 ﻿//
-// ITransactionCreator.cs
+// IQueryableWithEagerFetching.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
+using System.Linq;
 
 namespace CSF.ORM
 {
   /// <summary>
-  /// An object which can begin a new transaction within a data-store.
+  /// An object which represents an <see cref="IQueryable{T}"/> but also includes a request
+  /// to eagerly-fetch data from the query.
   /// </summary>
-  public interface IBeginsTransaction
-  {
-    /// <summary>
-    /// Attempts to begin a new transaction.
-    /// </summary>
-    /// <returns>The transaction.</returns>
-    ITransaction BeginTransaction();
-  }
+  public interface IQueryableWithEagerFetching<TQueried,TFetched> : IOrderedQueryable<TQueried>, IProvidesQueryable<TQueried> { }
 }

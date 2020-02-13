@@ -40,9 +40,13 @@ namespace CSF.ORM.InMemory
     /// <param name="item">The item.</param>
     /// <param name="identity">The item's identity.</param>
     /// <typeparam name="T">The item type.</typeparam>
-    public virtual void Add<T>(T item, object identity) where T : class
+    public virtual object Add<T>(T item, object identity = null) where T : class
     {
+      if (identity == null)
+        throw new ArgumentNullException(nameof(identity));
+
       query.Add(item, identity);
+      return identity;
     }
 
     /// <summary>

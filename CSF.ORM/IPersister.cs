@@ -23,7 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+
 namespace CSF.ORM
 {
   /// <summary>
@@ -35,9 +35,10 @@ namespace CSF.ORM
     /// Adds the specified item to the data-store.
     /// </summary>
     /// <param name="item">The item.</param>
-    /// <param name="identity">The item's identity.</param>
+    /// <param name="identity">Optional, the item's identity.</param>
+    /// <returns>The identity value which the item has, after it was added.</returns>
     /// <typeparam name="T">The item type.</typeparam>
-    void Add<T>(T item, object identity) where T : class;
+    object Add<T>(T item, object identity = null) where T : class;
 
     /// <summary>
     /// Updates the specified item in the data-store.
