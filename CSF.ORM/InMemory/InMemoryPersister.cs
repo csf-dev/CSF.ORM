@@ -24,7 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+
+namespace CSF.ORM.InMemory
 {
   /// <summary>
   /// In-memory implementation of <see cref="IPersister"/> which works upon an <see cref="InMemoryQuery"/>.

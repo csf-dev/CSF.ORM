@@ -4,6 +4,7 @@ using Moq;
 using CSF.ORM.NHibernate;
 using System.Linq;
 using CSF.ORM;
+using CSF.ORM.InMemory;
 using AutoFixture;
 using Test.CSF.ORM.NHibernate.Models;
 using Test.CSF.ORM.NHibernate.Entities;

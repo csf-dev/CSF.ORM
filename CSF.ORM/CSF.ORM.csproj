@@ -27,4 +27,7 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.xml</DocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="InMemory\" />
+  </ItemGroup>
 </Project>

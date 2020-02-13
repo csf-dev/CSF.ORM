@@ -26,6 +26,7 @@
 using System;
 using NUnit.Framework;
 using CSF.ORM.Tests.Stubs;
+using CSF.ORM.InMemory;
 using System.Linq;
 
 namespace CSF.ORM.Tests

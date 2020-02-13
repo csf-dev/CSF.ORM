@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using CSF.Entities;
+using CSF.ORM.InMemory;
 
 namespace CSF.ORM.Entities
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using NHibernate;
-using CSF.Reflection;
 
 namespace CSF.ORM.NHibernate
 {

@@ -24,12 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+
+namespace CSF.ORM.InMemory
 {
   /// <summary>
   /// A no-operation dummy/fake transaction creator.
   /// </summary>
-  public class NoOpTransactionCreator : ITransactionCreator
+  public class NoOpTransactionCreator : IBeginsTransaction
   {
     bool throwOnRollback;
 

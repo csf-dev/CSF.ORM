@@ -29,7 +29,7 @@ namespace CSF.ORM
   /// <summary>
   /// Service which creates transactions.
   /// </summary>
-  public interface ITransactionCreator
+  public interface IBeginsTransaction
   {
     /// <summary>
     /// Attempts to begin a new transaction.

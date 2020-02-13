@@ -59,10 +59,6 @@
     <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
-    <PackageReference Include="CSF.Reflection" Version="2.0.0" />
-    <PackageReference Include="CSF.Utils" Version="6.1.1">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSF.ORM\CSF.ORM.csproj" />
