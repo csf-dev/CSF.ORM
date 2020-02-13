@@ -41,7 +41,6 @@ namespace Test.CSF.ORM.NHibernate.Config
       var config = new Configuration();
 
       config.DataBaseIntegration(x => {
-        x.SelectSQLiteDriver();
         x.ConnectionString = "Data Source=:memory:;Version=3;New=True;";
         x.Dialect<SQLiteDialect>();
       });
