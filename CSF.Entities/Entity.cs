@@ -88,10 +88,7 @@ namespace CSF.Entities
     {
       RequireEntityType(entityType);
 
-      Type output = GetEqualityTypeFromBaseTypeAttribute(entityType);
-      if(output != null) return output;
-
-      output = GetEqualityTypeFromTypeHierarchy(entityType);
+      var output = GetEqualityTypeFromTypeHierarchy(entityType);
       if(output != null) return output;
 
       return entityType;
@@ -157,13 +154,6 @@ namespace CSF.Entities
       }
 
       return null;
-    }
-
-    static Type GetEqualityTypeFromBaseTypeAttribute(Type entityType)
-    {
-#pragma warning disable CS0618 // Type or member is obsolete
-      return entityType.GetCustomAttribute<BaseTypeAttribute>(true)?.Type;
-#pragma warning restore CS0618 // Type or member is obsolete
     }
 
     static Type GetEqualityTypeFromTypeHierarchy(Type entityType)
