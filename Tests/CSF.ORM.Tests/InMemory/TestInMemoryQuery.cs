@@ -29,7 +29,7 @@ using CSF.ORM.Tests.Stubs;
 using CSF.ORM.InMemory;
 using System.Linq;
 
-namespace CSF.ORM.Tests
+namespace CSF.ORM.Tests.InMemory
 {
   [TestFixture,Parallelizable]
   public class TestInMemoryQuery
