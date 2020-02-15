@@ -1,5 +1,5 @@
 ﻿//
-// InMemoryDataStore.cs
+// InMemoryLazyResultProvider.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -23,34 +23,34 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// A storage back-end for an in memory database.
+    /// In-memory implementation of <see cref="IGetsLazyQueryResult"/>, which just returns plain lazy objects.
     /// </summary>
-    public class InMemoryDataStore
+    public class InMemoryLazyResultProvider : IGetsLazyQueryResult
     {
-        /// <summary>
-        /// Gets a synchronisation object under which the current instance may be locked.
-        /// </summary>
-        public readonly ReaderWriterLockSlim SyncRoot;
-
-        /// <summary>
-        /// Gets the collection of items in the data store.
-        /// </summary>
-        /// <value>The data items.</value>
-        public ICollection<InMemoryDataItem> Items { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryDataStore"/> class.
-        /// </summary>
-        public InMemoryDataStore()
+        public Lazy<IEnumerable<T>> GetLazyEnumerable<T>(IQueryable<T> query)
         {
-            Items = new HashSet<InMemoryDataItem>();
-            SyncRoot = new ReaderWriterLockSlim();
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            return new Lazy<IEnumerable<T>>(() => query.AsEnumerable());
+        }
+
+        public Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+            if (valueExpression == null)
+                throw new ArgumentNullException(nameof(valueExpression));
+
+            return new Lazy<V>(() => valueExpression.Compile()(query));
         }
     }
 }

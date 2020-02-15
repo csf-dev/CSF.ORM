@@ -29,6 +29,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using CSF.ORM.InMemory;
 
 namespace CSF.ORM
 {
@@ -1017,6 +1018,21 @@ namespace CSF.ORM
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public static Task<List<TSource>> ToListAsync<TSource>(this IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
             => AsyncQueryingProvider.ToListAsync(source, cancellationToken);
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes the <see cref="QueryableExtensions"/> class.  This sets up the use of the
+        /// in-memory/no-op implementations by default.
+        /// </summary>
+        static QueryableExtensions()
+        {
+            EagerFetchingProvider = new NoOpEagerFetcher();
+            LazyQueryingProvider = new InMemoryLazyResultProvider();
+            AsyncQueryingProvider = new SynchronousAsyncQueryProvider();
+        }
 
         #endregion
     }
