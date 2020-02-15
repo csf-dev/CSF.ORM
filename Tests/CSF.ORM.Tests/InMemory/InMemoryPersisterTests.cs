@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,19 @@ namespace CSF.ORM.Tests.InMemory
                                                        Person item1,
                                                        Person item2)
         {
+            sut.BulkAdd(new[] { item1, item2 }, x => x.Identity);
+            Assert.That(store.Items, Has.Count.EqualTo(2));
+        }
 
+        [Test, AutoMoqData]
+        public void Delete_removes_an_added_item([Frozen] InMemoryDataStore store,
+                                                 InMemoryPersister sut,
+                                                 Person item,
+                                                 long identity)
+        {
+            store.Items.Add(new InMemoryDataItem(typeof(Person), identity, item));
+            sut.Delete(item, identity);
+            Assert.That(store.Items, Is.Empty);
         }
     }
 }

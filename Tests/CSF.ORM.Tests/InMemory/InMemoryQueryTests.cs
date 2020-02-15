@@ -1,10 +1,10 @@
 ﻿//
-// TestInMemoryQuery.cs
+// InMemoryQueryTests.cs
 //
 // Author:
 //       Craig Fowler <craig@craigfowler.me.uk>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,125 +28,64 @@ using NUnit.Framework;
 using CSF.ORM.Tests.Stubs;
 using CSF.ORM.InMemory;
 using System.Linq;
+using AutoFixture.NUnit3;
 
 namespace CSF.ORM.Tests.InMemory
 {
     [TestFixture, Parallelizable]
     public class InMemoryQueryTests
     {
-
         [Test, AutoMoqData]
-        public void Add_multiple_adds_multiple_items(Person item1,
-                                                     long identity1,
-                                                     Person item2,
-                                                     long identity2,
-                                                     InMemoryQuery sut)
+        public void Query_gets_queryable_of_items_of_correct_type([Frozen] InMemoryDataStore store,
+                                                                  InMemoryQuery sut,
+                                                                  Person item1,
+                                                                  Person item2)
         {
-            // Arrange
-            item1.Identity = identity1;
-            item2.Identity = identity2;
-            var items = new[] { item1, item2 };
+            AddToStore(store, item1);
+            AddToStore(store, item2);
 
-            // Act
-            sut.Add(items, x => x.Identity);
-
-            // Assert
-            var added = sut.GetContents().Select(x => x.Item).ToArray();
-            CollectionAssert.AreEquivalent(items, added);
+            Assert.That(sut.Query<Person>().ToList(), Is.EquivalentTo(new[] { item1, item2 }));
         }
 
         [Test, AutoMoqData]
-        public void Query_exposes_added_items(Person item1,
-                                              long identity1,
-                                              Person item2,
-                                              long identity2,
-                                              InMemoryQuery sut)
+        public void Query_does_not_include_items_of_other_types([Frozen] InMemoryDataStore store,
+                                                                InMemoryQuery sut,
+                                                                Person item1,
+                                                                Person item2,
+                                                                Animal animal1,
+                                                                Animal animal2)
         {
-            // Arrange
-            item1.Identity = identity1;
-            item2.Identity = identity2;
-            var items = new[] { item1, item2 };
+            AddToStore(store, item1);
+            AddToStore(store, item2);
+            AddToStore(store, animal1);
+            AddToStore(store, animal2);
 
-            sut.Add(items, x => x.Identity);
-
-            // Act
-            var result = sut.Query<Person>();
-
-            // Assert
-            CollectionAssert.AreEquivalent(items, result.ToArray());
+            Assert.That(sut.Query<Person>().ToList(), Is.EquivalentTo(new[] { item1, item2 }));
         }
 
         [Test, AutoMoqData]
-        public void Query_does_not_expose_items_of_other_types(Person item1,
-                                                               long identity1,
-                                                               Person item2,
-                                                               long identity2,
-                                                               Animal animal1,
-                                                               long animalIdentity1,
-                                                               Animal animal2,
-                                                               long animalIdentity2,
-                                                               InMemoryQuery sut)
+        public void Get_retrieves_correct_item([Frozen] InMemoryDataStore store,
+                                               InMemoryQuery sut,
+                                               Person item1,
+                                               Person item2)
         {
-            // Arrange
-            item1.Identity = identity1;
-            item2.Identity = identity2;
-            var items = new[] { item1, item2 };
+            AddToStore(store, item1);
+            AddToStore(store, item2);
 
-            animal1.Identity = animalIdentity1;
-            animal2.Identity = animalIdentity2;
-            var animals = new[] { animal1, animal2 };
-
-            sut
-              .Add(items, x => x.Identity)
-              .Add(animals, x => x.Identity);
-
-            // Act
-            var result = sut.Query<Person>();
-
-            // Assert
-            CollectionAssert.AreEquivalent(items, result.ToArray());
+            Assert.That(sut.Get<Person>(item1.Identity), Is.SameAs(item1));
         }
 
-        [Test, AutoMoqData]
-        public void Get_retrieves_correct_item(Person item1,
-                                               long identity1,
-                                               Person item2,
-                                               long identity2,
-                                               InMemoryQuery sut)
+        void AddToStore(InMemoryDataStore store, Person person)
         {
-            // Arrange
-            item1.Identity = identity1;
-            item2.Identity = identity2;
-            var items = new[] { item1, item2 };
-
-            sut.Add(items, x => x.Identity);
-
-            // Act
-            var result = sut.Get<Person>(identity1);
-
-            // Assert
-            Assert.AreSame(item1, result);
+            var id = person.Identity;
+            store.Items.Add(new InMemoryDataItem(typeof(Person), id, person));
         }
 
-        [Test, AutoMoqData]
-        public void Delete_removes_the_item(Person item,
-                                            long identity,
-                                            InMemoryQuery sut)
+        void AddToStore(InMemoryDataStore store, Animal animal)
         {
-            // Arrange
-            item.Identity = identity;
-            sut.Add(item, item.Identity);
-
-            // Act
-            sut.Delete<Person>(identity);
-
-            // Assert
-            var contents = sut.GetContents();
-            Assert.IsEmpty(contents);
+            var id = animal.Identity;
+            store.Items.Add(new InMemoryDataItem(typeof(Animal), id, animal));
         }
-
-
-#endregion
     }
 }
 

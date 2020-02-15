@@ -52,10 +52,7 @@ namespace CSF.ORM.InMemory
             try
             {
                 store.SyncRoot.EnterWriteLock();
-
-                var dataItem = new InMemoryDataItem(item.GetType(), identity, item);
-                store.Items.Add(dataItem);
-                return identity;
+                return AddLocked(item, identity);
             }
             finally
             {
@@ -93,7 +90,7 @@ namespace CSF.ORM.InMemory
 
         void Add<T>(T item, Func<T, object> identitySelector) where T : class
         {
-            if (ReferenceEquals(item, null)) return;
+            if (item is null) return;
 
             object identity;
 
@@ -103,7 +100,14 @@ namespace CSF.ORM.InMemory
             }
             catch(Exception) { return; }
 
-            Add(item, identity);
+            AddLocked(item, identity);
+        }
+
+        object AddLocked<T>(T item, object identity = null) where T : class
+        {
+            var dataItem = new InMemoryDataItem(item.GetType(), identity, item);
+            store.Items.Add(dataItem);
+            return identity;
         }
 
         /// <summary>
@@ -121,7 +125,7 @@ namespace CSF.ORM.InMemory
             {
                 store.SyncRoot.EnterWriteLock();
 
-                var toDelete = store.Items.Where(x => ReferenceEquals(x.Value, item));
+                var toDelete = store.Items.Where(x => ReferenceEquals(x.Value, item)).ToList();
                 foreach (var inMemoryItem in toDelete)
                     store.Items.Remove(inMemoryItem);
             }

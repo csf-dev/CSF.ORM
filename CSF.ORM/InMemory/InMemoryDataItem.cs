@@ -64,7 +64,7 @@ namespace CSF.ORM.InMemory
         /// <see cref="InMemoryDataItem"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(obj, null)) return false;
+            if (obj is null) return false;
             if (obj.GetType() != typeof(InMemoryDataItem)) return false;
             return Equals((InMemoryDataItem) obj);
         }
@@ -77,7 +77,7 @@ namespace CSF.ORM.InMemory
         /// <see cref="InMemoryDataItem"/>; otherwise, <c>false</c>.</returns>
         public bool Equals(InMemoryDataItem other)
         {
-            if (ReferenceEquals(other, null)) return false;
+            if (other is null) return false;
             if (ReferenceEquals(other, this)) return true;
 
             return ValueType.Equals(other.ValueType)
