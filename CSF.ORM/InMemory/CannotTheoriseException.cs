@@ -27,7 +27,7 @@ using System;
 namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// Exception raised when <see cref="InMemoryQuery.Theorise{TQueried}(object)"/> is used,
+    /// Exception raised when <see cref="DataQuery.Theorise{TQueried}(object)"/> is used,
     /// and a theory object cannot be constructed.
     /// </summary>
     [Serializable]

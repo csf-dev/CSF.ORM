@@ -12,8 +12,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-	<data name="CannotCommitAlreadyFinalised" xml:space="preserve">
-    <value>A subordinate transaction cannot be committed if the underlying transaction has already been committed or rolled back.
-Commit the subordinate transaction earlier in the application logic (before the underlying transaction is finalised).</value>
-	</data>
+    <data name="CannotCommitAlreadyFinalised" xml:space="preserve">
+    <value>A nested transaction cannot be committed if the outer transaction has already been committed or rolled back.
+Commit nested transactions earlier in the application logic (before the outer transaction is finalised).</value>
+    </data>
 </root>

@@ -1051,7 +1051,7 @@ namespace CSF.ORM
         static QueryableExtensions()
         {
             EagerFetchingProvider = new NoOpEagerFetcher();
-            LazyQueryingProvider = new InMemoryLazyResultProvider();
+            LazyQueryingProvider = new LazyResultProvider();
             AsyncQueryingProvider = new SynchronousAsyncQueryProvider();
         }
 

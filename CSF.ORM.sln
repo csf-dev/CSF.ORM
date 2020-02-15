@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.Entities", "CSF.ORM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate.Tests", "Tests\CSF.ORM.NHibernate.Tests\CSF.ORM.NHibernate.Tests.csproj", "{11DCF35A-6E2A-4C62-B536-14B83FF5AE07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate", "CSF.ORM.NHibernate\CSF.ORM.NHibernate.csproj", "{18466B45-F3E5-46D9-808D-EA2896CC7ACD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate4", "CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj", "{18466B45-F3E5-46D9-808D-EA2896CC7ACD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PersistenceTester", "PersistenceTester", "{0C6BAB9E-894E-4BC5-9017-05DC854F9BDC}"
 EndProject
@@ -38,10 +38,6 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-		Debug_NH51|Any CPU = Debug_NH51|Any CPU
-		Debug_NH52|Any CPU = Debug_NH52|Any CPU
-		Debug_NH50|Any CPU = Debug_NH50|Any CPU
-		Debug_NH40|Any CPU = Debug_NH40|Any CPU
 		Debug_SingleTarget|Any CPU = Debug_SingleTarget|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution

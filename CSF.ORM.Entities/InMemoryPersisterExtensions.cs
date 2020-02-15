@@ -31,7 +31,7 @@ using CSF.ORM.InMemory;
 namespace CSF.ORM
 {
     /// <summary>
-    /// Extension methods for <see cref="InMemoryPersister"/>.
+    /// Extension methods for <see cref="DataPersister"/>.
     /// </summary>
     public static class InMemoryPersisterExtensions
     {
@@ -41,7 +41,7 @@ namespace CSF.ORM
         /// <param name="query">The query.</param>
         /// <param name="entities">The entities.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        public static void BulkAdd<TEntity>(this InMemoryPersister query, IEnumerable<TEntity> entities) where TEntity : class, IEntity
+        public static void BulkAdd<TEntity>(this DataPersister query, IEnumerable<TEntity> entities) where TEntity : class, IEntity
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
