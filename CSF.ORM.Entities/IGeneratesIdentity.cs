@@ -26,7 +26,7 @@
 using System;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// Generator service which creates new identifiers for entities.

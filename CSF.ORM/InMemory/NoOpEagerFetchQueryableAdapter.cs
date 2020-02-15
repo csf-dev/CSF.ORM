@@ -46,7 +46,7 @@ namespace CSF.ORM.InMemory
 
         public IEnumerator<TQuery> GetEnumerator() => queryable.GetEnumerator();
 
-        public IQueryable<TQuery> GetQuerable() => queryable;
+        public IQueryable<TQuery> GetQueryable() => queryable;
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

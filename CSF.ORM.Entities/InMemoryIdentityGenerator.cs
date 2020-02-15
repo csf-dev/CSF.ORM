@@ -26,7 +26,7 @@
 using System;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// Implementation of <see cref="IGeneratesIdentity"/> which uses a simple/naive strategy
@@ -34,9 +34,9 @@ namespace CSF.ORM.Entities
     /// </summary>
     public class InMemoryIdentityGenerator : IGeneratesIdentity
     {
-        static readonly INumberGenerator DefaultGenerator = new IncrementalNumberGenerator();
+        static readonly IGeneratesNumbers DefaultGenerator = new IncrementalNumberGenerator();
 
-        readonly INumberGenerator numberGenerator;
+        readonly IGeneratesNumbers numberGenerator;
 
         /// <summary>
         /// Gets a new identity value of the specified type.
@@ -91,7 +91,7 @@ namespace CSF.ORM.Entities
         /// Initializes a new instance of the <see cref="InMemoryIdentityGenerator"/> class.
         /// </summary>
         /// <param name="numberGenerator">A number generator service.</param>
-        public InMemoryIdentityGenerator(INumberGenerator numberGenerator = null)
+        public InMemoryIdentityGenerator(IGeneratesNumbers numberGenerator  = null)
         {
             this.numberGenerator = numberGenerator ?? DefaultGenerator;
         }

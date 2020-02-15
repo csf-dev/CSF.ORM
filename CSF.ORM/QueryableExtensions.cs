@@ -98,9 +98,30 @@ namespace CSF.ORM
         /// <returns>The lazy query result.</returns>
         /// <param name="query">The query.</param>
         /// <typeparam name="T">The type of object queried.</typeparam>
-        public static Lazy<IEnumerable<T>> ToLazy<T>(this IQueryable<T> query)
+        public static Lazy<IList<T>> ToLazy<T>(this IQueryable<T> query)
         {
-            return LazyQueryingProvider.GetLazyEnumerable(query);
+            return LazyQueryingProvider.GetLazyList(query);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Gets the result of a getter-expression from the query, but lazily so
+        /// that the data-source will not be contacted until the value is retrieved.
+        /// </para>
+        /// <para>
+        /// For some ORM providers, this allows the backend to 'batch' data access
+        /// operations together for performance gains.  Developers may use this
+        /// functionality to create many 'lazy' queries, none of which are executed against
+        /// the underlying data-source until a value from any of the queries in the batch
+        /// is accessed.
+        /// </para>
+        /// </summary>
+        /// <returns>The lazy value.</returns>
+        /// <param name="query">The query.</param>
+        /// <typeparam name="T">The type of object queried.</typeparam>
+        public static Lazy<T> ToLazyValue<T>(this IQueryable<T> query)
+        {
+            return LazyQueryingProvider.GetLazyValue(query);
         }
 
         /// <summary>

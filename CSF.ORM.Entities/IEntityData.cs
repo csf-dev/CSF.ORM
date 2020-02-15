@@ -27,7 +27,7 @@ using System;
 using System.Linq;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// An object which provides access to an ORM-like data source for entities.

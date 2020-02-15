@@ -27,7 +27,7 @@ using System;
 using System.Linq;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// An implementation of <see cref="IQuery"/> which populates the identity value

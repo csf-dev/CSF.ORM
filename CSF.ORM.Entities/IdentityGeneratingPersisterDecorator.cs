@@ -26,7 +26,7 @@
 using System;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// Implementation of <see cref="EntityData"/> which generates identities for any entities which are added

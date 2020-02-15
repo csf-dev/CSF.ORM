@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using CSF.Entities;
 using CSF.ORM.InMemory;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// Extension methods for <see cref="InMemoryPersister"/>.
@@ -41,9 +41,7 @@ namespace CSF.ORM.Entities
         /// <param name="query">The query.</param>
         /// <param name="entities">The entities.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        public static void BulkAdd<TEntity>(this InMemoryPersister query,
-                                            IEnumerable<TEntity> entities)
-          where TEntity : class, IEntity
+        public static void BulkAdd<TEntity>(this InMemoryPersister query, IEnumerable<TEntity> entities) where TEntity : class, IEntity
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));

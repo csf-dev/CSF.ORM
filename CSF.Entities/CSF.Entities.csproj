@@ -28,18 +28,11 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.Entities.xml</DocumentationFile>
   </PropertyGroup>
-  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug_SingleTarget</OutputPath>
-    <DefineConstants></DefineConstants>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
-    <NoWarn></NoWarn>
-    <NoStdLib>false</NoStdLib>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.Entities.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
+    
   <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
   
   <ItemGroup>

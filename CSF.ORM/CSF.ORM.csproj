@@ -33,15 +33,8 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug_SingleTarget</OutputPath>
-    <DefineConstants></DefineConstants>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
-    <NoWarn></NoWarn>
-    <NoStdLib>false</NoStdLib>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="InMemory\" />

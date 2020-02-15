@@ -35,12 +35,20 @@ namespace CSF.ORM.InMemory
     /// </summary>
     public class InMemoryLazyResultProvider : IGetsLazyQueryResult
     {
-        public Lazy<IEnumerable<T>> GetLazyEnumerable<T>(IQueryable<T> query)
+        public Lazy<IList<T>> GetLazyList<T>(IQueryable<T> query)
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
 
-            return new Lazy<IEnumerable<T>>(() => query.AsEnumerable());
+            return new Lazy<IList<T>>(() => query.ToList());
+        }
+
+        public Lazy<T> GetLazyValue<T>(IQueryable<T> query)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            return new Lazy<T>(() => query.FirstOrDefault());
         }
 
         public Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
@@ -52,5 +60,7 @@ namespace CSF.ORM.InMemory
 
             return new Lazy<V>(() => valueExpression.Compile()(query));
         }
+
+
     }
 }

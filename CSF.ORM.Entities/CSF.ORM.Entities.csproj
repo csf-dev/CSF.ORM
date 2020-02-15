@@ -20,6 +20,7 @@
     <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>CSF.ORM</RootNamespace>
   </PropertyGroup>
     
   <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
@@ -33,15 +34,8 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.Entities.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug_SingleTarget</OutputPath>
-    <DefineConstants></DefineConstants>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
-    <NoWarn></NoWarn>
-    <NoStdLib>false</NoStdLib>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.Entities.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSF.Entities\CSF.Entities.csproj" />

@@ -24,29 +24,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
-  /// <summary>
-  /// A number generation service which creates integral numeric values.
-  /// </summary>
-  public interface INumberGenerator
-  {
     /// <summary>
-    /// Gets a 64 bit integer.
+    /// A number generation service which creates integral numeric values.
     /// </summary>
-    /// <returns>The generated number.</returns>
-    long GetLong();
+    public interface IGeneratesNumbers
+    {
+        /// <summary>
+        /// Gets a 64 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        long GetLong();
 
-    /// <summary>
-    /// Gets a 32 bit integer.
-    /// </summary>
-    /// <returns>The generated number.</returns>
-    int GetInt();
+        /// <summary>
+        /// Gets a 32 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        int GetInt();
 
-    /// <summary>
-    /// Gets an 8 bit integer.
-    /// </summary>
-    /// <returns>The generated number.</returns>
-    byte GetByte();
-  }
+        /// <summary>
+        /// Gets an 8 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        byte GetByte();
+    }
 }

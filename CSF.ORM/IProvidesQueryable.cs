@@ -37,6 +37,6 @@ namespace CSF.ORM
         /// Gets the querable.
         /// </summary>
         /// <returns>The querable.</returns>
-        IQueryable<T> GetQuerable();
+        IQueryable<T> GetQueryable();
     }
 }

@@ -28,7 +28,7 @@ using System;
 using System.Linq;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// Provides access to a data-source for entities, coordinating between query and persister implementations

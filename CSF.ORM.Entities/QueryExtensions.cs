@@ -26,7 +26,7 @@
 using System;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
     /// <summary>
     /// Extension methods for <see cref="IQuery"/> instances.
