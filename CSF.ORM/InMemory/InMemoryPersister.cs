@@ -101,9 +101,9 @@ namespace CSF.ORM.InMemory
             {
                 identity = identitySelector(item);
             }
-            catch(Exception e) { return; }
+            catch(Exception) { return; }
 
-            Add(T, identity);
+            Add(item, identity);
         }
 
         /// <summary>

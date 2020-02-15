@@ -21,4 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="InMemory\InMemoryQueryTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="InMemory\InMemoryQueryTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+  </ItemGroup>
 </Project>

@@ -31,4 +31,10 @@
     <ProjectReference Include="..\..\CSF.ORM.NHibernate\CSF.ORM.NHibernate.csproj" />
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="TestQueryableExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestQueryableExtensions.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+  </ItemGroup>
 </Project>
