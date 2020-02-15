@@ -30,11 +30,11 @@ using System.Linq;
 namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// In-memory implementation of <see cref="IPersister"/> which works upon an <see cref="InMemoryQuery"/>.
+    /// In-memory implementation of <see cref="IPersister"/> which works upon an <see cref="DataQuery"/>.
     /// </summary>
-    public class InMemoryPersister : IPersister
+    public class DataPersister : IPersister
     {
-        readonly InMemoryDataStore store;
+        readonly DataStore store;
 
         /// <summary>
         /// Adds the specified item to the data-store.
@@ -47,7 +47,7 @@ namespace CSF.ORM.InMemory
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
             if (identity == null)
-                throw new ArgumentNullException(nameof(identity), $"For an {nameof(InMemoryPersister)}, the identity must be specified upfront and must not be null.");
+                throw new ArgumentNullException(nameof(identity), $"For an {nameof(DataPersister)}, the identity must be specified upfront and must not be null.");
 
             try
             {
@@ -105,7 +105,7 @@ namespace CSF.ORM.InMemory
 
         object AddLocked<T>(T item, object identity = null) where T : class
         {
-            var dataItem = new InMemoryDataItem(item.GetType(), identity, item);
+            var dataItem = new DataItem(item.GetType(), identity, item);
             store.Items.Add(dataItem);
             return identity;
         }
@@ -148,10 +148,10 @@ namespace CSF.ORM.InMemory
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryPersister"/> class.
+        /// Initializes a new instance of the <see cref="DataPersister"/> class.
         /// </summary>
         /// <param name="store">The data store.</param>
-        public InMemoryPersister(InMemoryDataStore store)
+        public DataPersister(DataStore store)
         {
             this.store = store ?? throw new ArgumentNullException(nameof(store));
         }

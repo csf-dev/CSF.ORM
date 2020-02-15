@@ -39,8 +39,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CSF.ORM.NHibernate\CSF.ORM.NHibernate.csproj" />
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="TestQueryableExtensions.cs" />

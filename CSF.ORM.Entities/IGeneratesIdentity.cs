@@ -1,10 +1,10 @@
 ﻿//
-// IProvidesQueryable.cs
+// IIdentityGenerator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
+using CSF.Entities;
 
 namespace CSF.ORM
 {
     /// <summary>
-    /// An object which can provide a queryable object, for a given queried type.
+    /// Generator service which creates new identifiers for entities.
     /// </summary>
-    public interface IProvidesQueryable<T>
+    public interface IGeneratesIdentity
     {
         /// <summary>
-        /// Gets the querable.
+        /// Gets a new identity value of the specified type.
         /// </summary>
-        /// <returns>The querable.</returns>
-        IQueryable<T> GetQueryable();
+        /// <returns>The generated identity.</returns>
+        /// <typeparam name="T">The identity type.</typeparam>
+        T GetIdentity<T>();
+
+        /// <summary>
+        /// Gets a new identity value of the specified type.
+        /// </summary>
+        /// <returns>The generated identity.</returns>
+        /// <param name="identityType">The identity type.</param>
+        object GetIdentity(Type identityType);
+
+        /// <summary>
+        /// Updates the given entity object, ensuring that it has an identity value.
+        /// </summary>
+        /// <param name="entity">An entity for which to generate an identity.</param>
+        void UpdateWithIdentity(IEntity entity);
     }
 }

@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,123 +23,132 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Linq;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
-  /// <summary>
-  /// Provides access to a data-source for entities, coordinating between query and persister implementations
-  /// as appropriate.
-  /// </summary>
-  public class EntityData : IEntityData
-  {
-    readonly IQuery query;
-    readonly IPersister persister;
-
     /// <summary>
-    /// Gets the query service.
+    /// Provides access to a data-source for entities, coordinating between query and persister implementations
+    /// as appropriate.
     /// </summary>
-    /// <value>The query service.</value>
-    protected IQuery QueryService => query;
-
-    /// <summary>
-    /// Gets the persister.
-    /// </summary>
-    /// <value>The persister.</value>
-    protected IPersister Persister => persister;
-
-    /// <summary>
-    /// Add the specified entity.
-    /// </summary>
-    /// <param name="entity">Entity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    public virtual void Add<TEntity>(TEntity entity) where TEntity : class,IEntity
+    public class EntityData : IEntityData
     {
-      if(entity == null)
-        throw new ArgumentNullException(nameof(entity));
+        readonly IQuery query;
+        readonly IPersister persister;
 
-      Persister.Add(entity, entity.GetIdentity()?.Value);
+        /// <summary>
+        /// Add the specified entity.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public void Add<TEntity>(TEntity entity) where TEntity : class, IEntity
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            var identity = Entity.GetIdentity(entity);
+            persister.Add(entity, identity.Value);
+        }
+
+        /// <summary>
+        /// Get an entity using the specified identity.
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public TEntity Get<TEntity>(IIdentity<TEntity> identity) where TEntity : class, IEntity
+        {
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            return query.Get(identity);
+        }
+
+        /// <summary>
+        /// Create a query for entities.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public IQueryable<TEntity> Query<TEntity>() where TEntity : class, IEntity
+        {
+            return query.Query<TEntity>();
+        }
+
+        /// <summary>
+        /// Remove the specified entity.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public void Remove<TEntity>(TEntity entity) where TEntity : class, IEntity
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            persister.Delete(entity, entity.GetIdentity()?.Value);
+        }
+
+        /// <summary>
+        /// Remove the specified entity from the data-store using its identity.
+        /// </summary>
+        /// <param name="identity">The identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public void Remove<TEntity>(IIdentity<TEntity> identity) where TEntity : class, IEntity
+        {
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            var instance = query.Get(identity);
+            if (instance == null) return;
+            persister.Delete(instance, identity.Value);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Gets an instance of an object which is <typeparamref name="TEntity"/>.  This might be an object
+        /// from the data-store, or it might be a stub/proxy or other form of stand-in object.
+        /// </para>
+        /// <para>
+        /// This function should be used when the 'real' entity is not required but where a stand-in will suffice,
+        /// and where all that is required of the stand-in is for it to have to correct identity.
+        /// </para>
+        /// <para>
+        /// This function will never return <c>null</c>, but will also not make unneccesary use of the
+        /// underlying data-store.
+        /// </para>
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class, IEntity
+        {
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            return query.Theorise(identity);
+        }
+
+        /// <summary>
+        /// Update the specified entity.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public void Update<TEntity>(TEntity entity) where TEntity : class, IEntity
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            persister.Update(entity, entity.GetIdentity()?.Value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntityData"/> class.
+        /// </summary>
+        /// <param name="query">Query.</param>
+        /// <param name="persister">Persister.</param>
+        public EntityData(IQuery query, IPersister persister)
+        {
+            this.query = query ?? throw new ArgumentNullException(nameof(query));
+            this.persister = persister ?? throw new ArgumentNullException(nameof(persister));
+        }
     }
-
-    /// <summary>
-    /// Get an entity using the specified identity.
-    /// </summary>
-    /// <param name="identity">Identity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    public virtual TEntity Get<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity
-    {
-      if(identity == null)
-        throw new ArgumentNullException(nameof(identity));
-
-      return QueryService.Get(identity);
-    }
-
-    /// <summary>
-    /// Create a query for entities.
-    /// </summary>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    public virtual IQueryable<TEntity> Query<TEntity>() where TEntity : class,IEntity
-    {
-      return QueryService.Query<TEntity>();
-    }
-
-    /// <summary>
-    /// Remove the specified entity.
-    /// </summary>
-    /// <param name="entity">Entity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    public virtual void Remove<TEntity>(TEntity entity) where TEntity : class,IEntity
-    {
-      if(entity == null)
-        throw new ArgumentNullException(nameof(entity));
-
-      Persister.Delete(entity, entity.GetIdentity()?.Value);
-    }
-
-    /// <summary>
-    /// Create a theory object which assumes that an entity exists with the specified identity.
-    /// This operation will never return <c>null</c> but will not neccesarily make use of the underlying data-store.
-    /// </summary>
-    /// <param name="identity">Identity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    public virtual TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity
-    {
-      if(identity == null)
-        throw new ArgumentNullException(nameof(identity));
-
-      return QueryService.Theorise(identity);
-    }
-
-    /// <summary>
-    /// Update the specified entity.
-    /// </summary>
-    /// <param name="entity">Entity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    public virtual void Update<TEntity>(TEntity entity) where TEntity : class,IEntity
-    {
-      if(entity == null)
-        throw new ArgumentNullException(nameof(entity));
-
-      Persister.Update(entity, entity.GetIdentity()?.Value);
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="EntityData"/> class.
-    /// </summary>
-    /// <param name="query">Query.</param>
-    /// <param name="persister">Persister.</param>
-    public EntityData(IQuery query,
-                      IPersister persister)
-    {
-      if(persister == null)
-        throw new ArgumentNullException(nameof(persister));
-      if(query == null)
-        throw new ArgumentNullException(nameof(query));
-
-      this.query = query;
-      this.persister = persister;
-    }
-  }
 }

@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System;
 
-namespace CSF.ORM.InMemory
+namespace CSF.ORM
 {
     /// <summary>
     /// Exception raised when a transaction has been rolled back.

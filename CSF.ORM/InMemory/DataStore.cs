@@ -1,10 +1,10 @@
 ﻿//
-// INumberGenerator.cs
+// InMemoryDataStore.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,30 +23,34 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-namespace CSF.ORM.Entities
+using System.Collections.Generic;
+using System.Threading;
+
+namespace CSF.ORM.InMemory
 {
-  /// <summary>
-  /// A number generation service which creates integral numeric values.
-  /// </summary>
-  public interface INumberGenerator
-  {
     /// <summary>
-    /// Gets a 64 bit integer.
+    /// A storage back-end for an in memory database.
     /// </summary>
-    /// <returns>The generated number.</returns>
-    long GetLong();
+    public class DataStore
+    {
+        /// <summary>
+        /// Gets a synchronisation object under which the current instance may be locked.
+        /// </summary>
+        public readonly ReaderWriterLockSlim SyncRoot;
 
-    /// <summary>
-    /// Gets a 32 bit integer.
-    /// </summary>
-    /// <returns>The generated number.</returns>
-    int GetInt();
+        /// <summary>
+        /// Gets the collection of items in the data store.
+        /// </summary>
+        /// <value>The data items.</value>
+        public ICollection<DataItem> Items { get; }
 
-    /// <summary>
-    /// Gets an 8 bit integer.
-    /// </summary>
-    /// <returns>The generated number.</returns>
-    byte GetByte();
-  }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataStore"/> class.
+        /// </summary>
+        public DataStore()
+        {
+            Items = new HashSet<DataItem>();
+            SyncRoot = new ReaderWriterLockSlim();
+        }
+    }
 }

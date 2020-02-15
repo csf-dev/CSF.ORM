@@ -28,9 +28,9 @@ using System;
 namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// Represents an item in an <see cref="InMemoryDataStore"/>
+    /// Represents an item in an <see cref="DataStore"/>
     /// </summary>
-    public sealed class InMemoryDataItem : IEquatable<InMemoryDataItem>
+    public sealed class DataItem : IEquatable<DataItem>
     {
         /// <summary>
         /// Gets the <see cref="ValueType"/> for which the item is stored.  Typically this is equal to <see cref="Object.GetType()"/> for the <see cref="Value"/>.
@@ -51,31 +51,31 @@ namespace CSF.ORM.InMemory
         public object Value { get; }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="InMemoryDataItem"/> object.
+        /// Serves as a hash function for a <see cref="DataItem"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.</returns>
         public override int GetHashCode() => ValueType.GetHashCode() ^ Identity.GetHashCode();
 
         /// <summary>
-        /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="InMemoryDataItem"/>.
+        /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="DataItem"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="InMemoryDataItem"/>.</param>
+        /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="DataItem"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current
-        /// <see cref="InMemoryDataItem"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="DataItem"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             if (obj is null) return false;
-            if (obj.GetType() != typeof(InMemoryDataItem)) return false;
-            return Equals((InMemoryDataItem) obj);
+            if (obj.GetType() != typeof(DataItem)) return false;
+            return Equals((DataItem) obj);
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="InMemoryDataItem"/> is equal to the current <see cref="InMemoryDataItem"/>.
+        /// Determines whether the specified <see cref="DataItem"/> is equal to the current <see cref="DataItem"/>.
         /// </summary>
-        /// <param name="other">The <see cref="InMemoryDataItem"/> to compare with the current <see cref="InMemoryDataItem"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="InMemoryDataItem"/> is equal to the current
-        /// <see cref="InMemoryDataItem"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(InMemoryDataItem other)
+        /// <param name="other">The <see cref="DataItem"/> to compare with the current <see cref="DataItem"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="DataItem"/> is equal to the current
+        /// <see cref="DataItem"/>; otherwise, <c>false</c>.</returns>
+        public bool Equals(DataItem other)
         {
             if (other is null) return false;
             if (ReferenceEquals(other, this)) return true;
@@ -85,12 +85,12 @@ namespace CSF.ORM.InMemory
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryDataItem"/> class.
+        /// Initializes a new instance of the <see cref="DataItem"/> class.
         /// </summary>
         /// <param name="valueType">The type for which the object is being stored.</param>
         /// <param name="identity">The value's identity.</param>
         /// <param name="value">The data value.</param>
-        public InMemoryDataItem(Type valueType, object identity, object value)
+        public DataItem(Type valueType, object identity, object value)
         {
             ValueType = valueType ?? throw new ArgumentNullException(nameof(valueType));
             Identity = identity ?? throw new ArgumentNullException(nameof(identity));

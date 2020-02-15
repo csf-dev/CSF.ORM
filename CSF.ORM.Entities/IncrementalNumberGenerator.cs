@@ -26,31 +26,31 @@
 using System;
 using System.Threading;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
-  /// <summary>
-  /// Implementation of <see cref="INumberGenerator"/> which generates numeric values incrementally.
-  /// </summary>
-  public class IncrementalNumberGenerator : INumberGenerator
-  {
-    long nextNumber = 1;
-
     /// <summary>
-    /// Gets a 64 bit integer.
+    /// Implementation of <see cref="IGeneratesNumbers"/> which generates numeric values incrementally.
     /// </summary>
-    /// <returns>The generated number.</returns>
-    public long GetLong() => Interlocked.Increment(ref nextNumber);
+    public class IncrementalNumberGenerator : IGeneratesNumbers
+    {
+        long nextNumber = 1;
 
-    /// <summary>
-    /// Gets a 32 bit integer.
-    /// </summary>
-    /// <returns>The generated number.</returns>
-    public int GetInt() => unchecked((int) GetLong());
+        /// <summary>
+        /// Gets a 64 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        public long GetLong() => Interlocked.Increment(ref nextNumber);
 
-    /// <summary>
-    /// Gets an 8 bit integer.
-    /// </summary>
-    /// <returns>The generated number.</returns>
-    public byte GetByte() => unchecked((byte) GetLong());
-  }
+        /// <summary>
+        /// Gets a 32 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        public int GetInt() => unchecked((int)GetLong());
+
+        /// <summary>
+        /// Gets an 8 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        public byte GetByte() => unchecked((byte)GetLong());
+    }
 }

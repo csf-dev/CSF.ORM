@@ -37,9 +37,9 @@ namespace CSF.ORM.InMemory
     /// This type is intended for the purpose of mocking data-sets and queries (IE: it is a test fake).
     /// </para>
     /// </remarks>
-    public class InMemoryQuery : IQuery
+    public class DataQuery : IQuery
     {
-        readonly InMemoryDataStore store;
+        readonly DataStore store;
 
         /// <summary>
         /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
@@ -55,11 +55,24 @@ namespace CSF.ORM.InMemory
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public TQueried Theorise<TQueried>(object identityValue) where TQueried : class
         {
+            if (identityValue == null)
+                throw new ArgumentNullException(nameof(identityValue));
+
             try
             {
                 store.SyncRoot.EnterReadLock();
 
-                return Get<TQueried>(identityValue);
+                var actualObject = Get<TQueried>(identityValue);
+                if (actualObject != null) return actualObject;
+
+                try
+                {
+                    return Activator.CreateInstance<TQueried>();
+                }
+                catch(Exception e)
+                {
+                    throw new CannotTheoriseException($"Cannot create a theory object of type {typeof(TQueried).FullName}", e);
+                }
             }
             finally
             {
@@ -123,7 +136,7 @@ namespace CSF.ORM.InMemory
             }
         }
 
-        IQueryable<InMemoryDataItem> GetItemsOfType<TQueried>() where TQueried : class
+        IQueryable<DataItem> GetItemsOfType<TQueried>() where TQueried : class
         {
             return store.Items
                 .Where(x => typeof(TQueried).IsAssignableFrom(x.ValueType))
@@ -131,10 +144,10 @@ namespace CSF.ORM.InMemory
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryQuery"/> class.
+        /// Initializes a new instance of the <see cref="InMemory.DataQuery"/> class.
         /// </summary>
         /// <param name="store">The data-store which will be used by this query.</param>
-        public InMemoryQuery(InMemoryDataStore store)
+        public DataQuery(DataStore store)
         {
             this.store = store ?? throw new ArgumentNullException(nameof(store));
         }

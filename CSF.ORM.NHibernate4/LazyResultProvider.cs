@@ -1,5 +1,5 @@
 ﻿//
-// IGetsLazyQueryResult.cs
+// LazyResultProvider.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -27,15 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using NHibernate.Linq;
+using NhQueryProvider = NHibernate.Linq.DefaultQueryProvider;
 
-namespace CSF.ORM
+namespace CSF.ORM.NHibernate
 {
-    /// <summary>
-    /// A service which can get 'lazy' results from a query.
-    /// This generally means that the interaction the underlying data-source is
-    /// deferred until the lazy object's value is used.
-    /// </summary>
-    public interface IGetsLazyQueryResult
+    public class LazyResultProvider : IGetsLazyQueryResult
     {
         /// <summary>
         /// Gets the result of the query as an <see cref="IList{T}"/>, but lazily so
@@ -44,7 +41,17 @@ namespace CSF.ORM
         /// <returns>The lazy query result.</returns>
         /// <param name="query">The query.</param>
         /// <typeparam name="T">The type of object queried.</typeparam>
-        Lazy<IList<T>> GetLazyList<T>(IQueryable<T> query);
+        public Lazy<IList<T>> GetLazyList<T>(IQueryable<T> query)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            if(!(query.Provider is NhQueryProvider))
+                throw new ArgumentException($"The query provider must be an instance of {typeof(NhQueryProvider).FullName}.", nameof(query));
+
+            var futureEnumerable = LinqExtensionMethods.ToFuture(query);
+            return new Lazy<IList<T>>(() => futureEnumerable.ToList());
+        }
 
         /// <summary>
         /// Gets the result of a getter-expression from the query, but lazily so
@@ -53,7 +60,17 @@ namespace CSF.ORM
         /// <returns>The lazy value.</returns>
         /// <param name="query">The query.</param>
         /// <typeparam name="T">The type of object queried.</typeparam>
-        Lazy<T> GetLazyValue<T>(IQueryable<T> query);
+        public Lazy<T> GetLazyValue<T>(IQueryable<T> query)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            if (!(query.Provider is NhQueryProvider))
+                throw new ArgumentException($"The query provider must be an instance of {typeof(NhQueryProvider).FullName}.", nameof(query));
+
+            var futureValue = LinqExtensionMethods.ToFutureValue(query);
+            return new Lazy<T>(() => futureValue.Value);
+        }
 
         /// <summary>
         /// Gets the result of a getter-expression from the query, but lazily so
@@ -64,6 +81,16 @@ namespace CSF.ORM
         /// <param name="valueExpression">An expression which would retrieve the value from the query.</param>
         /// <typeparam name="T">The type of object queried.</typeparam>
         /// <typeparam name="V">The type of the value retrieved from the query.</typeparam>
-        Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression);
+        public Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            if (!(query.Provider is NhQueryProvider))
+                throw new ArgumentException($"The query provider must be an instance of {typeof(NhQueryProvider).FullName}.", nameof(query));
+
+            var futureValue = LinqExtensionMethods.ToFutureValue(query, valueExpression);
+            return new Lazy<V>(() => futureValue.Value);
+        }
     }
 }

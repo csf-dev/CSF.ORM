@@ -36,8 +36,8 @@ namespace CSF.ORM.Tests.InMemory
     public class InMemoryQueryTests
     {
         [Test, AutoMoqData]
-        public void Query_gets_queryable_of_items_of_correct_type([Frozen] InMemoryDataStore store,
-                                                                  InMemoryQuery sut,
+        public void Query_gets_queryable_of_items_of_correct_type([Frozen] DataStore store,
+                                                                  DataQuery sut,
                                                                   Person item1,
                                                                   Person item2)
         {
@@ -48,9 +48,8 @@ namespace CSF.ORM.Tests.InMemory
         }
 
         [Test, AutoMoqData]
-        public void Query_does_not_include_items_of_other_types([Frozen] InMemoryDataStore store,
-                                                                InMemoryQuery sut,
-                                                                Person item1,
+        public void Query_does_not_include_items_of_other_types([Frozen] DataStore store,
+                                                                DataQuery sut,                                                           Person item1,
                                                                 Person item2,
                                                                 Animal animal1,
                                                                 Animal animal2)
@@ -64,9 +63,9 @@ namespace CSF.ORM.Tests.InMemory
         }
 
         [Test, AutoMoqData]
-        public void Get_retrieves_correct_item([Frozen] InMemoryDataStore store,
-                                               InMemoryQuery sut,
-                                               Person item1,
+        public void Get_retrieves_correct_item([Frozen] DataStore store,
+                                                                DataQuery sut,
+             Person item1,
                                                Person item2)
         {
             AddToStore(store, item1);
@@ -75,16 +74,16 @@ namespace CSF.ORM.Tests.InMemory
             Assert.That(sut.Get<Person>(item1.Identity), Is.SameAs(item1));
         }
 
-        void AddToStore(InMemoryDataStore store, Person person)
+        void AddToStore(DataStore store, Person person)
         {
             var id = person.Identity;
-            store.Items.Add(new InMemoryDataItem(typeof(Person), id, person));
+            store.Items.Add(new DataItem(typeof(Person), id, person));
         }
 
-        void AddToStore(InMemoryDataStore store, Animal animal)
+        void AddToStore(DataStore store, Animal animal)
         {
             var id = animal.Identity;
-            store.Items.Add(new InMemoryDataItem(typeof(Animal), id, animal));
+            store.Items.Add(new DataItem(typeof(Animal), id, animal));
         }
     }
 }

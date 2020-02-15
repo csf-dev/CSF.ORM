@@ -1,5 +1,5 @@
 ﻿//
-// IIdentityGenerator.cs
+// InMemoryQueryExtensions.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,33 +24,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
 using CSF.Entities;
+using CSF.ORM.InMemory;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
-  /// <summary>
-  /// Generator service which creates new identifiers for entities.
-  /// </summary>
-  public interface IIdentityGenerator
-  {
     /// <summary>
-    /// Generates a new identity.
+    /// Extension methods for <see cref="DataPersister"/>.
     /// </summary>
-    /// <returns>The generated identity.</returns>
-    /// <typeparam name="T">The identity type.</typeparam>
-    T GenerateIdentity<T>();
+    public static class InMemoryPersisterExtensions
+    {
+        /// <summary>
+        /// Adds a collection of entities to the given persister.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="entities">The entities.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public static void BulkAdd<TEntity>(this DataPersister query, IEnumerable<TEntity> entities) where TEntity : class, IEntity
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
 
-    /// <summary>
-    /// Generates a new identity.
-    /// </summary>
-    /// <returns>The generated identity.</returns>
-    /// <param name="identityType">The identity type.</param>
-    object GenerateIdentity(Type identityType);
-
-    /// <summary>
-    /// Generates an identity for the given entity and stores it within that entity instance.
-    /// </summary>
-    /// <param name="entity">An entity for which to generate an identity.</param>
-    void GenerateIdentity(IEntity entity);
-  }
+            query.BulkAdd(entities, item => item.IdentityValue);
+        }
+    }
 }

@@ -27,53 +27,70 @@ using System;
 using System.Linq;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
-  /// <summary>
-  /// An abstraction exposing a data-source for entities.
-  /// </summary>
-  public interface IEntityData
-  {
     /// <summary>
-    /// Add the specified entity.
+    /// An object which provides access to an ORM-like data source for entities.
     /// </summary>
-    /// <param name="entity">Entity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    void Add<TEntity>(TEntity entity) where TEntity : class,IEntity;
+    public interface IEntityData
+    {
+        /// <summary>
+        /// Add the specified entity to the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        void Add<TEntity>(TEntity entity) where TEntity : class, IEntity;
 
-    /// <summary>
-    /// Update the specified entity.
-    /// </summary>
-    /// <param name="entity">Entity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    void Update<TEntity>(TEntity entity) where TEntity : class,IEntity;
+        /// <summary>
+        /// Update the specified entity in the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        void Update<TEntity>(TEntity entity) where TEntity : class, IEntity;
 
-    /// <summary>
-    /// Remove the specified entity.
-    /// </summary>
-    /// <param name="entity">Entity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    void Remove<TEntity>(TEntity entity) where TEntity : class,IEntity;
+        /// <summary>
+        /// Remove the specified entity from the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        void Remove<TEntity>(TEntity entity) where TEntity : class, IEntity;
 
-    /// <summary>
-    /// Get an entity using the specified identity.
-    /// </summary>
-    /// <param name="identity">Identity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    TEntity Get<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity;
+        /// <summary>
+        /// Remove the specified entity from the data-store using its identity.
+        /// </summary>
+        /// <param name="identity">The identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        void Remove<TEntity>(IIdentity<TEntity> identity) where TEntity : class, IEntity;
 
-    /// <summary>
-    /// Create an object instance which assumes that an entity exists with the specified identity.
-    /// This operation will never return <c>null</c> but will not neccesarily make use of the underlying data-store.
-    /// </summary>
-    /// <param name="identity">Identity.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class,IEntity;
+        /// <summary>
+        /// Get an entity using the specified identity.
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        TEntity Get<TEntity>(IIdentity<TEntity> identity) where TEntity : class, IEntity;
 
-    /// <summary>
-    /// Create a query for entities.
-    /// </summary>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
-    IQueryable<TEntity> Query<TEntity>() where TEntity : class,IEntity;
-  }
+        /// <summary>
+        /// <para>
+        /// Gets an instance of an object which is <typeparamref name="TEntity"/>.  This might be an object
+        /// from the data-store, or it might be a stub/proxy or other form of stand-in object.
+        /// </para>
+        /// <para>
+        /// This function should be used when the 'real' entity is not required but where a stand-in will suffice,
+        /// and where all that is required of the stand-in is for it to have to correct identity.
+        /// </para>
+        /// <para>
+        /// This function will never return <c>null</c>, but will also not make unneccesary use of the
+        /// underlying data-store.
+        /// </para>
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class, IEntity;
+
+        /// <summary>
+        /// Create a query for the specified entity type.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        IQueryable<TEntity> Query<TEntity>() where TEntity : class, IEntity;
+    }
 }

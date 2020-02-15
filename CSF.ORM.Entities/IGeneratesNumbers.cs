@@ -1,10 +1,10 @@
 ﻿//
-// InMemoryLazyResultProvider.cs
+// INumberGenerator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,33 +24,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace CSF.ORM.InMemory
+namespace CSF.ORM
 {
     /// <summary>
-    /// In-memory implementation of <see cref="IGetsLazyQueryResult"/>, which just returns plain lazy objects.
+    /// A number generation service which creates integral numeric values.
     /// </summary>
-    public class InMemoryLazyResultProvider : IGetsLazyQueryResult
+    public interface IGeneratesNumbers
     {
-        public Lazy<IEnumerable<T>> GetLazyEnumerable<T>(IQueryable<T> query)
-        {
-            if (query == null)
-                throw new ArgumentNullException(nameof(query));
+        /// <summary>
+        /// Gets a 64 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        long GetLong();
 
-            return new Lazy<IEnumerable<T>>(() => query.AsEnumerable());
-        }
+        /// <summary>
+        /// Gets a 32 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        int GetInt();
 
-        public Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
-        {
-            if (query == null)
-                throw new ArgumentNullException(nameof(query));
-            if (valueExpression == null)
-                throw new ArgumentNullException(nameof(valueExpression));
-
-            return new Lazy<V>(() => valueExpression.Compile()(query));
-        }
+        /// <summary>
+        /// Gets an 8 bit integer.
+        /// </summary>
+        /// <returns>The generated number.</returns>
+        byte GetByte();
     }
 }

@@ -26,83 +26,74 @@
 using System;
 using CSF.Entities;
 
-namespace CSF.ORM.Entities
+namespace CSF.ORM
 {
-  /// <summary>
-  /// In-memory implementation of <see cref="IIdentityGenerator"/>.  Please note that this is not suitable for
-  /// production usage.
-  /// </summary>
-  public class InMemoryIdentityGenerator : IIdentityGenerator
-  {
-    static readonly INumberGenerator DefaultGenerator = new IncrementalNumberGenerator();
-    readonly INumberGenerator numberGenerator;
-
     /// <summary>
-    /// Generates a new identity.
+    /// Implementation of <see cref="IGeneratesIdentity"/> which uses a simple/naive strategy
+    /// for creating entity identities.  Please note that this is not suitable for production usage.
     /// </summary>
-    /// <returns>The generated identity.</returns>
-    /// <param name="identityType">The identity type.</param>
-    public object GenerateIdentity(Type identityType)
+    public class InMemoryIdentityGenerator : IGeneratesIdentity
     {
-      if(identityType == null)
-        throw new ArgumentNullException(nameof(identityType));
+        static readonly IGeneratesNumbers DefaultGenerator = new IncrementalNumberGenerator();
 
-      if(identityType == typeof(long))
-      {
-        return numberGenerator.GetLong();
-      }
-      if(identityType == typeof(int))
-      {
-        return numberGenerator.GetInt();
-      }
-      if(identityType == typeof(byte))
-      {
-        return numberGenerator.GetByte();
-      }
-      if(identityType == typeof(Guid))
-      {
-        return Guid.NewGuid();
-      }
-      if(identityType == typeof(string))
-      {
-        return Guid.NewGuid().ToString();
-      }
+        readonly IGeneratesNumbers numberGenerator;
 
-      throw new ArgumentException($"The identity type {identityType.Name} is not supported by this generator.",
-                                  nameof(identityType));
+        /// <summary>
+        /// Gets a new identity value of the specified type.
+        /// </summary>
+        /// <returns>The generated identity.</returns>
+        /// <param name="identityType">The identity type.</param>
+        public object GetIdentity(Type identityType)
+        {
+            if (identityType == null)
+                throw new ArgumentNullException(nameof(identityType));
+
+            if (identityType == typeof(long))
+                return numberGenerator.GetLong();
+            if (identityType == typeof(int))
+                return numberGenerator.GetInt();
+            if (identityType == typeof(byte))
+                return numberGenerator.GetByte();
+            if (identityType == typeof(Guid))
+                return Guid.NewGuid();
+            if (identityType == typeof(string))
+                return Guid.NewGuid().ToString();
+
+            throw new ArgumentException($"The identity type {identityType.Name} is not supported by this generator.",
+                                        nameof(identityType));
+        }
+
+        /// <summary>
+        /// Gets a new identity value of the specified type.
+        /// </summary>
+        /// <returns>The generated identity.</returns>
+        /// <typeparam name="T">The identity type.</typeparam>
+        public T GetIdentity<T>()
+        {
+            return (T) GetIdentity(typeof(T));
+        }
+
+        /// <summary>
+        /// Updates the given entity object, ensuring that it has an identity value.
+        /// </summary>
+        /// <param name="entity">An entity for which to generate an identity.</param>
+        public void UpdateWithIdentity(IEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+            if (entity.HasIdentity) return;
+
+            var identity = GetIdentity(entity.GetIdentityType());
+            entity.SetIdentity(identity);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InMemoryIdentityGenerator"/> class.
+        /// </summary>
+        /// <param name="numberGenerator">A number generator service.</param>
+        public InMemoryIdentityGenerator(IGeneratesNumbers numberGenerator  = null)
+        {
+            this.numberGenerator = numberGenerator ?? DefaultGenerator;
+        }
     }
-
-    /// <summary>
-    /// Generates a new identity.
-    /// </summary>
-    /// <returns>The generated identity.</returns>
-    /// <typeparam name="T">The identity type.</typeparam>
-    public T GenerateIdentity<T>()
-    {
-      return (T) GenerateIdentity(typeof(T));
-    }
-
-    /// <summary>
-    /// Generates an identity for the given entity and stores it within that entity instance.
-    /// </summary>
-    /// <param name="entity">An entity for which to generate an identity.</param>
-    public void GenerateIdentity(IEntity entity)
-    {
-      if(entity == null)
-        throw new ArgumentNullException(nameof(entity));
-
-      var identityType = entity.GetIdentityType();
-      var identity = GenerateIdentity(identityType);
-      entity.SetIdentity(identity);
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="InMemoryIdentityGenerator"/> class.
-    /// </summary>
-    /// <param name="numberGenerator">A number generator service.</param>
-    public InMemoryIdentityGenerator(INumberGenerator numberGenerator = null)
-    {
-      this.numberGenerator = numberGenerator ?? DefaultGenerator;
-    }
-  }
 }
