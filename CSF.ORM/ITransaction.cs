@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,19 +26,19 @@
 using System;
 namespace CSF.ORM
 {
-  /// <summary>
-  /// Represents a transaction, against some form of data backend.
-  /// </summary>
-  public interface ITransaction : IDisposable
-  {
     /// <summary>
-    /// Commit this transaction to the back-end.
+    /// Represents a transaction, against some form of data backend.
     /// </summary>
-    void Commit();
+    public interface ITransaction : IDisposable
+    {
+        /// <summary>
+        /// Commit this transaction to the back-end.
+        /// </summary>
+        void Commit();
 
-    /// <summary>
-    /// Roll the transaction back and abort changes.
-    /// </summary>
-    void Rollback();
-  }
+        /// <summary>
+        /// Roll the transaction back and abort changes.
+        /// </summary>
+        void Rollback();
+    }
 }

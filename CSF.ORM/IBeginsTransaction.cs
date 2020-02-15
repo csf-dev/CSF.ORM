@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,15 @@
 
 namespace CSF.ORM
 {
-  /// <summary>
-  /// An object which can begin a new transaction within a data-store.
-  /// </summary>
-  public interface IBeginsTransaction
-  {
     /// <summary>
-    /// Attempts to begin a new transaction.
+    /// An object which can begin a new transaction within a data-store.
     /// </summary>
-    /// <returns>The transaction.</returns>
-    ITransaction BeginTransaction();
-  }
+    public interface IBeginsTransaction
+    {
+        /// <summary>
+        /// Attempts to begin a new transaction.
+        /// </summary>
+        /// <returns>The transaction.</returns>
+        ITransaction BeginTransaction();
+    }
 }

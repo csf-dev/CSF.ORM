@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,9 @@ using System.Linq;
 
 namespace CSF.ORM
 {
-  /// <summary>
-  /// An object which represents an <see cref="IQueryable{T}"/> but also includes a request
-  /// to eagerly-fetch data from the query.
-  /// </summary>
-  public interface IQueryableWithEagerFetching<TQueried,TFetched> : IOrderedQueryable<TQueried>, IProvidesQueryable<TQueried> { }
+    /// <summary>
+    /// An object which represents an <see cref="IQueryable{T}"/> but also includes a request
+    /// to eagerly-fetch data from the query.
+    /// </summary>
+    public interface IQueryableWithEagerFetching<TQueried, TFetched> : IOrderedQueryable<TQueried>, IProvidesQueryable<TQueried> { }
 }

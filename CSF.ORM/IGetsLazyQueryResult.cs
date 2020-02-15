@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,31 +30,31 @@ using System.Linq.Expressions;
 
 namespace CSF.ORM
 {
-  /// <summary>
-  /// A service which can get 'lazy' results from a query.
-  /// This generally means that the interaction the underlying data-source is
-  /// deferred until the lazy object's value is used.
-  /// </summary>
-  public interface IGetsLazyQueryResult
-  {
     /// <summary>
-    /// Gets the result of the query as an <see cref="IEnumerable{T}"/>, but lazily so
-    /// that the data-source will not be contacted until the value is retrieved.
+    /// A service which can get 'lazy' results from a query.
+    /// This generally means that the interaction the underlying data-source is
+    /// deferred until the lazy object's value is used.
     /// </summary>
-    /// <returns>The lazy query result.</returns>
-    /// <param name="query">The query.</param>
-    /// <typeparam name="T">The type of object queried.</typeparam>
-    Lazy<IEnumerable<T>> GetLazyEnumerable<T>(IQueryable<T> query);
+    public interface IGetsLazyQueryResult
+    {
+        /// <summary>
+        /// Gets the result of the query as an <see cref="IEnumerable{T}"/>, but lazily so
+        /// that the data-source will not be contacted until the value is retrieved.
+        /// </summary>
+        /// <returns>The lazy query result.</returns>
+        /// <param name="query">The query.</param>
+        /// <typeparam name="T">The type of object queried.</typeparam>
+        Lazy<IEnumerable<T>> GetLazyEnumerable<T>(IQueryable<T> query);
 
-    /// <summary>
-    /// Gets the result of a getter-expression from the query, but lazily so
-    /// that the data-source will not be contacted until the value is retrieved.
-    /// </summary>
-    /// <returns>The lazy value.</returns>
-    /// <param name="query">The query.</param>
-    /// <param name="valueExpression">An expression which would retrieve the value from the query.</param>
-    /// <typeparam name="T">The type of object queried.</typeparam>
-    /// <typeparam name="V">The type of the value retrieved from the query.</typeparam>
-    Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression);
-  }
+        /// <summary>
+        /// Gets the result of a getter-expression from the query, but lazily so
+        /// that the data-source will not be contacted until the value is retrieved.
+        /// </summary>
+        /// <returns>The lazy value.</returns>
+        /// <param name="query">The query.</param>
+        /// <param name="valueExpression">An expression which would retrieve the value from the query.</param>
+        /// <typeparam name="T">The type of object queried.</typeparam>
+        /// <typeparam name="V">The type of the value retrieved from the query.</typeparam>
+        Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression);
+    }
 }

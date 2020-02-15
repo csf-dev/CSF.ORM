@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -120,7 +120,7 @@ namespace CSF.ORM
         /// <param name="valueExpression">An expression which would retrieve the value from the query.</param>
         /// <typeparam name="T">The type of object queried.</typeparam>
         /// <typeparam name="V">The type of the value retrieved from the query.</typeparam>
-        public static Lazy<V> ToLazyValue<T,V>(this IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
+        public static Lazy<V> ToLazyValue<T, V>(this IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
         {
             return LazyQueryingProvider.GetLazyValue(query, valueExpression);
         }

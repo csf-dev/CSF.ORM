@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,63 +24,132 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSF.ORM.InMemory
 {
-  /// <summary>
-  /// In-memory implementation of <see cref="IPersister"/> which works upon an <see cref="InMemoryQuery"/>.
-  /// </summary>
-  public class InMemoryPersister : IPersister
-  {
-    readonly InMemoryQuery query;
-
     /// <summary>
-    /// Adds the specified item to the data-store.
+    /// In-memory implementation of <see cref="IPersister"/> which works upon an <see cref="InMemoryQuery"/>.
     /// </summary>
-    /// <param name="item">The item.</param>
-    /// <param name="identity">The item's identity.</param>
-    /// <typeparam name="T">The item type.</typeparam>
-    public virtual object Add<T>(T item, object identity = null) where T : class
+    public class InMemoryPersister : IPersister
     {
-      if (identity == null)
-        throw new ArgumentNullException(nameof(identity));
+        readonly InMemoryDataStore store;
 
-      query.Add(item, identity);
-      return identity;
+        /// <summary>
+        /// Adds the specified item to the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <typeparam name="T">The item type.</typeparam>
+        public object Add<T>(T item, object identity = null) where T : class
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity), $"For an {nameof(InMemoryPersister)}, the identity must be specified upfront and must not be null.");
+
+            try
+            {
+                store.SyncRoot.EnterWriteLock();
+
+                var dataItem = new InMemoryDataItem(item.GetType(), identity, item);
+                store.Items.Add(dataItem);
+                return identity;
+            }
+            finally
+            {
+                if (store.SyncRoot.IsWriteLockHeld)
+                    store.SyncRoot.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// Adds many items to the data store, in bulk.
+        /// </summary>
+        /// <param name="items">The items to add.</param>
+        /// <param name="identitySelector">A selector function which gets the identity from each item to add.</param>
+        /// <typeparam name="T">The item type.</typeparam>
+        public void BulkAdd<T>(IEnumerable<T> items, Func<T,object> identitySelector) where T : class
+        {
+            if (items == null)
+                throw new ArgumentNullException(nameof(items));
+            if (identitySelector == null)
+                throw new ArgumentNullException(nameof(identitySelector));
+
+            try
+            {
+                store.SyncRoot.EnterWriteLock();
+
+                foreach (var item in items)
+                    Add(item, identitySelector);
+            }
+            finally
+            {
+                if (store.SyncRoot.IsWriteLockHeld)
+                    store.SyncRoot.ExitWriteLock();
+            }
+        }
+
+        void Add<T>(T item, Func<T, object> identitySelector) where T : class
+        {
+            if (ReferenceEquals(item, null)) return;
+
+            object identity;
+
+            try
+            {
+                identity = identitySelector(item);
+            }
+            catch(Exception e) { return; }
+
+            Add(T, identity);
+        }
+
+        /// <summary>
+        /// Deletes the specified item from the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <typeparam name="T">The item type.</typeparam>
+        public void Delete<T>(T item, object identity) where T : class
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            try
+            {
+                store.SyncRoot.EnterWriteLock();
+
+                var toDelete = store.Items.Where(x => ReferenceEquals(x.Value, item));
+                foreach (var inMemoryItem in toDelete)
+                    store.Items.Remove(inMemoryItem);
+            }
+            finally
+            {
+                if(store.SyncRoot.IsWriteLockHeld)
+                    store.SyncRoot.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// Updates the specified item in the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <typeparam name="T">The item type.</typeparam>
+        public void Update<T>(T item, object identity) where T : class
+        {
+            // Intentional no-op, because the data-store is in memory, objects are changed 'live'
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InMemoryPersister"/> class.
+        /// </summary>
+        /// <param name="store">The data store.</param>
+        public InMemoryPersister(InMemoryDataStore store)
+        {
+            this.store = store ?? throw new ArgumentNullException(nameof(store));
+        }
     }
-
-    /// <summary>
-    /// Deletes the specified item from the data-store.
-    /// </summary>
-    /// <param name="item">The item.</param>
-    /// <param name="identity">The item's identity.</param>
-    /// <typeparam name="T">The item type.</typeparam>
-    public virtual void Delete<T>(T item, object identity) where T : class
-    {
-      query.Delete(item);
-    }
-
-    /// <summary>
-    /// Updates the specified item in the data-store.
-    /// </summary>
-    /// <param name="item">The item.</param>
-    /// <param name="identity">The item's identity.</param>
-    /// <typeparam name="T">The item type.</typeparam>
-    public virtual void Update<T>(T item, object identity) where T : class
-    {
-      // Intentional no-op
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:CSF.Data.InMemoryPersister"/> class.
-    /// </summary>
-    /// <param name="query">Query.</param>
-    public InMemoryPersister(InMemoryQuery query)
-    {
-      if(query == null)
-        throw new ArgumentNullException(nameof(query));
-
-      this.query = query;
-    }
-  }
 }

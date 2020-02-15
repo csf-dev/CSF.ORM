@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@craigfowler.me.uk>
 //
-// Copyright (c) 2016 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,42 +28,42 @@ using System.Linq;
 
 namespace CSF.ORM
 {
-  /// <summary>
-  /// Interface for a query component that is capable of returning a queryable data source.
-  /// </summary>
-  public interface IQuery
-  {
     /// <summary>
-    /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
+    /// Interface for a query component that is capable of returning a queryable data source.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This method should always return a non-null object instance, even if the underlying object does not exist in the
-    /// data source.  If a 'thoery object' is created for an object which does not actually exist, then an exception
-    /// could be thrown if that theory object is used.
-    /// </para>
-    /// </remarks>
-    /// <param name="identityValue">The identity value for the object to retrieve.</param>
-    /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
-    TQueried Theorise<TQueried>(object identityValue) where TQueried : class;
+    public interface IQuery
+    {
+        /// <summary>
+        /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method should always return a non-null object instance, even if the underlying object does not exist in the
+        /// data source.  If a 'thoery object' is created for an object which does not actually exist, then an exception
+        /// could be thrown if that theory object is used.
+        /// </para>
+        /// </remarks>
+        /// <param name="identityValue">The identity value for the object to retrieve.</param>
+        /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
+        TQueried Theorise<TQueried>(object identityValue) where TQueried : class;
 
-    /// <summary>
-    /// Gets a single instance from the underlying data source, identified by an identity value.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This method will either get an object instance, or it will return <c>null</c> (if no instance is found).
-    /// </para>
-    /// </remarks>
-    /// <param name="identityValue">The identity value for the object to retrieve.</param>
-    /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
-    TQueried Get<TQueried>(object identityValue) where TQueried : class;
+        /// <summary>
+        /// Gets a single instance from the underlying data source, identified by an identity value.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method will either get an object instance, or it will return <c>null</c> (if no instance is found).
+        /// </para>
+        /// </remarks>
+        /// <param name="identityValue">The identity value for the object to retrieve.</param>
+        /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
+        TQueried Get<TQueried>(object identityValue) where TQueried : class;
 
-    /// <summary>
-    /// Gets a new queryable data-source.
-    /// </summary>
-    /// <typeparam name="TQueried">The type of queried-for object.</typeparam>
-    IQueryable<TQueried> Query<TQueried>() where TQueried : class;
-  }
+        /// <summary>
+        /// Gets a new queryable data-source.
+        /// </summary>
+        /// <typeparam name="TQueried">The type of queried-for object.</typeparam>
+        IQueryable<TQueried> Query<TQueried>() where TQueried : class;
+    }
 }
 

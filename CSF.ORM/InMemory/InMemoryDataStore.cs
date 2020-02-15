@@ -1,5 +1,5 @@
 ﻿//
-// NoOpTransactionCreator.cs
+// InMemoryDataStore.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -23,30 +23,36 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// A no-operation dummy/fake transaction creator.
+    /// A storage back-end for an in memory database.
     /// </summary>
-    public class NoOpTransactionCreator : IBeginsTransaction
+    public class InMemoryDataStore
     {
-        bool throwOnRollback;
+        /// <summary>
+        /// Gets a synchronisation object under which the current instance may be locked.
+        /// </summary>
+        public readonly ReaderWriterLockSlim SyncRoot;
+
+        readonly ISet<InMemoryDataItem> items;
 
         /// <summary>
-        /// Begins the transaction.
+        /// Gets the collection of items in the data store.
         /// </summary>
-        /// <returns>The transaction.</returns>
-        public ITransaction BeginTransaction() => new NoOpTransaction(throwOnRollback);
+        /// <value>The data items.</value>
+        public ICollection<InMemoryDataItem> Items => items;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NoOpTransactionCreator"/> class.
+        /// Initializes a new instance of the <see cref="InMemoryDataStore"/> class.
         /// </summary>
-        /// <param name="throwOnRollback">If set to <c>true</c> throw on rollback.</param>
-        public NoOpTransactionCreator(bool throwOnRollback = false)
+        public InMemoryDataStore()
         {
-            this.throwOnRollback = throwOnRollback;
+            items = new HashSet<InMemoryDataItem>();
+            SyncRoot = new ReaderWriterLockSlim();
         }
     }
 }
