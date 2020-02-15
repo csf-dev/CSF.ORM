@@ -1,10 +1,10 @@
 ﻿//
-// ITransaction.cs
+// AssemblyInfo.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 Craig Fowler
+// Copyright (c) 2020 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,5 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-namespace CSF.ORM
-{
-    /// <summary>
-    /// Represents a transaction, against some form of data backend.
-    /// </summary>
-    public interface ITransaction : IDisposable
-    {
-        /// <summary>
-        /// Commit this transaction to the back-end.
-        /// </summary>
-        void Commit();
 
-        /// <summary>
-        /// Roll the transaction back and abort changes.
-        /// </summary>
-        void Rollback();
-    }
-}
+[assembly: NUnit.Framework.NonTestAssembly]

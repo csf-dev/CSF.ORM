@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <PackOnBuild>true</PackOnBuild>
     <PackageId>CSF.ORM.NHibernate</PackageId>
     <Authors>Craig Fowler</Authors>
     <Summary>Implementation of CSF.ORM using NHibernate</Summary>
@@ -57,10 +56,6 @@
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
-    <PackageReference Include="CSF.Reflection" Version="2.0.0" />
-    <PackageReference Include="CSF.Utils" Version="6.1.1">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
   </ItemGroup>

@@ -1,5 +1,5 @@
 ﻿//
-// IPersister.cs
+// ITransactionCreator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -27,33 +27,14 @@
 namespace CSF.ORM
 {
     /// <summary>
-    /// A service which makes changes to a back-end data-store.
+    /// An object which can begin a new transaction within a data-store.
     /// </summary>
-    public interface IPersister
+    public interface IBeginsTransaction
     {
         /// <summary>
-        /// Adds the specified item to the data store.
+        /// Attempts to begin a new transaction.
         /// </summary>
-        /// <param name="item">The data item to add.</param>
-        /// <param name="identity">Optional, the item's identity.</param>
-        /// <returns>The identity value which the item has, after it was added.</returns>
-        /// <typeparam name="T">The item type.</typeparam>
-        object Add<T>(T item, object identity = null) where T : class;
-
-        /// <summary>
-        /// Updates the specified item in the data-store.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="identity">The item's identity.</param>
-        /// <typeparam name="T">The item type.</typeparam>
-        void Update<T>(T item, object identity) where T : class;
-
-        /// <summary>
-        /// Deletes the specified item from the data-store.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="identity">The item's identity.</param>
-        /// <typeparam name="T">The item type.</typeparam>
-        void Delete<T>(T item, object identity) where T : class;
+        /// <returns>The transaction.</returns>
+        ITransaction BeginTransaction();
     }
 }

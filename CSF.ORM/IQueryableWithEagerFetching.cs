@@ -1,5 +1,5 @@
 ﻿//
-// ITransaction.cs
+// IQueryableWithEagerFetching.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,21 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Linq;
+
 namespace CSF.ORM
 {
     /// <summary>
-    /// Represents a transaction, against some form of data backend.
+    /// An object which represents an <see cref="IQueryable{T}"/> but also includes a request
+    /// to eagerly-fetch data from the query.
     /// </summary>
-    public interface ITransaction : IDisposable
-    {
-        /// <summary>
-        /// Commit this transaction to the back-end.
-        /// </summary>
-        void Commit();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes.
-        /// </summary>
-        void Rollback();
-    }
+    public interface IQueryableWithEagerFetching<TQueried, TFetched> : IOrderedQueryable<TQueried>, IProvidesQueryable<TQueried> { }
 }

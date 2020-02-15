@@ -1,5 +1,5 @@
 ﻿//
-// IPersister.cs
+// IProvidesQueryable.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -23,37 +23,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
+using System.Linq;
 
 namespace CSF.ORM
 {
     /// <summary>
-    /// A service which makes changes to a back-end data-store.
+    /// An object which can provide a queryable object, for a given queried type.
     /// </summary>
-    public interface IPersister
+    public interface IProvidesQueryable<T>
     {
         /// <summary>
-        /// Adds the specified item to the data store.
+        /// Gets the querable.
         /// </summary>
-        /// <param name="item">The data item to add.</param>
-        /// <param name="identity">Optional, the item's identity.</param>
-        /// <returns>The identity value which the item has, after it was added.</returns>
-        /// <typeparam name="T">The item type.</typeparam>
-        object Add<T>(T item, object identity = null) where T : class;
-
-        /// <summary>
-        /// Updates the specified item in the data-store.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="identity">The item's identity.</param>
-        /// <typeparam name="T">The item type.</typeparam>
-        void Update<T>(T item, object identity) where T : class;
-
-        /// <summary>
-        /// Deletes the specified item from the data-store.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="identity">The item's identity.</param>
-        /// <typeparam name="T">The item type.</typeparam>
-        void Delete<T>(T item, object identity) where T : class;
+        /// <returns>The querable.</returns>
+        IQueryable<T> GetQuerable();
     }
 }

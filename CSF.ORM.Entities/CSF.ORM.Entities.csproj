@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <PackOnBuild>true</PackOnBuild>
     <PackageId>CSF.ORM.Entities</PackageId>
     <Authors>Craig Fowler</Authors>
     <Summary>Integration library between CSF.Entities and CSF.ORM</Summary>
@@ -29,5 +28,11 @@
   <ItemGroup>
     <ProjectReference Include="..\CSF.Entities\CSF.Entities.csproj" />
     <ProjectReference Include="..\CSF.ORM\CSF.ORM.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="InMemoryQueryExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="InMemoryQueryExtensions.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

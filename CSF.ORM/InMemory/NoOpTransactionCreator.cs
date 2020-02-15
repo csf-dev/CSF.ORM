@@ -1,10 +1,10 @@
 ﻿//
-// ITransactionCreator.cs
+// NoOpTransactionCreator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+
+namespace CSF.ORM.InMemory
 {
-  /// <summary>
-  /// Service which creates transactions.
-  /// </summary>
-  public interface ITransactionCreator
-  {
     /// <summary>
-    /// Attempts to begin a new transaction.
+    /// A no-operation dummy/fake transaction creator.
     /// </summary>
-    /// <returns>The transaction.</returns>
-    ITransaction BeginTransaction();
-  }
+    public class NoOpTransactionCreator : IBeginsTransaction
+    {
+        bool throwOnRollback;
+
+        /// <summary>
+        /// Begins the transaction.
+        /// </summary>
+        /// <returns>The transaction.</returns>
+        public ITransaction BeginTransaction() => new NoOpTransaction(throwOnRollback);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoOpTransactionCreator"/> class.
+        /// </summary>
+        /// <param name="throwOnRollback">If set to <c>true</c> throw on rollback.</param>
+        public NoOpTransactionCreator(bool throwOnRollback = false)
+        {
+            this.throwOnRollback = throwOnRollback;
+        }
+    }
 }

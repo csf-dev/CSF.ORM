@@ -1,5 +1,5 @@
 ﻿//
-// ITransaction.cs
+// InMemoryLazyResultProvider.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,21 +24,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// Represents a transaction, against some form of data backend.
+    /// In-memory implementation of <see cref="IGetsLazyQueryResult"/>, which just returns plain lazy objects.
     /// </summary>
-    public interface ITransaction : IDisposable
+    public class InMemoryLazyResultProvider : IGetsLazyQueryResult
     {
-        /// <summary>
-        /// Commit this transaction to the back-end.
-        /// </summary>
-        void Commit();
+        public Lazy<IEnumerable<T>> GetLazyEnumerable<T>(IQueryable<T> query)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
 
-        /// <summary>
-        /// Roll the transaction back and abort changes.
-        /// </summary>
-        void Rollback();
+            return new Lazy<IEnumerable<T>>(() => query.AsEnumerable());
+        }
+
+        public Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+            if (valueExpression == null)
+                throw new ArgumentNullException(nameof(valueExpression));
+
+            return new Lazy<V>(() => valueExpression.Compile()(query));
+        }
     }
 }

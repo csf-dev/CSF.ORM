@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <PackOnBuild>true</PackOnBuild>
     <PackageId>CSF.ORM</PackageId>
     <Authors>Craig Fowler</Authors>
     <Summary>Types related to abstracting the usage of an ORM</Summary>
@@ -27,4 +26,7 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.xml</DocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="InMemory\" />
+  </ItemGroup>
 </Project>

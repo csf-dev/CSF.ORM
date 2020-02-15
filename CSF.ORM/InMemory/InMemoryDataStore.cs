@@ -1,10 +1,10 @@
 ﻿//
-// NoOpTransactionCreator.cs
+// InMemoryDataStore.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,34 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-namespace CSF.ORM
+using System.Collections.Generic;
+using System.Threading;
+
+namespace CSF.ORM.InMemory
 {
-  /// <summary>
-  /// A no-operation dummy/fake transaction creator.
-  /// </summary>
-  public class NoOpTransactionCreator : ITransactionCreator
-  {
-    bool throwOnRollback;
-
     /// <summary>
-    /// Begins the transaction.
+    /// A storage back-end for an in memory database.
     /// </summary>
-    /// <returns>The transaction.</returns>
-    public ITransaction BeginTransaction()
+    public class InMemoryDataStore
     {
-      return new NoOpTransaction(throwOnRollback);
-    }
+        /// <summary>
+        /// Gets a synchronisation object under which the current instance may be locked.
+        /// </summary>
+        public readonly ReaderWriterLockSlim SyncRoot;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:CSF.Data.NoOpTransactionCreator"/> class.
-    /// </summary>
-    /// <param name="throwOnRollback">If set to <c>true</c> throw on rollback.</param>
-    public NoOpTransactionCreator(bool throwOnRollback = false)
-    {
-      this.throwOnRollback = throwOnRollback;
+        /// <summary>
+        /// Gets the collection of items in the data store.
+        /// </summary>
+        /// <value>The data items.</value>
+        public ICollection<InMemoryDataItem> Items { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InMemoryDataStore"/> class.
+        /// </summary>
+        public InMemoryDataStore()
+        {
+            Items = new HashSet<InMemoryDataItem>();
+            SyncRoot = new ReaderWriterLockSlim();
+        }
     }
-  }
 }

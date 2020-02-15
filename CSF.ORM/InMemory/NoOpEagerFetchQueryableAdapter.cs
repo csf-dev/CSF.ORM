@@ -1,5 +1,5 @@
 ﻿//
-// ITransaction.cs
+// NoOpEagerFetchQueryableAdapter.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,21 +24,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// Represents a transaction, against some form of data backend.
+    /// No-op implementation of <see cref="IQueryableWithEagerFetching{TQueried, TFetched}"/> which simply wraps a queryable object.
     /// </summary>
-    public interface ITransaction : IDisposable
+    public class NoOpEagerFetchQueryableAdapter<TQuery, TFetched> : IQueryableWithEagerFetching<TQuery, TFetched>
     {
-        /// <summary>
-        /// Commit this transaction to the back-end.
-        /// </summary>
-        void Commit();
+        readonly IQueryable<TQuery> queryable;
 
-        /// <summary>
-        /// Roll the transaction back and abort changes.
-        /// </summary>
-        void Rollback();
+        public Type ElementType => queryable.ElementType;
+
+        public Expression Expression => queryable.Expression;
+
+        public IQueryProvider Provider => queryable.Provider;
+
+        public IEnumerator<TQuery> GetEnumerator() => queryable.GetEnumerator();
+
+        public IQueryable<TQuery> GetQuerable() => queryable;
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public NoOpEagerFetchQueryableAdapter(IQueryable<TQuery> queryable)
+        {
+            this.queryable = queryable ?? throw new ArgumentNullException(nameof(queryable));
+        }
     }
 }

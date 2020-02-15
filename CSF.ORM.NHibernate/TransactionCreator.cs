@@ -4,9 +4,9 @@ using NHibernate;
 namespace CSF.ORM.NHibernate
 {
   /// <summary>
-  /// Implementation of <see cref="ITransactionCreator"/> which creates transactions which wrap an NHibernate transaction.
+  /// Implementation of <see cref="IBeginsTransaction"/> which creates transactions which wrap an NHibernate transaction.
   /// </summary>
-  public class TransactionCreator : ITransactionCreator
+  public class TransactionCreator : IBeginsTransaction
   {
     readonly ISession session;
 
