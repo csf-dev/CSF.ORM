@@ -9,6 +9,15 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
+    <DebugType></DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug_SingleTarget</OutputPath>
+    <DefineConstants></DefineConstants>
+    <NoWarn></NoWarn>
+    <NoStdLib>false</NoStdLib>
+  </PropertyGroup>
   <ItemGroup> 
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="AutoFixture.NUnit3" Version="4.11.0" />

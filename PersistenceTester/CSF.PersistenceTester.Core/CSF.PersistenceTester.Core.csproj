@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks Condition="'$(Configuration)' != 'Debug_SingleTarget'">netstandard2.0;net45</TargetFrameworks>
+    <TargetFramework Condition="'$(Configuration)' == 'Debug_SingleTarget'">netstandard2.0</TargetFramework>
     <RootNamespace>CSF.PersistenceTester</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
@@ -17,6 +18,18 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.Core.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <DebugType></DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug_SingleTarget</OutputPath>
+    <DefineConstants></DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <NoWarn></NoWarn>
+    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Builder\" />
