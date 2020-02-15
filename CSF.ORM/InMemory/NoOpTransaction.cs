@@ -70,7 +70,7 @@ namespace CSF.ORM.InMemory
             final = true;
 
             if (throwOnRollback)
-                throw new TransactionRollbackException();
+                throw new TransactionRollbackException($"A {nameof(NoOpTransaction)} is being rolled back and 'throw on rollback' is true.");
         }
 
         /// <summary>

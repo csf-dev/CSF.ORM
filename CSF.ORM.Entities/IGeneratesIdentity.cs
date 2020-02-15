@@ -28,29 +28,29 @@ using CSF.Entities;
 
 namespace CSF.ORM.Entities
 {
-  /// <summary>
-  /// Generator service which creates new identifiers for entities.
-  /// </summary>
-  public interface IIdentityGenerator
-  {
     /// <summary>
-    /// Generates a new identity.
+    /// Generator service which creates new identifiers for entities.
     /// </summary>
-    /// <returns>The generated identity.</returns>
-    /// <typeparam name="T">The identity type.</typeparam>
-    T GenerateIdentity<T>();
+    public interface IGeneratesIdentity
+    {
+        /// <summary>
+        /// Gets a new identity value of the specified type.
+        /// </summary>
+        /// <returns>The generated identity.</returns>
+        /// <typeparam name="T">The identity type.</typeparam>
+        T GetIdentity<T>();
 
-    /// <summary>
-    /// Generates a new identity.
-    /// </summary>
-    /// <returns>The generated identity.</returns>
-    /// <param name="identityType">The identity type.</param>
-    object GenerateIdentity(Type identityType);
+        /// <summary>
+        /// Gets a new identity value of the specified type.
+        /// </summary>
+        /// <returns>The generated identity.</returns>
+        /// <param name="identityType">The identity type.</param>
+        object GetIdentity(Type identityType);
 
-    /// <summary>
-    /// Generates an identity for the given entity and stores it within that entity instance.
-    /// </summary>
-    /// <param name="entity">An entity for which to generate an identity.</param>
-    void GenerateIdentity(IEntity entity);
-  }
+        /// <summary>
+        /// Updates the given entity object, ensuring that it has an identity value.
+        /// </summary>
+        /// <param name="entity">An entity for which to generate an identity.</param>
+        void UpdateWithIdentity(IEntity entity);
+    }
 }

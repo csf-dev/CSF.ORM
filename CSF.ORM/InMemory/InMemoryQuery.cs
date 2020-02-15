@@ -55,11 +55,24 @@ namespace CSF.ORM.InMemory
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public TQueried Theorise<TQueried>(object identityValue) where TQueried : class
         {
+            if (identityValue == null)
+                throw new ArgumentNullException(nameof(identityValue));
+
             try
             {
                 store.SyncRoot.EnterReadLock();
 
-                return Get<TQueried>(identityValue);
+                var actualObject = Get<TQueried>(identityValue);
+                if (actualObject != null) return actualObject;
+
+                try
+                {
+                    return Activator.CreateInstance<TQueried>();
+                }
+                catch(Exception e)
+                {
+                    throw new CannotTheoriseException($"Cannot create a theory object of type {typeof(TQueried).FullName}", e);
+                }
             }
             finally
             {

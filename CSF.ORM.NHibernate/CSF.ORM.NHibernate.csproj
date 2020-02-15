@@ -1,8 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+    
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(Configuration)' != 'Debug_SingleTarget'">netstandard2.0;net45</TargetFrameworks>
-    <TargetFramework Condition="'$(Configuration)' == 'Debug_SingleTarget'">netstandard2.0</TargetFramework>
     <PackageId>CSF.ORM.NHibernate</PackageId>
     <Authors>Craig Fowler</Authors>
     <Summary>Implementation of CSF.ORM using NHibernate</Summary>
@@ -24,18 +30,11 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.xml</DocumentationFile>
   </PropertyGroup>
-  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug_SingleTarget</OutputPath>
-    <DefineConstants></DefineConstants>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
-    <NoWarn></NoWarn>
-    <NoStdLib>false</NoStdLib>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
+    
   <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
   
   <ItemGroup>

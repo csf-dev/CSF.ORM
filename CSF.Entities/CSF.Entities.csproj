@@ -1,8 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(Configuration)' != 'Debug_SingleTarget'">netstandard2.0;net45</TargetFrameworks>
-    <TargetFramework Condition="'$(Configuration)' == 'Debug_SingleTarget'">netstandard2.0</TargetFramework>
     <PackageId>CSF.Entities</PackageId>
     <Authors>Craig Fowler</Authors>
     <Summary>Base types used to describe entity objects, such as would be mapped to the data-store via an ORM</Summary>
