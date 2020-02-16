@@ -12,7 +12,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <Authors>CSF Software Limited</Authors>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/csf-dev/CSF.PersistenceTester</PackageProjectUrl>
     <Summary>A persistence testing library for NHibernate</Summary>
     <Title>NHibernate persistence tester</Title>
@@ -46,7 +46,6 @@
     <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
-    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="NHibernate\" />
