@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{671772C1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.Entities", "CSF.ORM.Entities\CSF.ORM.Entities.csproj", "{3EF001E2-A559-42DB-A2DB-1A8629E7486D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate.Tests", "Tests\CSF.ORM.NHibernate.Tests\CSF.ORM.NHibernate.Tests.csproj", "{11DCF35A-6E2A-4C62-B536-14B83FF5AE07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate4.Tests", "Tests\CSF.ORM.NHibernate4.Tests\CSF.ORM.NHibernate4.Tests.csproj", "{11DCF35A-6E2A-4C62-B536-14B83FF5AE07}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate4", "CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj", "{18466B45-F3E5-46D9-808D-EA2896CC7ACD}"
 EndProject
