@@ -24,6 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using CSF.Entities;
 
 namespace CSF.ORM
@@ -77,6 +79,52 @@ namespace CSF.ORM
                 throw new ArgumentNullException(nameof(identity));
 
             return query.Get<TEntity>(identity.Value);
+        }
+
+        /// <summary>
+        /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method will always return a non-null object instance, even if the underlying object does not exist in the
+        /// data source.  If a 'thoery object' is created for an object which does not actually exist, then an exception
+        /// could be thrown if that theory object is used.
+        /// </para>
+        /// </remarks>
+        /// <param name="query">The query instance on which to operate.</param>
+        /// <param name="identity">An identity instance.</param>
+        /// <typeparam name="TEntity">The type of object to retrieve.</typeparam>
+        public static Task<TEntity> TheoriseAsync<TEntity>(this IQuery query, IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken))
+          where TEntity : class, IEntity
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            return query.TheoriseAsync<TEntity>(identity.Value, token);
+        }
+
+        /// <summary>
+        /// Gets a single instance from the underlying data source, identified by an identity object.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method will either get an object instance, or it will return <c>null</c> (if no instance is found).
+        /// </para>
+        /// </remarks>
+        /// <param name="query">The query instance on which to operate.</param>
+        /// <param name="identity">An identity instance.</param>
+        /// <typeparam name="TEntity">The type of object to retrieve.</typeparam>
+        public static Task<TEntity> GetAsync<TEntity>(this IQuery query, IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken))
+          where TEntity : class, IEntity
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            return query.GetAsync<TEntity>(identity.Value, token);
         }
     }
 }

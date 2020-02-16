@@ -26,6 +26,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace CSF.ORM.InMemory
 {
@@ -142,6 +144,12 @@ namespace CSF.ORM.InMemory
                 .Where(x => typeof(TQueried).IsAssignableFrom(x.ValueType))
                 .AsQueryable();
         }
+
+        public Task<TQueried> TheoriseAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
+            => Task.Run(() => Theorise<TQueried>(identityValue), token);
+
+        public Task<TQueried> GetAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
+            => Task.Run(() => Get<TQueried>(identityValue), token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemory.DataQuery"/> class.

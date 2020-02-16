@@ -2,6 +2,8 @@
 using NHibernate;
 using NHibernate.Linq;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace CSF.ORM.NHibernate
 {
@@ -47,6 +49,12 @@ namespace CSF.ORM.NHibernate
         /// <typeparam name="TQueried">The type of queried-for object.</typeparam>
         public IQueryable<TQueried> Query<TQueried>() where TQueried : class
             => session.Query<TQueried>();
+
+        public Task<TQueried> TheoriseAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
+            => session.LoadAsync<TQueried>(identityValue, token);
+
+        public Task<TQueried> GetAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
+            => session.GetAsync<TQueried>(identityValue, token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CSF.ORM.NHibernate.QueryAdapter"/> class.

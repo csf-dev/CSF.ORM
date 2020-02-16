@@ -26,6 +26,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CSF.ORM.InMemory
 {
@@ -146,6 +148,15 @@ namespace CSF.ORM.InMemory
         {
             // Intentional no-op, because the data-store is in memory, objects are changed 'live'
         }
+
+        public Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class
+            => Task.Run(() => Add(item, identity), token);
+
+        public Task UpdateAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
+            => Task.Run(() => Update(item, identity), token);
+
+        public Task DeleteAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
+            => Task.Run(() => Delete(item, identity), token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataPersister"/> class.

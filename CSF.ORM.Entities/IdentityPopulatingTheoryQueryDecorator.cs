@@ -25,6 +25,8 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CSF.Entities;
 
 namespace CSF.ORM
@@ -73,6 +75,19 @@ namespace CSF.ORM
         /// </summary>
         /// <typeparam name="TQueried">The type of queried-for object.</typeparam>
         public IQueryable<TQueried> Query<TQueried>() where TQueried : class => wrapped.Query<TQueried>();
+
+        public async Task<TQueried> TheoriseAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
+        {
+            var output = await wrapped.TheoriseAsync<TQueried>(identityValue, token);
+
+            if (output is IEntity entity && !entity.HasIdentity)
+                entity.SetIdentity(identityValue);
+
+            return output;
+        }
+
+        public Task<TQueried> GetAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
+            => wrapped.GetAsync<TQueried>(identityValue, token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IdentityPopulatingTheoryQueryDecorator"/> class.

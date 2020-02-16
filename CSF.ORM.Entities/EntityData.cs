@@ -26,6 +26,8 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CSF.Entities;
 
 namespace CSF.ORM
@@ -138,6 +140,57 @@ namespace CSF.ORM
                 throw new ArgumentNullException(nameof(entity));
 
             persister.Update(entity, entity.GetIdentity()?.Value);
+        }
+
+        public Task AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            var identity = Entity.GetIdentity(entity);
+            return persister.AddAsync(entity, identity.Value, token);
+        }
+
+        public Task UpdateAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            return persister.UpdateAsync(entity, entity.GetIdentity()?.Value, token);
+        }
+
+        public Task RemoveAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            return persister.DeleteAsync(entity, entity.GetIdentity()?.Value, token);
+        }
+
+        public Task RemoveAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        {
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            var instance = query.Get(identity);
+            if (instance == null) return Task.CompletedTask;
+            return persister.DeleteAsync(instance, identity.Value, token);
+        }
+
+        public Task<TEntity> GetAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        {
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            return query.GetAsync(identity, token);
+        }
+
+        public Task<TEntity> TheoriseAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        {
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
+
+            return query.TheoriseAsync(identity, token);
         }
 
         /// <summary>

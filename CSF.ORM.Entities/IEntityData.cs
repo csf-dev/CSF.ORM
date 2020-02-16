@@ -25,6 +25,8 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CSF.Entities;
 
 namespace CSF.ORM
@@ -86,6 +88,59 @@ namespace CSF.ORM
         /// <param name="identity">Identity.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
         TEntity Theorise<TEntity>(IIdentity<TEntity> identity) where TEntity : class, IEntity;
+
+        /// <summary>
+        /// Add the specified entity to the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        Task AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
+
+        /// <summary>
+        /// Update the specified entity in the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        Task UpdateAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
+
+        /// <summary>
+        /// Remove the specified entity from the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        Task RemoveAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
+
+        /// <summary>
+        /// Remove the specified entity from the data-store using its identity.
+        /// </summary>
+        /// <param name="identity">The identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        Task RemoveAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
+
+        /// <summary>
+        /// Get an entity using the specified identity.
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        Task<TEntity> GetAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
+
+        /// <summary>
+        /// <para>
+        /// Gets an instance of an object which is <typeparamref name="TEntity"/>.  This might be an object
+        /// from the data-store, or it might be a stub/proxy or other form of stand-in object.
+        /// </para>
+        /// <para>
+        /// This function should be used when the 'real' entity is not required but where a stand-in will suffice,
+        /// and where all that is required of the stand-in is for it to have to correct identity.
+        /// </para>
+        /// <para>
+        /// This function will never return <c>null</c>, but will also not make unneccesary use of the
+        /// underlying data-store.
+        /// </para>
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        Task<TEntity> TheoriseAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 
         /// <summary>
         /// Create a query for the specified entity type.

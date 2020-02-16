@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using NHibernate;
 
 namespace CSF.ORM.NHibernate
@@ -36,6 +38,15 @@ namespace CSF.ORM.NHibernate
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         public void Update<T>(T item, object identity) where T : class
             => session.Update(item);
+
+        public Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class
+            => Task.Run(() => Add(item, identity), token);
+
+        public Task UpdateAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
+            => Task.Run(() => Update(item, identity), token);
+
+        public Task DeleteAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
+            => Task.Run(() => Delete(item, identity), token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersisterAdapter"/> class.

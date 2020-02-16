@@ -48,7 +48,7 @@ namespace CSF.ORM.NHibernate
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
 
-            if (!(query is NhQueryProvider))
+            if (!(query.Provider is NhQueryProvider))
                 throw new ArgumentException($"The query provider must be an instance of {typeof(NhQueryProvider).FullName}.", nameof(query));
 
             var queryToUse = GetUnderlyingQueryIfAvailable(query);
@@ -70,7 +70,7 @@ namespace CSF.ORM.NHibernate
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
 
-            if (!(query is NhQueryProvider))
+            if (!(query.Provider is NhQueryProvider))
                 throw new ArgumentException($"The query provider must be an instance of {typeof(NhQueryProvider).FullName}.", nameof(query));
 
             var queryToUse = GetUnderlyingQueryIfAvailable(query);
@@ -93,7 +93,7 @@ namespace CSF.ORM.NHibernate
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
 
-            if (!(query is NhQueryProvider))
+            if (!(query.Provider is NhQueryProvider))
                 throw new ArgumentException($"The query provider must be an instance of {typeof(NhQueryProvider).FullName}.", nameof(query));
 
             var queryToUse = GetNhFetchRequest<TQueried,TChild>(query);
@@ -116,7 +116,7 @@ namespace CSF.ORM.NHibernate
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
 
-            if (!(query is NhQueryProvider))
+            if (!(query.Provider is NhQueryProvider))
                 throw new ArgumentException($"The query provider must be an instance of {typeof(NhQueryProvider).FullName}.", nameof(query));
 
             var queryToUse = GetNhFetchRequest<TQueried, TChild>(query);
