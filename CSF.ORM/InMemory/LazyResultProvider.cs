@@ -35,6 +35,13 @@ namespace CSF.ORM.InMemory
     /// </summary>
     public class LazyResultProvider : IGetsLazyQueryResult
     {
+        /// <summary>
+        /// Gets the result of the query as an <see cref="IList{T}"/>, but lazily so
+        /// that the data-source will not be contacted until the value is retrieved.
+        /// </summary>
+        /// <returns>The lazy query result.</returns>
+        /// <param name="query">The query.</param>
+        /// <typeparam name="T">The type of object queried.</typeparam>
         public Lazy<IList<T>> GetLazyList<T>(IQueryable<T> query)
         {
             if (query == null)
@@ -43,6 +50,13 @@ namespace CSF.ORM.InMemory
             return new Lazy<IList<T>>(() => query.ToList());
         }
 
+        /// <summary>
+        /// Gets the result of a getter-expression from the query, but lazily so
+        /// that the data-source will not be contacted until the value is retrieved.
+        /// </summary>
+        /// <returns>The lazy value.</returns>
+        /// <param name="query">The query.</param>
+        /// <typeparam name="T">The type of object queried.</typeparam>
         public Lazy<T> GetLazyValue<T>(IQueryable<T> query)
         {
             if (query == null)
@@ -51,6 +65,15 @@ namespace CSF.ORM.InMemory
             return new Lazy<T>(() => query.FirstOrDefault());
         }
 
+        /// <summary>
+        /// Gets the result of a getter-expression from the query, but lazily so
+        /// that the data-source will not be contacted until the value is retrieved.
+        /// </summary>
+        /// <returns>The lazy value.</returns>
+        /// <param name="query">The query.</param>
+        /// <param name="valueExpression">An expression which would retrieve the value from the query.</param>
+        /// <typeparam name="T">The type of object queried.</typeparam>
+        /// <typeparam name="V">The type of the value retrieved from the query.</typeparam>
         public Lazy<V> GetLazyValue<T, V>(IQueryable<T> query, Expression<Func<IQueryable<T>, V>> valueExpression)
         {
             if (query == null)

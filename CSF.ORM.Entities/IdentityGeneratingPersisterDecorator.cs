@@ -24,6 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using CSF.Entities;
 
 namespace CSF.ORM
@@ -80,6 +82,48 @@ namespace CSF.ORM
         /// <typeparam name="T">The item type.</typeparam>
         public void Delete<T>(T item, object identity) where T : class
             => wrapped.Delete<T>(item, identity);
+
+        /// <summary>
+        /// Adds the specified item to the data store.
+        /// </summary>
+        /// <param name="item">The data item to add.</param>
+        /// <param name="identity">Optional, the item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <returns>The identity value which the item has, after it was added.</returns>
+        /// <typeparam name="T">The item type.</typeparam>
+        public async Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class
+        {
+            if (identity != null)
+                return await wrapped.AddAsync<T>(item, identity, token);
+
+            if (item is IEntity entity)
+            {
+                identityGenerator.UpdateWithIdentity(entity);
+                return await wrapped.AddAsync<T>((T)entity, entity.IdentityValue, token);
+            }
+
+            return await wrapped.AddAsync<T>(item, identity, token);
+        }
+
+        /// <summary>
+        /// Updates the specified item in the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="T">The item type.</typeparam>
+        public Task UpdateAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
+            => wrapped.UpdateAsync(item, identity, token);
+
+        /// <summary>
+        /// Deletes the specified item from the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="T">The item type.</typeparam>
+        public Task DeleteAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
+            => wrapped.DeleteAsync(item, identity, token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IdentityGeneratingPersisterDecorator"/> class.

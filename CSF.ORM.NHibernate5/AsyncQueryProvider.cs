@@ -29,14 +29,15 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using NhLinq = NHibernate.Linq.LinqExtensionMethods;
 
-namespace CSF.ORM.InMemory
+namespace CSF.ORM.NHibernate
 {
     /// <summary>
-    /// An implementation of <see cref="IProvidesAsyncQuerying"/> which just runs the
-    /// commands synchronously.
+    /// An implementation of <see cref="IProvidesAsyncQuerying"/> which uses NHibernate 5.x
+    /// functionality to get the query results asynchronously.
     /// </summary>
-    public class SynchronousAsyncQueryProvider : IProvidesAsyncQuerying
+    public class AsyncQueryProvider : IProvidesAsyncQuerying
     {
         /// <summary>Determines whether all elements of a sequence satisfies a condition.</summary>
         /// <param name="source">A sequence whose elements to test for a condition.</param>
@@ -47,16 +48,17 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> or <paramref name="predicate" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<bool> AllAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.All(predicate), cancellationToken);
+            => NhLinq.AllAsync(source, predicate, cancellationToken);
 
         /// <summary>Determines whether any element of a sequence satisfies a condition.</summary>
         /// <param name="source">A sequence whose elements to test for a condition.</param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
         /// <returns>true if any elements in the source sequence pass the test in the specified predicate; otherwise, false.</returns>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<bool> AnyAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Any(), cancellationToken);
+            => NhLinq.AnyAsync(source, cancellationToken);
 
         /// <summary>Determines whether any element of a sequence satisfies a condition.</summary>
         /// <param name="source">A sequence whose elements to test for a condition.</param>
@@ -67,7 +69,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> or <paramref name="predicate" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<bool> AnyAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Any(predicate), cancellationToken);
+            => NhLinq.AnyAsync(source, predicate, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Int32"/> values.
@@ -81,7 +83,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<double> AverageAsync(IQueryable<int> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Int32"/> values.
@@ -94,7 +96,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<double?> AverageAsync(IQueryable<int?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Int64"/> values.
@@ -108,7 +110,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<double> AverageAsync(IQueryable<long> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Int64"/> values.
@@ -121,7 +123,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<double?> AverageAsync(IQueryable<long?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Single"/> values.
@@ -135,7 +137,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<float> AverageAsync(IQueryable<float> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Single"/> values.
@@ -148,7 +150,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<float?> AverageAsync(IQueryable<float?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Double"/> values.
@@ -162,7 +164,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<double> AverageAsync(IQueryable<double> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Double"/> values.
@@ -175,7 +177,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<double?> AverageAsync(IQueryable<double?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Decimal"/> values.
@@ -189,7 +191,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<decimal> AverageAsync(IQueryable<decimal> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Decimal"/> values.
@@ -202,7 +204,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<decimal?> AverageAsync(IQueryable<decimal?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(), cancellationToken);
+            => NhLinq.AverageAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Int32"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -218,7 +220,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<double> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, int>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Int32"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -233,7 +235,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<double?> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, int?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Int64"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -249,7 +251,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<double> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, long>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Int64"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -264,7 +266,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<double?> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, long?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Single"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -280,7 +282,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<float> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, float>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Single"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -295,7 +297,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<float?> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, float?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Double"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -311,7 +313,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<double> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, double>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Double"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -326,7 +328,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<double?> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, double?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of <see cref="T:System.Decimal"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -342,7 +344,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException"><paramref name="source"/> contains no elements.</exception>
         public Task<decimal> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, decimal>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="T:System.Decimal"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -357,7 +359,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<decimal?> AverageAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, decimal?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Average(selector), cancellationToken);
+            => NhLinq.AverageAsync(source, selector, cancellationToken);
 
         /// <summary>Returns the number of elements in a sequence.</summary>
         /// <param name="source">The <see cref="T:System.Linq.IQueryable`1" /> that contains the elements to be counted.</param>
@@ -368,7 +370,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The number of elements in <paramref name="source" /> is larger than <see cref="F:System.Int32.MaxValue" />.</exception>
         public Task<int> CountAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Count(), cancellationToken);
+            => NhLinq.CountAsync(source, cancellationToken);
 
         /// <summary>Returns the number of elements in the specified sequence that satisfies a condition.</summary>
         /// <param name="source">An <see cref="T:System.Linq.IQueryable`1" /> that contains the elements to be counted.</param>
@@ -380,7 +382,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The number of elements in <paramref name="source" /> is larger than <see cref="F:System.Int32.MaxValue" />.</exception>
         public Task<int> CountAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Count(predicate), cancellationToken);
+            => NhLinq.CountAsync(source, predicate, cancellationToken);
 
         /// <summary>Returns the first element of a sequence.</summary>
         /// <param name="source">The <see cref="T:System.Linq.IQueryable`1" /> to return the first element of.</param>
@@ -391,7 +393,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException">The source sequence is empty.</exception>
         public Task<TSource> FirstAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.First(), cancellationToken);
+            => NhLinq.FirstAsync(source, cancellationToken);
 
         /// <summary>Returns the first element of a sequence that satisfies a specified condition.</summary>
         /// <param name="source">An <see cref="T:System.Linq.IQueryable`1" /> to return an element from.</param>
@@ -403,7 +405,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException">No element satisfies the condition in <paramref name="predicate" />.-or-The source sequence is empty.</exception>
         public Task<TSource> FirstAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.First(predicate), cancellationToken);
+            => NhLinq.FirstAsync(source, predicate, cancellationToken);
 
         /// <summary>Returns the first element of a sequence, or a default value if the sequence contains no elements.</summary>
         /// <param name="source">The <see cref="T:System.Linq.IQueryable`1" /> to return the first element of.</param>
@@ -413,7 +415,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<TSource> FirstOrDefaultAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.FirstOrDefault(), cancellationToken);
+            => NhLinq.FirstOrDefaultAsync(source, cancellationToken);
 
         /// <summary>Returns the first element of a sequence that satisfies a specified condition or a default value if no such element is found.</summary>
         /// <param name="source">An <see cref="T:System.Linq.IQueryable`1" /> to return an element from.</param>
@@ -424,7 +426,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> or <paramref name="predicate" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<TSource> FirstOrDefaultAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.FirstOrDefault(predicate), cancellationToken);
+            => NhLinq.FirstOrDefaultAsync(source, predicate, cancellationToken);
 
         /// <summary>Returns the number of elements in a sequence.</summary>
         /// <param name="source">The <see cref="T:System.Linq.IQueryable`1" /> that contains the elements to be counted.</param>
@@ -435,7 +437,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The number of elements in <paramref name="source" /> is larger than <see cref="F:System.Int64.MaxValue" />.</exception>
         public Task<long> LongCountAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.LongCount(), cancellationToken);
+            => NhLinq.LongCountAsync(source, cancellationToken);
 
         /// <summary>Returns the number of elements in the specified sequence that satisfies a condition.</summary>
         /// <param name="source">An <see cref="T:System.Linq.IQueryable`1" /> that contains the elements to be counted.</param>
@@ -447,7 +449,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The number of elements in <paramref name="source" /> is larger than <see cref="F:System.Int64.MaxValue" />.</exception>
         public Task<long> LongCountAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.LongCount(predicate), cancellationToken);
+            => NhLinq.LongCountAsync(source, predicate, cancellationToken);
 
         /// <summary>
         /// Returns the maximum value in a generic <see cref="T:System.Linq.IQueryable`1"/>.
@@ -461,7 +463,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<TSource> MaxAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Max(), cancellationToken);
+            => NhLinq.MaxAsync(source, cancellationToken);
 
         /// <summary>
         /// Invokes a projection function on each element of a generic <see cref="T:System.Linq.IQueryable`1"/> and returns the maximum resulting value.
@@ -476,7 +478,7 @@ namespace CSF.ORM.InMemory
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is <see langword="null"/>.</exception>
         public Task<TResult> MaxAsync<TSource, TResult>(IQueryable<TSource> source, Expression<Func<TSource, TResult>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Max(selector), cancellationToken);
+            => NhLinq.MaxAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Returns the minimum value of a generic <see cref="T:System.Linq.IQueryable`1"/>.
@@ -490,7 +492,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<TSource> MinAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Min(), cancellationToken);
+            => NhLinq.MinAsync(source, cancellationToken);
 
         /// <summary>
         /// Invokes a projection function on each element of a generic <see cref="T:System.Linq.IQueryable`1"/> and returns the minimum resulting value.
@@ -506,7 +508,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<TResult> MinAsync<TSource, TResult>(IQueryable<TSource> source, Expression<Func<TSource, TResult>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Min(selector), cancellationToken);
+            => NhLinq.MinAsync(source, selector, cancellationToken);
 
         /// <summary>Returns the only element of a sequence, and throws an exception if there is not exactly one element in the sequence.</summary>
         /// <param name="source">The <see cref="T:System.Linq.IQueryable`1" /> to return the first element of.</param>
@@ -517,7 +519,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException">The source sequence is empty.</exception>
         public Task<TSource> SingleAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Single(), cancellationToken);
+            => NhLinq.SingleAsync(source, cancellationToken);
 
         /// <summary>Returns the only element of a sequence, and throws an exception if there is not exactly one element in the sequence.</summary>
         /// <param name="source">An <see cref="T:System.Linq.IQueryable`1" /> to return an element from.</param>
@@ -529,7 +531,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.InvalidOperationException">No element satisfies the condition in <paramref name="predicate" />.-or-The source sequence is empty.</exception>
         public Task<TSource> SingleAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Single(predicate), cancellationToken);
+            => NhLinq.SingleAsync(source, predicate, cancellationToken);
 
         /// <summary>Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.</summary>
         /// <param name="source">The <see cref="T:System.Linq.IQueryable`1" /> to return the single element of.</param>
@@ -539,7 +541,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<TSource> SingleOrDefaultAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.SingleOrDefault(), cancellationToken);
+            => NhLinq.SingleOrDefaultAsync(source, cancellationToken);
 
         /// <summary>Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.</summary>
         /// <param name="source">An <see cref="T:System.Linq.IQueryable`1" /> to return an element from.</param>
@@ -550,7 +552,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> or <paramref name="predicate" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<TSource> SingleOrDefaultAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.SingleOrDefault(predicate), cancellationToken);
+            => NhLinq.SingleOrDefaultAsync(source, predicate, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="T:System.Int32"/> values.
@@ -564,7 +566,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int32.MaxValue"/>.</exception>
         public Task<int> SumAsync(IQueryable<int> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of nullable <see cref="T:System.Int32"/> values.
@@ -578,7 +580,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int32.MaxValue"/>.</exception>
         public Task<int?> SumAsync(IQueryable<int?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="T:System.Int64"/> values.
@@ -592,7 +594,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int64.MaxValue"/>.</exception>
         public Task<long> SumAsync(IQueryable<long> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of nullable <see cref="T:System.Int64"/> values.
@@ -606,7 +608,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int64.MaxValue"/>.</exception>
         public Task<long?> SumAsync(IQueryable<long?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="T:System.Single"/> values.
@@ -620,7 +622,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Single.MaxValue"/>.</exception>
         public Task<float> SumAsync(IQueryable<float> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of nullable <see cref="T:System.Single"/> values.
@@ -634,7 +636,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Single.MaxValue"/>.</exception>
         public Task<float?> SumAsync(IQueryable<float?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="T:System.Double"/> values.
@@ -648,7 +650,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Double.MaxValue"/>.</exception>
         public Task<double> SumAsync(IQueryable<double> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of nullable <see cref="T:System.Double"/> values.
@@ -662,7 +664,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Double.MaxValue"/>.</exception>
         public Task<double?> SumAsync(IQueryable<double?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="T:System.Decimal"/> values.
@@ -676,7 +678,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Decimal.MaxValue"/>.</exception>
         public Task<decimal> SumAsync(IQueryable<decimal> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of a sequence of nullable <see cref="T:System.Decimal"/> values.
@@ -690,7 +692,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Decimal.MaxValue"/>.</exception>
         public Task<decimal?> SumAsync(IQueryable<decimal?> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(), cancellationToken);
+            => NhLinq.SumAsync(source, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of <see cref="T:System.Int32"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -706,7 +708,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int32.MaxValue"/>.</exception>
         public Task<int> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, int>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of nullable <see cref="T:System.Int32"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -722,7 +724,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int32.MaxValue"/>.</exception>
         public Task<int?> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, int?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of <see cref="T:System.Int64"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -738,7 +740,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int64.MaxValue"/>.</exception>
         public Task<long> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, long>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of nullable <see cref="T:System.Int64"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -754,7 +756,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Int64.MaxValue"/>.</exception>
         public Task<long?> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, long?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of <see cref="T:System.Single"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -770,7 +772,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Single.MaxValue"/>.</exception>
         public Task<float> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, float>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of nullable <see cref="T:System.Single"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -786,7 +788,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Single.MaxValue"/>.</exception>
         public Task<float?> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, float?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of <see cref="T:System.Double"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -802,7 +804,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Double.MaxValue"/>.</exception>
         public Task<double> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, double>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of nullable <see cref="T:System.Double"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -818,7 +820,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Double.MaxValue"/>.</exception>
         public Task<double?> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, double?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of <see cref="T:System.Decimal"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -834,7 +836,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Decimal.MaxValue"/>.</exception>
         public Task<decimal> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, decimal>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Computes the sum of the sequence of nullable <see cref="T:System.Decimal"/> values that is obtained by invoking a projection function on each element of the input sequence.
@@ -850,7 +852,7 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         /// <exception cref="T:System.OverflowException">The sum is larger than <see cref="F:System.Decimal.MaxValue"/>.</exception>
         public Task<decimal?> SumAsync<TSource>(IQueryable<TSource> source, Expression<Func<TSource, decimal?>> selector, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.Sum(selector), cancellationToken);
+            => NhLinq.SumAsync(source, selector, cancellationToken);
 
         /// <summary>
         /// Executes the query and returns its result as a <see cref="List{T}"/>.
@@ -862,6 +864,6 @@ namespace CSF.ORM.InMemory
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is <see langword="null"/>.</exception>
         /// <exception cref="T:System.NotSupportedException"><paramref name="source" /> <see cref="IQueryable.Provider" /> is not a supported query provider.</exception>
         public Task<List<TSource>> ToListAsync<TSource>(IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-            => Task.Run(() => source.ToList(), cancellationToken);
+            => NhLinq.ToListAsync(source, cancellationToken);
     }
 }

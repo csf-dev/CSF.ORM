@@ -38,18 +38,42 @@ namespace CSF.ORM.InMemory
     {
         readonly IQueryable<TQuery> queryable;
 
+        /// <summary>
+        /// Gets the element type for the query.
+        /// </summary>
+        /// <value>The type of the element.</value>
         public Type ElementType => queryable.ElementType;
 
+        /// <summary>
+        /// Gets the query expression.
+        /// </summary>
+        /// <value>The expression.</value>
         public Expression Expression => queryable.Expression;
 
+        /// <summary>
+        /// Gets the query provider.
+        /// </summary>
+        /// <value>The provider.</value>
         public IQueryProvider Provider => queryable.Provider;
 
+        /// <summary>
+        /// Gets an enumerator for the query results.
+        /// </summary>
+        /// <returns>The enumerator.</returns>
         public IEnumerator<TQuery> GetEnumerator() => queryable.GetEnumerator();
 
+        /// <summary>
+        /// Gets the queryable object for this instance.
+        /// </summary>
+        /// <returns>The queryable.</returns>
         public IQueryable<TQuery> GetQueryable() => queryable;
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoOpEagerFetchQueryableAdapter{TQuery, TFetched}"/> class.
+        /// </summary>
+        /// <param name="queryable">Queryable.</param>
         public NoOpEagerFetchQueryableAdapter(IQueryable<TQuery> queryable)
         {
             this.queryable = queryable ?? throw new ArgumentNullException(nameof(queryable));

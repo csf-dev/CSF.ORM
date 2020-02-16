@@ -48,7 +48,7 @@ namespace CSF.ORM.NHibernate
         /// <returns>The identity value which the item has, after it was added.</returns>
         /// <typeparam name="T">The item type.</typeparam>
         public Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class
-            => Task.Run(() => Add(item, identity), token);
+            => session.SaveAsync(item, token);
 
         /// <summary>
         /// Updates the specified item in the data-store.
@@ -58,7 +58,7 @@ namespace CSF.ORM.NHibernate
         /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="T">The item type.</typeparam>
         public Task UpdateAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
-            => Task.Run(() => Update(item, identity), token);
+            => session.UpdateAsync(item, token);
 
         /// <summary>
         /// Deletes the specified item from the data-store.
@@ -68,7 +68,7 @@ namespace CSF.ORM.NHibernate
         /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="T">The item type.</typeparam>
         public Task DeleteAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
-            => Task.Run(() => Delete(item, identity), token);
+            => session.DeleteAsync(item, token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersisterAdapter"/> class.

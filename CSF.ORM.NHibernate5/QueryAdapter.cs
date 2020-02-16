@@ -64,7 +64,7 @@ namespace CSF.ORM.NHibernate
         /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public Task<TQueried> TheoriseAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
-            => Task.Run(() => Theorise<TQueried>(identityValue), token);
+            => session.LoadAsync<TQueried>(identityValue, token);
 
         /// <summary>
         /// Gets a single instance from the underlying data source, identified by an identity value.
@@ -78,7 +78,7 @@ namespace CSF.ORM.NHibernate
         /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public Task<TQueried> GetAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
-            => Task.Run(() => Get<TQueried>(identityValue), token);
+            => session.GetAsync<TQueried>(identityValue, token);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CSF.ORM.NHibernate.QueryAdapter"/> class.
