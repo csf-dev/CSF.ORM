@@ -93,6 +93,7 @@ namespace CSF.ORM
         /// </remarks>
         /// <param name="query">The query instance on which to operate.</param>
         /// <param name="identity">An identity instance.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The type of object to retrieve.</typeparam>
         public static Task<TEntity> TheoriseAsync<TEntity>(this IQuery query, IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken))
           where TEntity : class, IEntity
@@ -115,6 +116,7 @@ namespace CSF.ORM
         /// </remarks>
         /// <param name="query">The query instance on which to operate.</param>
         /// <param name="identity">An identity instance.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The type of object to retrieve.</typeparam>
         public static Task<TEntity> GetAsync<TEntity>(this IQuery query, IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken))
           where TEntity : class, IEntity

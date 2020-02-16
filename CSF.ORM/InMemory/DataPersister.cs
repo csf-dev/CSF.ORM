@@ -149,12 +149,34 @@ namespace CSF.ORM.InMemory
             // Intentional no-op, because the data-store is in memory, objects are changed 'live'
         }
 
+        /// <summary>
+        /// Adds the specified item to the data store.
+        /// </summary>
+        /// <param name="item">The data item to add.</param>
+        /// <param name="identity">Optional, the item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <returns>The identity value which the item has, after it was added.</returns>
+        /// <typeparam name="T">The item type.</typeparam>
         public Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class
             => Task.Run(() => Add(item, identity), token);
 
+        /// <summary>
+        /// Updates the specified item in the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="T">The item type.</typeparam>
         public Task UpdateAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
             => Task.Run(() => Update(item, identity), token);
 
+        /// <summary>
+        /// Deletes the specified item from the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="T">The item type.</typeparam>
         public Task DeleteAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
             => Task.Run(() => Delete(item, identity), token);
 

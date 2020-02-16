@@ -93,6 +93,7 @@ namespace CSF.ORM
         /// Add the specified entity to the data-store.
         /// </summary>
         /// <param name="entity">Entity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
         Task AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 
@@ -100,6 +101,7 @@ namespace CSF.ORM
         /// Update the specified entity in the data-store.
         /// </summary>
         /// <param name="entity">Entity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
         Task UpdateAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 
@@ -107,6 +109,7 @@ namespace CSF.ORM
         /// Remove the specified entity from the data-store.
         /// </summary>
         /// <param name="entity">Entity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
         Task RemoveAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 
@@ -114,6 +117,7 @@ namespace CSF.ORM
         /// Remove the specified entity from the data-store using its identity.
         /// </summary>
         /// <param name="identity">The identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
         Task RemoveAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 
@@ -121,6 +125,7 @@ namespace CSF.ORM
         /// Get an entity using the specified identity.
         /// </summary>
         /// <param name="identity">Identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
         Task<TEntity> GetAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 
@@ -139,6 +144,7 @@ namespace CSF.ORM
         /// </para>
         /// </summary>
         /// <param name="identity">Identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
         Task<TEntity> TheoriseAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 

@@ -76,6 +76,19 @@ namespace CSF.ORM
         /// <typeparam name="TQueried">The type of queried-for object.</typeparam>
         public IQueryable<TQueried> Query<TQueried>() where TQueried : class => wrapped.Query<TQueried>();
 
+        /// <summary>
+        /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method should always return a non-null object instance, even if the underlying object does not exist in the
+        /// data source.  If a 'thoery object' is created for an object which does not actually exist, then an exception
+        /// could be thrown if that theory object is used.
+        /// </para>
+        /// </remarks>
+        /// <param name="identityValue">The identity value for the object to retrieve.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public async Task<TQueried> TheoriseAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
         {
             var output = await wrapped.TheoriseAsync<TQueried>(identityValue, token);
@@ -86,6 +99,17 @@ namespace CSF.ORM
             return output;
         }
 
+        /// <summary>
+        /// Gets a single instance from the underlying data source, identified by an identity value.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method will either get an object instance, or it will return <c>null</c> (if no instance is found).
+        /// </para>
+        /// </remarks>
+        /// <param name="identityValue">The identity value for the object to retrieve.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public Task<TQueried> GetAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
             => wrapped.GetAsync<TQueried>(identityValue, token);
 

@@ -32,6 +32,11 @@ using NhQueryProvider = NHibernate.Linq.DefaultQueryProvider;
 
 namespace CSF.ORM.NHibernate
 {
+    /// <summary>
+    /// An implementation of <see cref="IEagerlyFetchesFromQuery"/> which uses NHibernate functionality
+    /// to eagerly-fetch child/grandchild objects from the underlying database, using the same query
+    /// as its parent objects are fetched.
+    /// </summary>
     public class NHibernateEagerFetchingProvider : IEagerlyFetchesFromQuery
     {
         /// <summary>

@@ -32,6 +32,10 @@ using NhQueryProvider = NHibernate.Linq.DefaultQueryProvider;
 
 namespace CSF.ORM.NHibernate
 {
+    /// <summary>
+    /// An implementation of <see cref="IGetsLazyQueryResult"/> which uses NHibernate to batch
+    /// queries together so that they may be retrieved from the database using a single round-trip.
+    /// </summary>
     public class LazyResultProvider : IGetsLazyQueryResult
     {
         /// <summary>

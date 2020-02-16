@@ -39,12 +39,34 @@ namespace CSF.ORM.NHibernate
         public void Update<T>(T item, object identity) where T : class
             => session.Update(item);
 
+        /// <summary>
+        /// Adds the specified item to the data store.
+        /// </summary>
+        /// <param name="item">The data item to add.</param>
+        /// <param name="identity">Optional, the item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <returns>The identity value which the item has, after it was added.</returns>
+        /// <typeparam name="T">The item type.</typeparam>
         public Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class
             => session.SaveAsync(item, token);
 
+        /// <summary>
+        /// Updates the specified item in the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="T">The item type.</typeparam>
         public Task UpdateAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
             => session.UpdateAsync(item, token);
 
+        /// <summary>
+        /// Deletes the specified item from the data-store.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="T">The item type.</typeparam>
         public Task DeleteAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class
             => session.DeleteAsync(item, token);
 

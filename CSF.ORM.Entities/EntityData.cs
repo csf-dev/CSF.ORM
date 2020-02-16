@@ -142,6 +142,12 @@ namespace CSF.ORM
             persister.Update(entity, entity.GetIdentity()?.Value);
         }
 
+        /// <summary>
+        /// Add the specified entity to the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
         public Task AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (entity == null)
@@ -151,6 +157,12 @@ namespace CSF.ORM
             return persister.AddAsync(entity, identity.Value, token);
         }
 
+        /// <summary>
+        /// Update the specified entity in the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
         public Task UpdateAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (entity == null)
@@ -159,6 +171,12 @@ namespace CSF.ORM
             return persister.UpdateAsync(entity, entity.GetIdentity()?.Value, token);
         }
 
+        /// <summary>
+        /// Remove the specified entity from the data-store.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
         public Task RemoveAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (entity == null)
@@ -167,16 +185,32 @@ namespace CSF.ORM
             return persister.DeleteAsync(entity, entity.GetIdentity()?.Value, token);
         }
 
+        /// <summary>
+        /// Remove the specified entity from the data-store using its identity.
+        /// </summary>
+        /// <param name="identity">The identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
         public Task RemoveAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (identity == null)
                 throw new ArgumentNullException(nameof(identity));
 
             var instance = query.Get(identity);
+#if NET45
+            if (instance == null) return Task.FromResult(0);
+#else
             if (instance == null) return Task.CompletedTask;
+#endif
             return persister.DeleteAsync(instance, identity.Value, token);
         }
 
+        /// <summary>
+        /// Get an entity using the specified identity.
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
         public Task<TEntity> GetAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (identity == null)
@@ -185,6 +219,23 @@ namespace CSF.ORM
             return query.GetAsync(identity, token);
         }
 
+        /// <summary>
+        /// <para>
+        /// Gets an instance of an object which is <typeparamref name="TEntity"/>.  This might be an object
+        /// from the data-store, or it might be a stub/proxy or other form of stand-in object.
+        /// </para>
+        /// <para>
+        /// This function should be used when the 'real' entity is not required but where a stand-in will suffice,
+        /// and where all that is required of the stand-in is for it to have to correct identity.
+        /// </para>
+        /// <para>
+        /// This function will never return <c>null</c>, but will also not make unneccesary use of the
+        /// underlying data-store.
+        /// </para>
+        /// </summary>
+        /// <param name="identity">Identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
         public Task<TEntity> TheoriseAsync<TEntity>(IIdentity<TEntity> identity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (identity == null)

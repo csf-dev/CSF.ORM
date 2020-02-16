@@ -78,6 +78,7 @@ namespace CSF.ORM
         /// </para>
         /// </remarks>
         /// <param name="identityValue">The identity value for the object to retrieve.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         Task<TQueried> TheoriseAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class;
 
@@ -90,6 +91,7 @@ namespace CSF.ORM
         /// </para>
         /// </remarks>
         /// <param name="identityValue">The identity value for the object to retrieve.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         Task<TQueried> GetAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class;
     }

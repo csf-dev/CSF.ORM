@@ -64,6 +64,7 @@ namespace CSF.ORM
         /// </summary>
         /// <param name="item">The data item to add.</param>
         /// <param name="identity">Optional, the item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <returns>The identity value which the item has, after it was added.</returns>
         /// <typeparam name="T">The item type.</typeparam>
         Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class;
@@ -73,6 +74,7 @@ namespace CSF.ORM
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="T">The item type.</typeparam>
         Task UpdateAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class;
 
@@ -81,6 +83,7 @@ namespace CSF.ORM
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="identity">The item's identity.</param>
+        /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="T">The item type.</typeparam>
         Task DeleteAsync<T>(T item, object identity, CancellationToken token = default(CancellationToken)) where T : class;
     }
