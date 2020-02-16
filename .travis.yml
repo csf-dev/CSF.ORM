@@ -3,7 +3,7 @@ solution: CSF.ORM.sln
 
 mono: none
 dotnet:
-    - latest
+    - 3.1.101
 
 script:
     - dotnet restore
