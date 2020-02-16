@@ -7,4 +7,5 @@ jobs:
             mono: latest
 
 script:
-    - dotnet test
+    -   dotnet build
+    -   dotnet test

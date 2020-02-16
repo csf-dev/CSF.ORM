@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM", "CSF.ORM\CSF.ORM.csproj", "{45BA9A53-8E8F-48C7-94FB-211DAA4D69DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Entities", "CSF.Entities\CSF.Entities.csproj", "{2EE2F785-5655-432E-9726-41349A4FA958}"
