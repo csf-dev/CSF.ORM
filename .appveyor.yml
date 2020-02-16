@@ -2,7 +2,6 @@ version: '{branch}-{build}'
 image: Visual Studio 2017
 
 init:
-    # Good practise, because Windows line endings are different from Unix/Linux ones
     - cmd: git config --global core.autocrlf true
     
 before_build:
@@ -10,8 +9,7 @@ before_build:
     - cmd: dotnet restore --verbosity m
 
 build_script:
-    - cmd: dotnet publish
-
+    - cmd: dotnet build
 
 test_script:
-    - dotnet test
+    - cmd: dotnet test
