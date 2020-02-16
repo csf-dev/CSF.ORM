@@ -1,10 +1,10 @@
 language: csharp
 solution: CSF.ORM.sln
 
-mono: none
-dotnet:
-    - 3.1.101
+jobs:
+    include:
+        -   dotnet: 2.2.207
+            mono: latest
 
 script:
-    - dotnet restore
     - dotnet test
