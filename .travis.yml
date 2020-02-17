@@ -1,4 +1,5 @@
 language: csharp
+dist: trusty
 solution: CSF.ORM.sln
 
 jobs:
@@ -6,6 +7,11 @@ jobs:
         -   dotnet: 2.2.207
             mono: latest
 
+addons:
+    sonarcloud:
+        organization: "craigfowler-github"
+        token:
+            secure: "TsbL/mfcugHa+pCSlfprTwn1KXQ6C0f3izWyY8OV576r/zWBomHzag15BWNkmHY2jtsHqVI8z8xd6kFcE/8Vc5vzdY4hwvx+SLlrfkvBlWIU0aAQIOn1V1SB05575lTSx57b/C7DFyh+0l980+LYinbinMIZ9JE1Fmoty0m+8DqDHF6o9Z/pFosjSt7rRdzqW/wae4tGNUMCcxc4l2hcvHyFrQEPIi9+bZnR06hkSaszLj0PZWBCcEoCQ4dic/45jyh/tFMBVtUGQh4j2pJov4dD5nIxxyGT36ggT5mgiU/vrIWDtbcDCrSzW4m12vP/0butYOLt6E95O1tsRqCfIX9rs5ptwcDoYpBBz94dTXEdVRVjLSy1tQ4w/2oY+RBKhbjAFcYnetv7FOtuz5MaB0twpfouA2NsMoPTCX74ExP9GZwTiCAHcZirQVOkUgrw7dt5/3GqByHhcK9eXuI9VKUjHPzEWrbAiRhCxFiqweYXQ+QCoV9a/V+QrLJdrWDdV/3yr5TgqwCxIXfEmHYi7gNx43Rv+MoSQB/54z4p0IPctccTZsTVk9Wb6nOtYmJtdexfJKNZ8SpJLAf0xtP8//7kkWb9gGW+9FVFLfy4r9Tfgy0VqsPQKPHbIejaJP69GuhhZA9FrR2fN5Po/jYH91PksxgkS+uCqiMjI2h0Kus="
 script:
-    -   dotnet build
-    -   dotnet test
+    -   sonar-scanner
+    
