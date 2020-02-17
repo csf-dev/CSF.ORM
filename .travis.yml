@@ -1,5 +1,5 @@
 language: csharp
-dist: trusty
+# dist: trusty
 solution: CSF.ORM.sln
 
 jobs:
