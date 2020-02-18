@@ -12,4 +12,4 @@ packages/*/*
 .vs/
 *.csproj.user
 .CoverageReports/
-
+Tests/*/TestResults/
