@@ -289,56 +289,6 @@ namespace Test.CSF.Entities
       Assert.IsFalse(result);
     }
 
-    [Test]
-    public void EqualityOverload_does_not_use_virtual_functionality()
-    {
-      // Arrange
-      var sut = new ProhibitVirtualMethodsEntity();
-
-      // Act & Assert
-      #pragma warning disable 219
-      Assert.DoesNotThrow(() => { var throwaway = sut == new ProhibitVirtualMethodsEntity(); });
-      #pragma warning restore 219
-    }
-
-    [Test]
-    public void EqualityOverload_treats_two_empty_entities_as_different()
-    {
-      // Arrange
-      var sut = new ProhibitVirtualMethodsEntity();
-
-      // Act
-      var result = sut == new ProhibitVirtualMethodsEntity();
-
-      // Assert
-      Assert.IsFalse(result);
-    }
-
-    [Test]
-    public void EqualityOverload_does_not_throw_exception_when_comparing_with_null()
-    {
-      // Arrange
-      var sut = new Person();
-
-      // Act & Assert
-      #pragma warning disable 219
-      Assert.DoesNotThrow(() => { var throwaway = sut == null; });
-      #pragma warning restore 219
-    }
-
-    [Test]
-    public void EqualityOverload_returns_false_when_comparing_with_null()
-    {
-      // Arrange
-      var sut = new Person();
-
-      // Act
-      var result = sut == null;
-
-      // Assert
-      Assert.IsFalse(result);
-    }
-
     #endregion
   }
 }

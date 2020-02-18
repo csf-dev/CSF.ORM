@@ -18,7 +18,7 @@ namespace CSF.ORM.NHibernate
         /// <param name="item">Item.</param>
         /// <param name="identity">Identity.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public object Add<T>(T item, object identity) where T : class
+        public object Add<T>(T item, object identity = null) where T : class
             => session.Save(item);
 
         /// <summary>

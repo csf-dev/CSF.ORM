@@ -97,26 +97,26 @@ namespace CSF.Entities
     /// <summary>
     /// Determines whether the specified identity is equal to the current instance.
     /// </summary>
-    /// <param name='obj'>The identity to compare with the current instance.</param>
+    /// <param name='other'>The identity to compare with the current instance.</param>
     /// <returns>
     /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
     /// </returns>
-    public bool Equals (IIdentity obj)
+    public bool Equals (IIdentity other)
     {
       bool output;
 
-      if(Object.ReferenceEquals(this, obj))
+      if(Object.ReferenceEquals(this, other))
       {
         output = true;
       }
-      else if(((object) obj) == null)
+      else if(((object) other) == null)
       {
         output = false;
       }
       else
       {
-        output = (Entity.AreEqualityTypesSame(EntityType, obj.EntityType)
-                  && Object.Equals(Value, obj.Value));
+        output = (Entity.AreEqualityTypesSame(EntityType, other.EntityType)
+                  && Object.Equals(Value, other.Value));
       }
 
       return output;
@@ -125,27 +125,27 @@ namespace CSF.Entities
     /// <summary>
     /// Determines whether the specified identity is equal to the current instance.
     /// </summary>
-    /// <param name='obj'>The identity to compare with the current instance.</param>
+    /// <param name='other'>The identity to compare with the current instance.</param>
     /// <returns>
     /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
     /// </returns>
-    public bool Equals (IIdentity<TEntity> obj)
+    public bool Equals (IIdentity<TEntity> other)
     {
-      return Equals((IIdentity) obj);
+      return Equals((IIdentity) other);
     }
 
     /// <summary>
     /// Determines whether the specified identity is equal to the current instance.
     /// </summary>
-    /// <param name='obj'>
+    /// <param name='other'>
     /// The identity to compare with the current instance.
     /// </param>
     /// <returns>
     /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
     /// </returns>
-    public bool Equals (Identity<TIdentity,TEntity> obj)
+    public bool Equals (Identity<TIdentity, TEntity> other)
     {
-      return Equals((IIdentity) obj);
+      return Equals((IIdentity) other);
     }
 
     /// <summary>
