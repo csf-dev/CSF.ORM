@@ -17,7 +17,7 @@ build_script:
     - cmd: dotnet build
 
 test_script:
-    - cmd: mkdir .CoverageReports/
+    - cmd: mkdir .CoverageReports
     - cmd: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=\"json,opencover\" /p:CoverletOutput=\"../../.CoverageReports/\" /p:MergeWith=\"../../.CoverageReports/coverage.json\"
 
 after_test:
