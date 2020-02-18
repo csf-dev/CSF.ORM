@@ -11,3 +11,5 @@ packages/*/*
 *.nupkg
 .vs/
 *.csproj.user
+OpenCover.xml
+

@@ -19,7 +19,7 @@ build_script:
     - cmd: dotnet build
 
 test_script:
-    - cmd: .OpenCover\OpenCover.4.7.922\tools\OpenCover.Console.exe -register:user -target:.TestRunner\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe -targetargs:"--result=%APPVEYOR_BUILD_FOLDER%\Tests\TestResult.xml Tests\CSF.Entities.Tests\bin\Debug\netcoreapp2.2\CSF.Entities.Tests.dll Tests\CSF.ORM.NHibernate4.Tests\bin\Debug\netcoreapp2.2\CSF.ORM.NHibernate4.Tests.dll Tests\CSF.ORM.Tests\bin\Debug\netcoreapp2.2\CSF.ORM.Tests.dll Tests\CSF.PersistenceTester.IntegrationTests\bin\Debug\netcoreapp2.2\CSF.PersistenceTester.IntegrationTests.dll Tests\CSF.PersistenceTester.Tests\bin\Debug\netcoreapp2.2\CSF.PersistenceTester.Tests.dll"  -output:%APPVEYOR_BUILD_FOLDER%\OpenCover.xml
+    - cmd: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../../OpenCover.xml
 
 after_test:
     - cmd: dotnet-sonarscanner end /d:"sonar.login=%SONARCLOUD_SECRET_KEY%"
