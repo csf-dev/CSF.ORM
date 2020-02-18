@@ -11,5 +11,4 @@ packages/*/*
 *.nupkg
 .vs/
 *.csproj.user
-.CoverageReports/
 Tests/*/TestResults/
