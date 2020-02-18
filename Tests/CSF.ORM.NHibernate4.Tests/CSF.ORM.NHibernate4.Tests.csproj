@@ -37,6 +37,10 @@
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.6.0">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="2.8.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
