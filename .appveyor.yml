@@ -6,7 +6,7 @@ init:
     
 install:
     - cmd: git submodule update --init --recursive
-    - cmd: choco install sonarscanner-msbuild-netcoreapp30
+    - cmd: dotnet tool install --global dotnet-sonarscanner
     - cmd: nuget install -OutputDirectory %APPVEYOR_BUILD_FOLDER%\.OpenCover -Version 4.7.922 OpenCover
     - cmd: nuget install -OutputDirectory %APPVEYOR_BUILD_FOLDER%\.TestRunner -Version 3.7.0 NUnit.ConsoleRunner
     
