@@ -128,7 +128,6 @@ namespace CSF.ORM.InMemory
                 return GetItemsOfType<TQueried>()
                   .Select(x => x.Value)
                   .Cast<TQueried>()
-                  .ToList()
                   .AsQueryable();
             }
             finally

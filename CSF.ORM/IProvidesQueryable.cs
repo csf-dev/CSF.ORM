@@ -31,12 +31,12 @@ namespace CSF.ORM
     /// <summary>
     /// An object which can provide a queryable object, for a given queried type.
     /// </summary>
-    public interface IProvidesQueryable<T>
+    public interface IProvidesQueryable<out T>
     {
         /// <summary>
-        /// Gets the querable.
+        /// Gets a queryable for the given type.
         /// </summary>
-        /// <returns>The querable.</returns>
+        /// <returns>The queryable.</returns>
         IQueryable<T> GetQueryable();
     }
 }

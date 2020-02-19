@@ -32,7 +32,7 @@ namespace CSF.ORM.InMemory
     /// </summary>
     public class NoOpTransactionCreator : IBeginsTransaction
     {
-        bool throwOnRollback;
+        readonly bool throwOnRollback;
 
         /// <summary>
         /// Begins the transaction.

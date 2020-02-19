@@ -137,6 +137,7 @@ namespace CSF.PersistenceTester.Impl
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
