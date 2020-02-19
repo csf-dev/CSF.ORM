@@ -1,8 +1,10 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Test.CSF.ORM.NHibernate.Config;
 using Test.CSF.ORM.NHibernate.Models;
 using Test.CSF.ORM.NHibernate.Entities;
 using CSF.ORM.NHibernate;
+using CSF.ORM;
 
 namespace Test.CSF.ORM.NHibernate
 {
