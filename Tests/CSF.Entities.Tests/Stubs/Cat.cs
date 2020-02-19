@@ -1,5 +1,4 @@
-﻿using System;
-namespace Test.CSF.Entities.Stubs
+﻿namespace Test.CSF.Entities.Stubs
 {
   public class Cat : Animal
   {

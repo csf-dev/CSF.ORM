@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Mapping.ByCode.Conformist;
+﻿using NHibernate.Mapping.ByCode.Conformist;
 using Test.CSF.ORM.NHibernate.Entities;
 using NHibernate.Mapping.ByCode;
 

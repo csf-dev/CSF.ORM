@@ -5,7 +5,6 @@ using NHibernate.Mapping.ByCode;
 using System.Reflection;
 using System.Linq;
 using Test.CSF.ORM.NHibernate.Mappings;
-using CSF.ORM;
 using NHibernate.Tool.hbm2ddl;
 using System.Data;
 using System.IO;

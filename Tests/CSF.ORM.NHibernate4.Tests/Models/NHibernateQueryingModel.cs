@@ -1,9 +1,7 @@
-﻿using System;
-using NHibernate;
+﻿using NHibernate;
 using Test.CSF.ORM.NHibernate.Entities;
 using AutoFixture;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Test.CSF.ORM.NHibernate.Models
 {

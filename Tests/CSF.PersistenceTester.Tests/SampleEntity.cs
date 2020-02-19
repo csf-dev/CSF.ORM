@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CSF.PersistenceTester.Tests
+﻿namespace CSF.PersistenceTester.Tests
 {
     public class SampleEntity
     {

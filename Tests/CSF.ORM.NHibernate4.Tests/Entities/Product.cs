@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Test.CSF.ORM.NHibernate.Entities
+﻿namespace Test.CSF.ORM.NHibernate.Entities
 {
   public class Product : EntityBase
   {

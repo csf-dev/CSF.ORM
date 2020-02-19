@@ -1,5 +1,4 @@
-﻿using System;
-namespace CSF.PersistenceTester
+﻿namespace CSF.PersistenceTester
 {
     /// <summary>
     /// A service which selects the entity to be tested in a persistence test.

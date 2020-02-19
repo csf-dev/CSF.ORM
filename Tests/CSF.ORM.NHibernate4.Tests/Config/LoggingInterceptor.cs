@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.SqlCommand;
 
 namespace Test.CSF.ORM.NHibernate.Config
