@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -128,7 +127,6 @@ namespace CSF.ORM.InMemory
                 return GetItemsOfType<TQueried>()
                   .Select(x => x.Value)
                   .Cast<TQueried>()
-                  .ToList()
                   .AsQueryable();
             }
             finally

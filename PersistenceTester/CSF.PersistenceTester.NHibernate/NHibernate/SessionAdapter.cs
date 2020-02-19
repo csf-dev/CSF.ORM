@@ -7,7 +7,7 @@ namespace CSF.PersistenceTester.NHibernate
     /// An adapter around the native NHibernate <c>ISession</c> object, allowing it to be used as
     /// an <see cref="ISession"/>.
     /// </summary>
-    public class SessionAdapter : ISession
+    public sealed class SessionAdapter : ISession
     {
         readonly INhSession nhSession;
 

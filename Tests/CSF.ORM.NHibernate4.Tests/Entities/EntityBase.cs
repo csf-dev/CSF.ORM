@@ -1,5 +1,4 @@
-﻿using System;
-using CSF.Entities;
+﻿using CSF.Entities;
 
 namespace Test.CSF.ORM.NHibernate.Entities
 {

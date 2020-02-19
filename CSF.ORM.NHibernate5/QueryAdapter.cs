@@ -1,6 +1,5 @@
 ﻿using System;
 using NHibernate;
-using NHibernate.Linq;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;

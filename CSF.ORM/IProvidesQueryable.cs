@@ -23,7 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+
 using System.Linq;
 
 namespace CSF.ORM
@@ -31,12 +31,12 @@ namespace CSF.ORM
     /// <summary>
     /// An object which can provide a queryable object, for a given queried type.
     /// </summary>
-    public interface IProvidesQueryable<T>
+    public interface IProvidesQueryable<out T>
     {
         /// <summary>
-        /// Gets the querable.
+        /// Gets a queryable for the given type.
         /// </summary>
-        /// <returns>The querable.</returns>
+        /// <returns>The queryable.</returns>
         IQueryable<T> GetQueryable();
     }
 }

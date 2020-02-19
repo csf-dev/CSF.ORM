@@ -25,8 +25,6 @@
 // THE SOFTWARE.
 
 
-using System;
-
 namespace CSF.Entities
 {
   /// <summary>

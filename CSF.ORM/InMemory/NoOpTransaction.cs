@@ -30,9 +30,10 @@ namespace CSF.ORM.InMemory
     /// <summary>
     /// A no-operation (dummy/fake) transaction implementation.
     /// </summary>
-    public class NoOpTransaction : ITransaction
+    public sealed class NoOpTransaction : ITransaction
     {
-        bool final, throwOnRollback;
+        bool final;
+        readonly bool throwOnRollback;
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="NoOpTransaction"/> is committed.

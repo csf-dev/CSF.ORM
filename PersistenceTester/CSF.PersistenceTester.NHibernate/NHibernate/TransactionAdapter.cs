@@ -7,7 +7,7 @@ namespace CSF.PersistenceTester.NHibernate
     /// An adapter around the native NHibernate <c>ITransaction</c> object, allowing it to be used as
     /// an <see cref="ITransaction"/>.
     /// </summary>
-    public class TransactionAdapter : ITransaction
+    public sealed class TransactionAdapter : ITransaction
     {
         readonly INhTransaction nhTran;
 

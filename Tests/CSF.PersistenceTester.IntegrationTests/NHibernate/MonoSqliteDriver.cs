@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Driver;
+﻿using NHibernate.Driver;
 using System.Reflection;
 
 namespace CSF.PersistenceTester.Tests.NHibernate

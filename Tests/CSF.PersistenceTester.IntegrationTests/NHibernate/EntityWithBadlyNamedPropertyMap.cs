@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Mapping.ByCode.Conformist;
+﻿using NHibernate.Mapping.ByCode.Conformist;
 
 namespace CSF.PersistenceTester.Tests.NHibernate
 {

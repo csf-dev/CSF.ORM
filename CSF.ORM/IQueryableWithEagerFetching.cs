@@ -23,7 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+
 using System.Linq;
 
 namespace CSF.ORM
@@ -32,5 +32,5 @@ namespace CSF.ORM
     /// An object which represents an <see cref="IQueryable{T}"/> but also includes a request
     /// to eagerly-fetch data from the query.
     /// </summary>
-    public interface IQueryableWithEagerFetching<TQueried, TFetched> : IOrderedQueryable<TQueried>, IProvidesQueryable<TQueried> { }
+    public interface IQueryableWithEagerFetching<out TQueried, TFetched> : IOrderedQueryable<TQueried>, IProvidesQueryable<TQueried> { }
 }

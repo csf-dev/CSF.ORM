@@ -63,10 +63,8 @@ namespace CSF.PersistenceTester.Builder
         {
             if (!disposedValue)
             {
-                if (disposing)
-                {
-                    if (shouldDisposeSession) cachedSession?.Dispose();
-                }
+                if (disposing && shouldDisposeSession)
+                    cachedSession?.Dispose();
 
                 disposedValue = true;
             }
@@ -84,6 +82,7 @@ namespace CSF.PersistenceTester.Builder
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
