@@ -1,10 +1,10 @@
 ﻿//
-// IIdentity.cs
+// IGetsEntityTypeForIdentityEquality.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2015 CSF Software Limited
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,41 +23,27 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-
 namespace CSF.Entities
 {
-  /// <summary>
-  /// Represents the identity for a <see cref="IEntity"/>.  This is a value-object
-  /// which holds just the information which which entity type it relates to, and what
-  /// the identity value is.
-  /// </summary>
-  public interface IIdentity : IEquatable<IIdentity>
-  {
     /// <summary>
-    /// Gets a <see cref="Type"/> that indicates the type of entity that this instance describes.
+    /// A service which gets the entity type which should be used for determining identity-equality.
     /// </summary>
-    /// <value>The entity type.</value>
-    Type EntityType { get; }
+    public interface IGetsEntityTypeForIdentityEquality
+    {
+        /// <summary>
+        /// Gets the type which should be used for identity equality for the given entity instance.
+        /// </summary>
+        /// <returns>The identity equality type.</returns>
+        /// <param name="entity">An entity.</param>
+        Type GetIdentityEqualityType(IEntity entity);
 
-    /// <summary>
-    /// Gets the underlying type of <see cref="Value"/>.
-    /// </summary>
-    /// <value>The identity type.</value>
-    Type IdentityType { get; }
-
-    /// <summary>
-    /// Gets the identity value contained within the current instance.
-    /// </summary>
-    /// <value>The identity value.</value>
-    object Value { get; }
-
-    /// <summary>
-    /// Gets the identity value and converts it to a string.
-    /// </summary>
-    /// <returns>The value as a string.</returns>
-    string GetValueAsString();
-  }
+        /// <summary>
+        /// Gets the type which should be used for identity equality for the given
+        /// <see cref="Type"/>, which must implement <see cref="IEntity"/>.
+        /// </summary>
+        /// <returns>The identity equality type.</returns>
+        /// <param name="entityType">The entity type.</param>
+        Type GetIdentityEqualityType(Type entityType);
+    }
 }
-

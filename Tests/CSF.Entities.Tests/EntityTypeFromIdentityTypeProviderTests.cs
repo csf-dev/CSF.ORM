@@ -1,10 +1,10 @@
 ﻿//
-// IIdentity.cs
+// EntityTypeFromIdentityTypeProviderTests.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2015 CSF Software Limited
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,41 +23,31 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
+using CSF.Entities.Tests.Stubs;
+using NUnit.Framework;
 
-namespace CSF.Entities
+namespace CSF.Entities.Tests
 {
-  /// <summary>
-  /// Represents the identity for a <see cref="IEntity"/>.  This is a value-object
-  /// which holds just the information which which entity type it relates to, and what
-  /// the identity value is.
-  /// </summary>
-  public interface IIdentity : IEquatable<IIdentity>
-  {
-    /// <summary>
-    /// Gets a <see cref="Type"/> that indicates the type of entity that this instance describes.
-    /// </summary>
-    /// <value>The entity type.</value>
-    Type EntityType { get; }
+    [TestFixture,Parallelizable]
+    public class EntityTypeFromIdentityTypeProviderTests
+    {
+        [Test, AutoMoqData]
+        public void GetEntityType_returns_correct_entity_type_for_generic_identity_interface(EntityTypeFromIdentityTypeProvider sut)
+        {
+            Assert.That(sut.GetEntityType(typeof(IIdentity<Cat>)), Is.EqualTo(typeof(Cat)));
+        }
 
-    /// <summary>
-    /// Gets the underlying type of <see cref="Value"/>.
-    /// </summary>
-    /// <value>The identity type.</value>
-    Type IdentityType { get; }
+        [Test, AutoMoqData]
+        public void GetEntityType_returns_correct_entity_type_for_generic_identity_class(EntityTypeFromIdentityTypeProvider sut)
+        {
+            Assert.That(sut.GetEntityType(typeof(Identity<long,Cat>)), Is.EqualTo(typeof(Cat)));
+        }
 
-    /// <summary>
-    /// Gets the identity value contained within the current instance.
-    /// </summary>
-    /// <value>The identity value.</value>
-    object Value { get; }
-
-    /// <summary>
-    /// Gets the identity value and converts it to a string.
-    /// </summary>
-    /// <returns>The value as a string.</returns>
-    string GetValueAsString();
-  }
+        [Test, AutoMoqData]
+        public void GetEntityType_returns_null_for_nongeneric_identity_interface(EntityTypeFromIdentityTypeProvider sut)
+        {
+            Assert.That(sut.GetEntityType(typeof(IIdentity)), Is.Null);
+        }
+    }
 }
-

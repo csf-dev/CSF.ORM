@@ -53,7 +53,7 @@ namespace CSF.ORM
             var output = wrapped.Theorise<TQueried>(identityValue);
 
             if(output is IEntity entity && !entity.HasIdentity)
-                entity.SetIdentity(identityValue);
+                entity.IdentityValue = identityValue;
 
             return output;
         }
@@ -94,7 +94,7 @@ namespace CSF.ORM
             var output = await wrapped.TheoriseAsync<TQueried>(identityValue, token);
 
             if (output is IEntity entity && !entity.HasIdentity)
-                entity.SetIdentity(identityValue);
+                entity.IdentityValue = identityValue;
 
             return output;
         }

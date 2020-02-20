@@ -1,5 +1,5 @@
 ﻿//
-// IIdentity.cs
+// EntityExtensions.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -25,39 +25,30 @@
 // THE SOFTWARE.
 
 using System;
+using System.Reflection;
 
 namespace CSF.Entities
 {
-  /// <summary>
-  /// Represents the identity for a <see cref="IEntity"/>.  This is a value-object
-  /// which holds just the information which which entity type it relates to, and what
-  /// the identity value is.
-  /// </summary>
-  public interface IIdentity : IEquatable<IIdentity>
-  {
     /// <summary>
-    /// Gets a <see cref="Type"/> that indicates the type of entity that this instance describes.
+    /// Extension methods for entity types.
     /// </summary>
-    /// <value>The entity type.</value>
-    Type EntityType { get; }
+    public static class EntityExtensions
+    {
+        static readonly ICreatesIdentity identityFactory = new IdentityFactory();
 
-    /// <summary>
-    /// Gets the underlying type of <see cref="Value"/>.
-    /// </summary>
-    /// <value>The identity type.</value>
-    Type IdentityType { get; }
+        /// <summary>
+        /// Gets the identity for the specified entity.
+        /// </summary>
+        /// <returns>The entity identity, possibly a <c>null</c> reference if the entity does not have an identity value.</returns>
+        /// <param name="entity">The entity.</param>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        public static IIdentity<TEntity> GetIdentity<TEntity>(this TEntity entity) where TEntity : IEntity
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
 
-    /// <summary>
-    /// Gets the identity value contained within the current instance.
-    /// </summary>
-    /// <value>The identity value.</value>
-    object Value { get; }
-
-    /// <summary>
-    /// Gets the identity value and converts it to a string.
-    /// </summary>
-    /// <returns>The value as a string.</returns>
-    string GetValueAsString();
-  }
+            return (IIdentity<TEntity>)identityFactory.Create(typeof(TEntity), entity.IdentityType, entity.IdentityValue);
+        }
+    }
 }
 

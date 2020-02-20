@@ -51,7 +51,7 @@ namespace CSF.ORM
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            var identity = Entity.GetIdentity(entity);
+            var identity = entity.GetIdentity();
             persister.Add(entity, identity.Value);
         }
 
@@ -153,7 +153,7 @@ namespace CSF.ORM
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            var identity = Entity.GetIdentity(entity);
+            var identity = entity.GetIdentity();
             return persister.AddAsync(entity, identity.Value, token);
         }
 

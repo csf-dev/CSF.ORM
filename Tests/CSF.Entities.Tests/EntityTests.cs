@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Test.CSF.Entities.Stubs;
+using CSF.Entities.Tests.Stubs;
 using CSF.Entities;
 
 namespace Test.CSF.Entities

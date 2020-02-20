@@ -29,71 +29,28 @@ using System;
 
 namespace CSF.Entities
 {
-  /// <summary>
-  /// <para>Base non-generic interface for domain entities.</para>
-  /// </summary>
-  public interface IEntity
-  {
-    #region properties
-    
     /// <summary>
-    /// <para>Gets a value which indicates whether or not the current instance has an identity.</para>
+    /// Represents an entity; an object which has a unique identity within the domain of an application's business
+    /// logic, as well as other properties which store data.
     /// </summary>
-    bool HasIdentity { get; }
+    public interface IEntity
+    {
+        /// <summary>
+        /// Gets a value which indicates whether or not the current instance has an identity value set.
+        /// </summary>
+        bool HasIdentity { get; }
 
-    /// <summary>
-    /// Gets the identity value for the current instance.
-    /// </summary>
-    /// <value>The identity value.</value>
-    object IdentityValue { get; }
+        /// <summary>
+        /// Gets or sets the identity value for the current instance.
+        /// </summary>
+        /// <value>The identity value.</value>
+        object IdentityValue { get; set; }
 
-    #endregion
-
-    #region methods
-
-    /// <summary>
-    /// Sets the identity for the current instance.
-    /// </summary>
-    /// <param name="identity">Identity.</param>
-    void SetIdentity(object identity);
-
-    /// <summary>
-    /// Sets the identity for the current instance.
-    /// </summary>
-    /// <param name="identity">Identity.</param>
-    void SetIdentity(IIdentity identity);
-
-    /// <summary>
-    /// Gets the <c>System.Type</c> of the identity value represented by <see cref="Identity"/>.
-    /// </summary>
-    /// <returns>The identity type.</returns>
-    Type GetIdentityType();
-
-    /// <summary>
-    /// Gets a <c>System.Type</c> of the current <see cref="IEntity"/> for the purpose of entity equality testing.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Consider a hierarchy of Person -&gt; Employee.  Employee is a subclass of Person and both are entities.
-    /// Employee ID=5 should be equal to Person ID=5.  Even though the entity types are different, "an employee is a
-    /// person" so the equality test should consider them to be equivalent.
-    /// </para>
-    /// <para>
-    /// This method gets the entity type which the current instance should use for purposes of this equality test.
-    /// In the example above, for both the Employee and Person classes, it would return Person.
-    /// </para>
-    /// </remarks>
-    /// <returns>The entity equality type.</returns>
-    Type GetIdentityEqualityEntityType();
-
-    /// <summary>
-    /// Gets a value indicating whether the current instance and a given other entity are identity-equal.
-    /// </summary>
-    /// <returns><c>true</c>, if the current instance is identity-equal to the given instance, <c>false</c> otherwise.</returns>
-    /// <param name="other">Other.</param>
-    bool IdentityEquals(IEntity other);
-
-    #endregion
-  }
+        /// <summary>
+        /// Gets the <see cref="Type"/> of the identity value which would be used with <see cref="IdentityValue"/>.
+        /// </summary>
+        /// <returns>The identity type.</returns>
+        Type IdentityType { get; }
+    }
 }
 
