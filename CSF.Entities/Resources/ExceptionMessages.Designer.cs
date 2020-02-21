@@ -64,5 +64,11 @@ namespace CSF.Entities.Resources {
                 return ResourceManager.GetString("CastTypeMustImplementEntityTypeFormat", resourceCulture);
             }
         }
+        
+        internal static string InvalidIdentityType {
+            get {
+                return ResourceManager.GetString("InvalidIdentityType", resourceCulture);
+            }
+        }
     }
 }

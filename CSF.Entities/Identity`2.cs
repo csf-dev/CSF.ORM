@@ -26,236 +26,135 @@
 
 
 using System;
+using System.Collections.Generic;
 
 namespace CSF.Entities
 {
-  /// <summary>
-  /// Describes an immutable identity for an <see cref="T:Entity{TIdentity}"/>.  This serves as a unique identifier for
-  /// that entity instance within the object model.
-  /// </summary>
-  /// <typeparam name="TIdentity">The underlying type of the identity <see cref="Value"/>.</typeparam>
-  /// <typeparam name="TEntity">The type of <see cref="T:Entity{TIdentity}"/> that this object represents.</typeparam>
-  [Serializable]
-  public class Identity<TIdentity,TEntity> :  IIdentity<TEntity>,
-                                              IEquatable<IIdentity<TEntity>>,
-                                              IEquatable<Identity<TIdentity,TEntity>>
-                                              where TEntity : IEntity
-  {
-    #region properties
-    
     /// <summary>
-    /// <para>Read-only.  A <see cref="System.Type"/> that is associated with this identity instance.</para>
+    /// Describes an immutable identity for an <see cref="IEntity"/> instance.  This is a unique identifier
+    /// for that entity within the application's logic domain.
     /// </summary>
-    public Type EntityType { get { return typeof(TEntity); } }
-
-    /// <summary>
-    /// Gets the underlying type of <see cref="Value"/>.
-    /// </summary>
-    /// <value>The identity type.</value>
-    public Type IdentityType { get { return typeof(TIdentity); } }
-
-    /// <summary>
-    /// <para>
-    /// Read-only.  An <see cref="System.Object"/> of the appropriate generic type that uniquely identifies this entity
-    /// amongst all other entities of the same <see cref="Type"/>.
-    /// </para>
-    /// </summary>
-    public TIdentity Value { get; private set; }
-
-    object IIdentity.Value { get { return this.Value; } }
-
-    #endregion
-
-    #region methods
-
-    /// <summary>
-    /// <para>Overridden, overloaded.  Determines equality with the given <see cref="System.Object"/>.</para>
-    /// </summary>
-    /// <param name="obj">
-    /// A <see cref="System.Object"/>
-    /// </param>
-    /// <returns>
-    /// A <see cref="System.Boolean"/>
-    /// </returns>
-    public override bool Equals (object obj)
+    /// <typeparam name="TIdentity">The underlying type of the identity value.</typeparam>
+    /// <typeparam name="TEntity">The concrete type of <see cref="IEntity"/> which this instance described.</typeparam>
+    [Serializable]
+    public sealed class Identity<TIdentity, TEntity> : IIdentity<TEntity>,
+                                                       IEquatable<IIdentity>,
+                                                       IEquatable<IIdentity<TEntity>>,
+                                                       IEquatable<Identity<TIdentity, TEntity>>
+                                                       where TEntity : IEntity
     {
-      bool output;
+        readonly IEqualityComparer<IIdentity> comparer = new IdentityEqualityComparer();
 
-      if(Object.ReferenceEquals(this, obj))
-      {
-        output = true;
-      }
-      else
-      {
-        var other = obj as IIdentity;
-        output = ((object) other != null)? this.Equals(other) : false;
-      }
+        /// <summary>
+        /// Gets a <see cref="Type"/> that indicates the type of entity that this instance describes.
+        /// </summary>
+        public Type EntityType { get { return typeof(TEntity); } }
 
-      return output;
+        /// <summary>
+        /// Gets the underlying type of <see cref="Value"/>.
+        /// </summary>
+        /// <value>The identity type.</value>
+        public Type IdentityType { get { return typeof(TIdentity); } }
+
+        /// <summary>
+        /// Gets the identity value.
+        /// </summary>
+        public TIdentity Value { get; }
+
+        object IIdentity.Value => Value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current instance.
+        /// </summary>
+        /// <param name="obj">
+        /// A <see cref="System.Object"/>.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj) => Equals(obj as IIdentity);
+
+        /// <summary>
+        /// Determines whether the specified identity is equal to the current instance.
+        /// </summary>
+        /// <param name='other'>The identity to compare with the current instance.</param>
+        /// <returns>
+        /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
+        /// </returns>
+        public bool Equals(IIdentity other) => comparer.Equals(this, other);
+
+        /// <summary>
+        /// Determines whether the specified identity is equal to the current instance.
+        /// </summary>
+        /// <param name='other'>The identity to compare with the current instance.</param>
+        /// <returns>
+        /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
+        /// </returns>
+        public bool Equals(IIdentity<TEntity> other) => Equals((IIdentity)other);
+
+        /// <summary>
+        /// Determines whether the specified identity is equal to the current instance.
+        /// </summary>
+        /// <param name='other'>
+        /// The identity to compare with the current instance.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
+        /// </returns>
+        public bool Equals(Identity<TIdentity, TEntity> other) => Equals((IIdentity)other);
+
+        /// <summary>
+        /// Computes a hash code for this identity instance.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="Int32"/> hash code.
+        /// </returns>
+        public override int GetHashCode() => comparer.GetHashCode(this);
+
+        /// <summary>
+        /// Gets a <see cref="String"/> representation of this identity.s
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/>
+        /// </returns>
+        public override string ToString() => string.Format(Resources.Strings.IdentityFormat, EntityType.Name, Value);
+
+        /// <summary>
+        /// Gets the identity value and converts it to a string.
+        /// </summary>
+        /// <returns>The value as a string.</returns>
+        public string GetValueAsString() => Value.ToString();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Identity{TIdentity,TEntity}"/> class.
+        /// </summary>
+        /// <param name="identity">The identity value.</param>
+        public Identity(TIdentity identity)
+        {
+            if (Equals(identity, default(TIdentity)))
+                throw new ArgumentException(String.Format(Resources.ExceptionMessages.MustNotBeDefaultForDataTypeFormat, typeof(TIdentity).Name), nameof(identity));
+
+            Value = identity;
+        }
+
+        /// <summary>
+        /// Operator overload for testing equality between identity instances.
+        /// </summary>
+        /// <param name="objectA">An identity instance.</param>
+        /// <param name="objectB">An identity instance.</param>
+        public static bool operator ==(Identity<TIdentity, TEntity> objectA, IIdentity objectB)
+        {
+            if (ReferenceEquals(objectA, objectB)) return true;
+            if (ReferenceEquals(objectA, null)) return false;
+            return objectA.Equals(objectB);
+        }
+
+        /// <summary>
+        /// Operator overload for testing inequality between identity instances.
+        /// </summary>
+        /// <param name="objectA">An identity instance.</param>
+        /// <param name="objectB">An identity instance.</param>
+        public static bool operator !=(Identity<TIdentity, TEntity> objectA, IIdentity objectB) => !(objectA == objectB);
     }
-
-    /// <summary>
-    /// Determines whether the specified identity is equal to the current instance.
-    /// </summary>
-    /// <param name='other'>The identity to compare with the current instance.</param>
-    /// <returns>
-    /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
-    /// </returns>
-    public bool Equals (IIdentity other)
-    {
-      bool output;
-
-      if(Object.ReferenceEquals(this, other))
-      {
-        output = true;
-      }
-      else if(((object) other) == null)
-      {
-        output = false;
-      }
-      else
-      {
-        output = (Entity.AreEqualityTypesSame(EntityType, other.EntityType)
-                  && Object.Equals(Value, other.Value));
-      }
-
-      return output;
-    }
-
-    /// <summary>
-    /// Determines whether the specified identity is equal to the current instance.
-    /// </summary>
-    /// <param name='other'>The identity to compare with the current instance.</param>
-    /// <returns>
-    /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
-    /// </returns>
-    public bool Equals (IIdentity<TEntity> other)
-    {
-      return Equals((IIdentity) other);
-    }
-
-    /// <summary>
-    /// Determines whether the specified identity is equal to the current instance.
-    /// </summary>
-    /// <param name='other'>
-    /// The identity to compare with the current instance.
-    /// </param>
-    /// <returns>
-    /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
-    /// </returns>
-    public bool Equals (Identity<TIdentity, TEntity> other)
-    {
-      return Equals((IIdentity) other);
-    }
-
-    /// <summary>
-    /// <para>Overridden.  Computes a hash code for this identity instance.</para>
-    /// </summary>
-    /// <returns>
-    /// A <see cref="System.Int32"/>
-    /// </returns>
-    public override int GetHashCode ()
-    {
-      int typeHash, identityHash;
-      
-      typeHash = this.EntityType.GetHashCode();
-      identityHash = this.Value.GetHashCode();
-      
-      return (typeHash ^ identityHash);
-    }
-    
-    /// <summary>
-    /// <para>Overridden, gets a <see cref="System.String"/> representation of this identity.</para>
-    /// </summary>
-    /// <returns>
-    /// A <see cref="System.String"/>
-    /// </returns>
-    public override string ToString ()
-    {
-      return string.Format (Resources.Strings.IdentityFormat, this.EntityType.Name, this.Value.ToString());
-    }
-
-
-    /// <summary>
-    /// Gets the identity value and converts it to a string.
-    /// </summary>
-    /// <returns>The value as a string.</returns>
-    public string GetValueAsString()
-    {
-      if(Equals(default(TIdentity), Value))
-      {
-        return null;
-      }
-
-      return Value.ToString();
-    }
-
-    #endregion
-    
-    #region constructor
-    
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:CSF.Entities.Identity{TIdentity,TEntity}"/> class.
-    /// </summary>
-    /// <param name="identity">The identity value.</param>
-    public Identity(TIdentity identity)
-    {
-      Identity.RequireNotDefaultValue(identity);
-      Value = identity;
-    }
-    
-    #endregion
-    
-    #region operator overloads
-
-    /// <summary>
-    /// Operator overload for testing equality between identity instances.
-    /// </summary>
-    /// <param name="objectA">An identity instance.</param>
-    /// <param name="objectB">An identity instance.</param>
-    public static bool operator ==(Identity<TIdentity,TEntity> objectA, IIdentity objectB)
-    {
-      if((object) objectA == null)
-      {
-        return Object.ReferenceEquals(objectA, objectB);
-      }
-      else
-      {
-        return objectA.Equals(objectB);
-      }
-    }
-
-    /// <summary>
-    /// Operator overload for testing inequality between identity instances.
-    /// </summary>
-    /// <param name="objectA">An identity instance.</param>
-    /// <param name="objectB">An identity instance.</param>
-    public static bool operator !=(Identity<TIdentity,TEntity> objectA, IIdentity objectB)
-    {
-      return !(objectA == objectB);
-    }
-
-    /// <summary>
-    /// Operator overload for testing equality between identity instances.
-    /// </summary>
-    /// <param name="objectA">An identity instance.</param>
-    /// <param name="objectB">An identity instance.</param>
-    public static bool operator ==(IIdentity objectA, Identity<TIdentity,TEntity> objectB)
-    {
-      return objectB == objectA;
-    }
-
-    /// <summary>
-    /// Operator overload for testing inequality between identity instances.
-    /// </summary>
-    /// <param name="objectA">An identity instance.</param>
-    /// <param name="objectB">An identity instance.</param>
-    public static bool operator !=(IIdentity objectA, Identity<TIdentity,TEntity> objectB)
-    {
-      return !(objectA == objectB);
-    }
-    
-    #endregion
-  }
 }
 

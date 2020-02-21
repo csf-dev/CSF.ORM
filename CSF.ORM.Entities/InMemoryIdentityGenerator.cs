@@ -83,8 +83,8 @@ namespace CSF.ORM
                 throw new ArgumentNullException(nameof(entity));
             if (entity.HasIdentity) return;
 
-            var identity = GetIdentity(entity.GetIdentityType());
-            entity.SetIdentity(identity);
+            var identity = GetIdentity(entity.IdentityType);
+            entity.IdentityValue = identity;
         }
 
         /// <summary>

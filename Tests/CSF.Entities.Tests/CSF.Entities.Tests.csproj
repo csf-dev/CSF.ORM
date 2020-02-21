@@ -36,4 +36,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="EntityTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+  </ItemGroup>
 </Project>

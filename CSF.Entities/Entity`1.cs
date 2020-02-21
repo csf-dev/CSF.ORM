@@ -24,138 +24,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 using System;
 
 namespace CSF.Entities
 {
-  /// <summary>
-  /// Generic base type for an entity object which may be stored in a persistent data source.
-  /// </summary>
-  /// <typeparam name="TIdentity">The identity type for the current instance.</typeparam>
-  [Serializable,IgnoreForIdentityEquality]
-  public abstract class Entity<TIdentity> : IEntity
-  {
-    #region fields
-    
-    int? _cachedHashCode;
-    
-    #endregion
-    
-    #region properties
-
     /// <summary>
-    /// Gets or sets the identity value for the current instance.
+    /// Abstract base type for an <see cref="IEntity"/> class, defining the baseline
+    /// functionality.  This class is generic for the type which will be used for the
+    /// identity value.  Consider using <see cref="long"/> or <see cref="Guid"/>.
     /// </summary>
-    /// <value>The identity value.</value>
-    protected virtual TIdentity IdentityValue { get; set; }
-
-    /// <summary>
-    /// Gets a value indicating whether this instance has an identity.
-    /// </summary>
-    /// <value><c>true</c> if this instance has an identity; otherwise, <c>false</c>.</value>
-    protected virtual bool HasIdentity
+    /// <typeparam name="TIdentity">The identity type for the current instance.</typeparam>
+    [Serializable, IgnoreForIdentityEquality]
+    public abstract class Entity<TIdentity> : IEntity
     {
-      get {
-        return !Object.Equals(IdentityValue, default(TIdentity));
-      }
+        /// <summary>
+        /// Gets or sets the identity value for the current instance.
+        /// </summary>
+        /// <value>The identity value.</value>
+        protected virtual TIdentity IdentityValue { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has an identity.
+        /// </summary>
+        /// <value><c>true</c> if this instance has an identity; otherwise, <c>false</c>.</value>
+        protected virtual bool HasIdentity => !Equals(IdentityValue, default(TIdentity));
+
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents the current <see cref="Entity{TIdentity}"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="String"/> that represents the current <see cref="Entity{TIdentity}"/>.
+        /// </returns>
+        public override string ToString()
+        {
+            string identityPart = HasIdentity ? IdentityValue.ToString() : Resources.Strings.NoIdentity;
+            return String.Format(Resources.Strings.IdentityFormat, this.GetType().Name, identityPart);
+        }
+
+        bool IEntity.HasIdentity => HasIdentity;
+
+        object IEntity.IdentityValue
+        {
+            get { return IdentityValue; }
+            set { IdentityValue = (TIdentity) value; }
+        }
+
+        Type IEntity.IdentityType => typeof(TIdentity);
     }
-
-    #endregion
-
-    #region methods
-
-    /// <summary>
-    /// Determines whether the specified <see cref="System.Object"/> is equal to the current
-    /// <see cref="T:CSF.Entities.Entity{TIdentity}"/>.
-    /// </summary>
-    /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="T:CSF.Entities.Entity{TIdentity}"/>.</param>
-    /// <returns>
-    /// <c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-    /// <see cref="T:CSF.Entities.Entity{TIdentity}"/>; otherwise, <c>false</c>.
-    /// </returns>
-    public override bool Equals(object obj)
-    {
-      return ReferenceEquals(this, obj);
-    }
-
-    /// <summary>
-    /// Gets a value indicating whether the current instance and a given other entity are identity-equal.
-    /// </summary>
-    /// <returns><c>true</c>, if the current instance is identity-equal to the given instance, <c>false</c> otherwise.</returns>
-    /// <param name="other">Other.</param>
-    public virtual bool IdentityEquals(IEntity other)
-    {
-      if(ReferenceEquals(other, null)) return false;
-      if(ReferenceEquals(this, other)) return true;
-
-      return Identity.Equals(this, other);
-    }
-
-    /// <summary>
-    /// Serves as a hash function for a <see cref="T:CSF.Entities.Entity{TIdentity}"/> object.
-    /// </summary>
-    /// <returns>
-    /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-    /// hash table.
-    /// </returns>
-    public override int GetHashCode()
-    {
-      if(!_cachedHashCode.HasValue)
-      {
-        if(HasIdentity)
-          _cachedHashCode = IdentityValue.GetHashCode();
-        else
-          _cachedHashCode = base.GetHashCode();
-      }
-
-      return _cachedHashCode.Value;
-    }
-    
-    /// <summary>
-    /// Returns a <see cref="System.String"/> that represents the current <see cref="T:CSF.Entities.Entity{TIdentity}"/>.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="System.String"/> that represents the current <see cref="T:CSF.Entities.Entity{TIdentity}"/>.
-    /// </returns>
-    public override string ToString()
-    {
-      string identityPart = HasIdentity? IdentityValue.ToString() : Resources.Strings.NoIdentity;
-      return String.Format(Resources.Strings.IdentityFormat, this.GetType().Name, identityPart);
-    }
-
-    /// <summary>
-    /// Sets the identity for the current instance.
-    /// </summary>
-    /// <param name="identity">Identity.</param>
-    public virtual void SetIdentityValue(TIdentity identity)
-    {
-      IdentityValue = identity;
-    }
-
-    #endregion
-
-    #region explicit interface implementations
-
-    bool IEntity.HasIdentity { get { return HasIdentity; } }
-
-    object IEntity.IdentityValue { get { return IdentityValue; } }
-
-    Type IEntity.GetIdentityType() { return typeof(TIdentity); }
-
-    Type IEntity.GetIdentityEqualityEntityType() { return Entity.GetEqualityType(GetType()); }
-
-    void IEntity.SetIdentity(object identity)
-    {
-      SetIdentityValue((TIdentity) identity);
-    }
-
-    void IEntity.SetIdentity(IIdentity identity)
-    {
-      SetIdentityValue((TIdentity) identity.Value);
-    }
-
-    #endregion
-  }
 }
 

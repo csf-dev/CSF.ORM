@@ -1,10 +1,10 @@
 ﻿//
-// IIdentity.cs
+// IUpCastsIdentity.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2015 CSF Software Limited
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,41 +23,22 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-
 namespace CSF.Entities
 {
-  /// <summary>
-  /// Represents the identity for a <see cref="IEntity"/>.  This is a value-object
-  /// which holds just the information which which entity type it relates to, and what
-  /// the identity value is.
-  /// </summary>
-  public interface IIdentity : IEquatable<IIdentity>
-  {
     /// <summary>
-    /// Gets a <see cref="Type"/> that indicates the type of entity that this instance describes.
+    /// A service which converts/casts an identity instance from a
+    /// less-specific entity type to a more specific entity type.
     /// </summary>
-    /// <value>The entity type.</value>
-    Type EntityType { get; }
-
-    /// <summary>
-    /// Gets the underlying type of <see cref="Value"/>.
-    /// </summary>
-    /// <value>The identity type.</value>
-    Type IdentityType { get; }
-
-    /// <summary>
-    /// Gets the identity value contained within the current instance.
-    /// </summary>
-    /// <value>The identity value.</value>
-    object Value { get; }
-
-    /// <summary>
-    /// Gets the identity value and converts it to a string.
-    /// </summary>
-    /// <returns>The value as a string.</returns>
-    string GetValueAsString();
-  }
+    public interface ICastsIdentityType
+    {
+        /// <summary>
+        /// Cast the identity instance to the desired entity type, or raise an exception if the cast would be invalid.
+        /// </summary>
+        /// <returns>The identity, converted to a new entity type.</returns>
+        /// <exception cref="InvalidCastException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
+        /// <param name="identity">The identity to convert to a different entity type.</param>
+        /// <typeparam name="TCast">The desired entity type.</typeparam>
+        IIdentity<TCast> CastIdentity<TCast>(IIdentity identity) where TCast : IEntity;
+    }
 }
-
