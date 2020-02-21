@@ -37,9 +37,9 @@ namespace CSF.Entities
         /// <summary>
         /// Cast the identity instance to the desired entity type, or raise an exception if the cast would be invalid.
         /// </summary>
-        /// <returns>The identity, cast to a new type.</returns>
+        /// <returns>The identity, converted to a new entity type.</returns>
         /// <exception cref="InvalidCastException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
-        /// <param name="identity">The identity to up-cast.</param>
+        /// <param name="identity">The identity to convert to a different entity type.</param>
         /// <typeparam name="TCast">The desired entity type.</typeparam>
         public IIdentity<TCast> CastIdentity<TCast>(IIdentity identity) where TCast : IEntity
         {

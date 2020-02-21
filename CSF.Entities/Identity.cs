@@ -63,12 +63,12 @@ namespace CSF.Entities
             => (IIdentity<TEntity>) parser.Parse(typeof(TEntity), value);
 
         /// <summary>
-        /// Attempts to up-cast an identity to a specified entity type.
+        /// Cast the identity instance to the desired entity type, or raise an exception if the cast would be invalid.
         /// </summary>
-        /// <returns>An identity for the specified entity type.</returns>
-        /// <param name="identity">The identity to up-cast.</param>
-        /// <typeparam name="TCast">The entity type.</typeparam>
-        /// <exception cref="ArgumentException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
+        /// <returns>The identity, converted to a new entity type.</returns>
+        /// <param name="identity">The identity to convert to a different entity type.</param>
+        /// <typeparam name="TCast">The desired entity type.</typeparam>
+        /// <exception cref="InvalidCastException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
         public static IIdentity<TCast> Cast<TCast>(this IIdentity identity)
             => caster.CastIdentity<TCast>(identity);
     }

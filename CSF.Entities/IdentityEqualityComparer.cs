@@ -30,7 +30,7 @@ namespace CSF.Entities
 {
     /// <summary>
     /// An implementation of <see cref="IEqualityComparer{IIdentity}"/> which compares
-    /// <see cref="IIdentity"/> instances for identity-equality.  This is where the identity
+    /// <see cref="IIdentity"/> instances for equality.  This is where the identity
     /// values are equal and the entity types for the identities are either equal or compatible,
     /// as determined by <see cref="EntityIdentityEqualityTypeProvider"/>.
     /// </summary>
@@ -39,7 +39,7 @@ namespace CSF.Entities
         readonly IGetsEntityTypeForIdentityEquality identityEqualityTypeProvider;
 
         /// <summary>
-        /// Determines whether the two identities are identity-equal or not.
+        /// Determines whether the two identities are equal or not.
         /// </summary>
         /// <returns><c>true</c> if the identities are equal; <c>false</c> otherwise.</returns>
         /// <param name="x">The first identity.</param>

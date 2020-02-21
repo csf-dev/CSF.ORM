@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace CSF.Entities
@@ -35,6 +36,7 @@ namespace CSF.Entities
     public static class EntityExtensions
     {
         static readonly ICreatesIdentity identityFactory = new IdentityFactory();
+        static readonly IEqualityComparer<IEntity> entityIdentityEqualityComparer = new EntityIdentityEqualityComparer();
 
         /// <summary>
         /// Gets the identity for the specified entity.
@@ -47,8 +49,23 @@ namespace CSF.Entities
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            return (IIdentity<TEntity>)identityFactory.Create(typeof(TEntity), entity.IdentityType, entity.IdentityValue);
+            return (IIdentity<TEntity>)identityFactory.Create(entity.GetType(), entity.IdentityType, entity.IdentityValue);
         }
+
+        /// <summary>
+        /// <para>
+        /// Compares the specified <paramref name="entity"/> instance for identity-equality
+        /// with the <paramref name="other"/> entity.
+        /// </para>
+        /// <para>
+        /// This functionality is equivalent to <seealso cref="EntityIdentityEqualityComparer.Equals(IEntity, IEntity)"/>.
+        /// </para>
+        /// </summary>
+        /// <returns><c>true</c> if the entities are identity-equal; <c>false</c> otherwise.</returns>
+        /// <param name="entity">The first entity.</param>
+        /// <param name="other">The second entity.</param>
+        public static bool IdentityEquals(this IEntity entity, IEntity other)
+            => entityIdentityEqualityComparer.Equals(entity, other);
     }
 }
 
