@@ -30,13 +30,13 @@ namespace CSF.Entities
     /// A service which converts/casts an identity instance from a
     /// less-specific entity type to a more specific entity type.
     /// </summary>
-    public interface IUpCastsIdentity
+    public interface ICastsIdentityType
     {
         /// <summary>
         /// Cast the identity instance to the desired entity type, or raise an exception if the cast would be invalid.
         /// </summary>
         /// <returns>The identity, cast to a new type.</returns>
-        /// <exception cref="ArgumentException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
+        /// <exception cref="InvalidCastException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
         /// <param name="identity">The identity to up-cast.</param>
         /// <typeparam name="TCast">The desired entity type.</typeparam>
         IIdentity<TCast> CastIdentity<TCast>(IIdentity identity) where TCast : IEntity;

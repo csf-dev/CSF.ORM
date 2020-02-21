@@ -30,7 +30,7 @@ namespace CSF.Entities
     /// A service which converts/casts an identity instance from a
     /// less-specific entity type to a more specific entity type.
     /// </summary>
-    public class IdentityCaster : IUpCastsIdentity
+    public class IdentityTypeCaster : ICastsIdentityType
     {
         static readonly ICreatesIdentity identityFactory = new IdentityFactory();
 
@@ -38,7 +38,7 @@ namespace CSF.Entities
         /// Cast the identity instance to the desired entity type, or raise an exception if the cast would be invalid.
         /// </summary>
         /// <returns>The identity, cast to a new type.</returns>
-        /// <exception cref="ArgumentException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
+        /// <exception cref="InvalidCastException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
         /// <param name="identity">The identity to up-cast.</param>
         /// <typeparam name="TCast">The desired entity type.</typeparam>
         public IIdentity<TCast> CastIdentity<TCast>(IIdentity identity) where TCast : IEntity
@@ -46,12 +46,15 @@ namespace CSF.Entities
             if (identity == null)
                 throw new ArgumentNullException(nameof(identity));
 
-            if (!typeof(TCast).IsAssignableFrom(identity.EntityType))
+            if (identity is IIdentity<TCast> downCastId)
+                return downCastId;
+
+            if (!identity.EntityType.IsAssignableFrom(typeof(TCast)))
             {
                 string message = String.Format(Resources.ExceptionMessages.CastTypeMustImplementEntityTypeFormat,
                                                identity.EntityType.Name,
                                                typeof(TCast).Name);
-                throw new ArgumentException(message, nameof(identity));
+                throw new InvalidCastException(message);
             }
 
             return (IIdentity<TCast>) identityFactory.Create(typeof(TCast), identity.IdentityType, identity.Value);

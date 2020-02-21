@@ -30,27 +30,38 @@ using NUnit.Framework;
 namespace CSF.Entities.Tests
 {
     [TestFixture,Parallelizable]
-    public class IdentityCasterTests
+    public class IdentityTypeCasterTests
     {
         [Test, AutoMoqData]
-        public void CastIdentity_returns_identity_when_types_are_same(IdentityCaster sut)
+        public void CastIdentity_returns_same_identity_when_types_are_same(IdentityTypeCaster sut)
         {
             IIdentity id = new Identity<long, Cat>(5);
-            Assert.That(sut.CastIdentity<Cat>(id), Is.EqualTo(id));
+            Assert.That(sut.CastIdentity<Cat>(id), Is.SameAs(id));
         }
 
         [Test, AutoMoqData]
-        public void CastIdentity_returns_identity_when_types_are_compatible(IdentityCaster sut)
+        public void CastIdentity_returns_same_identity_when_downcast_would_be_valid(IdentityTypeCaster sut)
         {
             IIdentity id = new Identity<long, Cat>(5);
-            Assert.That(sut.CastIdentity<Animal>(id), Is.EqualTo(id));
+            Assert.That(sut.CastIdentity<Animal>(id), Is.SameAs(id));
         }
 
         [Test, AutoMoqData]
-        public void CastIdentity_throws_exception_when_when_types_are_not_compatible(IdentityCaster sut)
+        public void CastIdentity_returns_new_identity_when_types_are_compatible_for_upcast(IdentityTypeCaster sut)
         {
             IIdentity id = new Identity<long, Animal>(5);
-            Assert.That(() => sut.CastIdentity<Cat>(id), Throws.InstanceOf<ArgumentException>());
+            var newId = sut.CastIdentity<Cat>(id);
+            Assert.That(newId, Is.InstanceOf<Identity<long,Cat>>(), "Correct type");
+            Assert.That(newId, Is.Not.SameAs(id), "Is a different object");
+            Assert.That(newId.EntityType, Is.EqualTo(typeof(Cat)), "Correct entity type");
+            Assert.That(newId.Value, Is.EqualTo(5), "Correct identity value");
+        }
+
+        [Test, AutoMoqData]
+        public void CastIdentity_throws_exception_when_when_types_are_not_compatible_for_upcast(IdentityTypeCaster sut)
+        {
+            IIdentity id = new Identity<long, Person>(5);
+            Assert.That(() => sut.CastIdentity<Cat>(id), Throws.InstanceOf<InvalidCastException>());
         }
     }
 }

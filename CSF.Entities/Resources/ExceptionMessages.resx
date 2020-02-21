@@ -19,7 +19,7 @@
     <value>Identity values may not be the default for their data-type (`{0}').</value>
   </data>
   <data name="CastTypeMustImplementEntityTypeFormat" xml:space="preserve">
-    <value>The identity's entity type: `{0}' must derive from (or be equal-to) the cast-to type: `{1}'.</value>
+    <value>To up-cast an identity to a more specific entity type, the entity type to cast-as: `{1}' must derive from the specified identity's current entity type: `{0}'.</value>
   </data>
   <data name="InvalidIdentityType" xml:space="preserve">
     <value>Identity type `{0}' was specified but provided identity value was a `{1}'.</value>
