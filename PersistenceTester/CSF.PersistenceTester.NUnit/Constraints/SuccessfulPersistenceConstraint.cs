@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework.Constraints;
+﻿using NUnit.Framework.Constraints;
 
 namespace CSF.PersistenceTester.Constraints
 {

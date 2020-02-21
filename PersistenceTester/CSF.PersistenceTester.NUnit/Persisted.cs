@@ -1,6 +1,4 @@
-﻿using System;
-using CSF.PersistenceTester.Constraints;
-using NUnit.Framework;
+﻿using CSF.PersistenceTester.Constraints;
 using NUnit.Framework.Constraints;
 
 namespace CSF.PersistenceTester

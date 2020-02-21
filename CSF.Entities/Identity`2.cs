@@ -38,8 +38,6 @@ namespace CSF.Entities
     /// <typeparam name="TEntity">The concrete type of <see cref="IEntity"/> which this instance described.</typeparam>
     [Serializable]
     public sealed class Identity<TIdentity, TEntity> : IIdentity<TEntity>,
-                                                       IEquatable<IIdentity>,
-                                                       IEquatable<IIdentity<TEntity>>,
                                                        IEquatable<Identity<TIdentity, TEntity>>
                                                        where TEntity : IEntity
     {
@@ -82,15 +80,6 @@ namespace CSF.Entities
         /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(IIdentity other) => comparer.Equals(this, other);
-
-        /// <summary>
-        /// Determines whether the specified identity is equal to the current instance.
-        /// </summary>
-        /// <param name='other'>The identity to compare with the current instance.</param>
-        /// <returns>
-        /// <c>true</c> if the specified identity is equal to the current instance; otherwise, <c>false</c>.
-        /// </returns>
-        public bool Equals(IIdentity<TEntity> other) => Equals((IIdentity)other);
 
         /// <summary>
         /// Determines whether the specified identity is equal to the current instance.

@@ -63,7 +63,7 @@ namespace CSF.Entities
                 throw new ArgumentNullException(nameof(identityType));
             if (Equals(identityValue, GetDefaultValue(identityType)))
                 return null;
-            if (!identityType.IsAssignableFrom(identityValue.GetType()))
+            if (!identityType.IsInstanceOfType(identityValue))
                 throw new ArgumentException(String.Format(Resources.ExceptionMessages.InvalidIdentityType, identityType.Name, identityValue.GetType()), nameof(identityValue));
 
             var closedIdentityType = typeof(Identity<,>).MakeGenericType(identityType, entityType);
