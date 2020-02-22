@@ -1,5 +1,5 @@
 ﻿//
-// ITransaction.cs
+// UseExistingNativeTransactionDecorator.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,31 +24,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+using Nh = NHibernate;
+
+namespace CSF.ORM.NHibernate
 {
     /// <summary>
-    /// Represents a transaction, against some form of data backend.
+    /// A decorator for a transaction-creator service which prefers the use of
+    /// an existing active transaction, rather than creating a new one.
     /// </summary>
-    public interface ITransaction : IDisposable
+    public class PreferExistingNativeTransactionDecorator : IGetsNHibernateTransaction
     {
-        /// <summary>
-        /// Commit this transaction to the back-end.
-        /// </summary>
-        void Commit();
+        readonly IGetsNHibernateTransaction wrapped;
 
         /// <summary>
-        /// Roll the transaction back and abort changes.
+        /// Gets a transaction.
         /// </summary>
-        void Rollback();
+        /// <returns>The transaction.</returns>
+        /// <param name="session">Session.</param>
+        public Nh.ITransaction GetTransaction(Nh.ISession session)
+        {
+            if (session.Transaction?.IsActive == true)
+                return session.Transaction;
+
+            return wrapped.GetTransaction(session);
+        }
 
         /// <summary>
-        /// Commit this transaction to the back-end using an asynchronous API, where available.
+        /// Initializes a new instance of the
+        /// <see cref="PreferExistingNativeTransactionDecorator"/> class.
         /// </summary>
-        void CommitAsync();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes using an asynchronous API, where available.
-        /// </summary>
-        void RollbackAsync();
+        /// <param name="wrapped">Wrapped.</param>
+        public PreferExistingNativeTransactionDecorator(IGetsNHibernateTransaction wrapped)
+        {
+            this.wrapped = wrapped ?? throw new ArgumentNullException(nameof(wrapped));
+        }
     }
 }

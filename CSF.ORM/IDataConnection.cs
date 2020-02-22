@@ -1,5 +1,5 @@
 ﻿//
-// ITransaction.cs
+// IDataConnection.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,31 +24,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+
 namespace CSF.ORM
 {
     /// <summary>
-    /// Represents a transaction, against some form of data backend.
+    /// An object which represents a connection to the underlying data-store.
     /// </summary>
-    public interface ITransaction : IDisposable
+    public interface IDataConnection : IDisposable
     {
         /// <summary>
-        /// Commit this transaction to the back-end.
+        /// Gets a query object from the current connection.
         /// </summary>
-        void Commit();
+        /// <returns>The query.</returns>
+        IQuery GetQuery();
 
         /// <summary>
-        /// Roll the transaction back and abort changes.
+        /// Gets a persister object from the current connection.
         /// </summary>
-        void Rollback();
-
-        /// <summary>
-        /// Commit this transaction to the back-end using an asynchronous API, where available.
-        /// </summary>
-        void CommitAsync();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes using an asynchronous API, where available.
-        /// </summary>
-        void RollbackAsync();
+        /// <returns>The persister.</returns>
+        IPersister GetPersister();
     }
 }

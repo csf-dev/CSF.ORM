@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+    
+  <PropertyGroup>
+    <PackageId>CSF.ORM.NHibernate.Common</PackageId>
+    <Authors>Craig Fowler</Authors>
+    <Summary>Implementation of CSF.ORM using NHibernate version 4.x</Summary>
+    <Title>CSF.ORM.NHibernate.Common</Title>
+    <ReleaseVersion>1.3.1</ReleaseVersion>
+    <PackageVersion>$(ReleaseVersion)</PackageVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
+    <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>CSF.ORM.NHibernate</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+    
+  <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
+    
+  <ItemGroup>
+    <Reference Include="System.Runtime" Condition="$(TargetFramework.StartsWith('net4'))" />
+    <Reference Include="System.Configuration" Condition="$(TargetFramework.StartsWith('net4'))" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" Condition="$(TargetFramework) == 'netstandard2.0'" />
+    <PackageReference Include="System.Security.Permissions" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+   <PackageReference Include="NHibernate" Version="4.0.0.4000">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSF.ORM\CSF.ORM.csproj" />
+  </ItemGroup>
+
+</Project>

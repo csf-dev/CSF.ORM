@@ -1,5 +1,5 @@
 ﻿//
-// ITransaction.cs
+// IGetsDataConnection.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -27,28 +27,14 @@ using System;
 namespace CSF.ORM
 {
     /// <summary>
-    /// Represents a transaction, against some form of data backend.
+    /// A service which creates data connections.
     /// </summary>
-    public interface ITransaction : IDisposable
+    public interface ICreatesDataConnection
     {
         /// <summary>
-        /// Commit this transaction to the back-end.
+        /// Create a new data connection and return it.
         /// </summary>
-        void Commit();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes.
-        /// </summary>
-        void Rollback();
-
-        /// <summary>
-        /// Commit this transaction to the back-end using an asynchronous API, where available.
-        /// </summary>
-        void CommitAsync();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes using an asynchronous API, where available.
-        /// </summary>
-        void RollbackAsync();
+        /// <returns>The connection.</returns>
+        IDataConnection CreateConnection();
     }
 }

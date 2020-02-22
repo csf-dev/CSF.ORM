@@ -40,11 +40,23 @@ namespace CSF.ORM.NHibernate
         /// </summary>
         public void Commit()
         {
-            if (IsFinal || disposedValue)
-                throw new InvalidTransactionOperationException(Resources.ExceptionMessages.CannotCommitAlreadyFinalised);
+            AssertNotFinalised();
 
-            if(mayCommitAndDispose)
+            if (mayCommitAndDispose)
                 transaction.Commit();
+
+            IsFinal = true;
+        }
+
+        /// <summary>
+        /// Commit this transaction to the back-end using an asynchronous API, where available.
+        /// </summary>
+        public void CommitAsync()
+        {
+            AssertNotFinalised();
+
+            if (mayCommitAndDispose)
+                transaction.CommitAsync();
 
             IsFinal = true;
         }
@@ -54,13 +66,35 @@ namespace CSF.ORM.NHibernate
         /// </summary>
         public void Rollback()
         {
-            if (transaction.WasRolledBack || IsFinal)
+            if (transaction.WasRolledBack || IsFinal || disposedValue)
             {
                 IsFinal = true;
                 return;
             }
             transaction.Rollback();
             IsFinal = true;
+        }
+
+        /// <summary>
+        /// Roll the transaction back and abort changes using an asynchronous API, where available.
+        /// </summary>
+        public void RollbackAsync()
+        {
+            if (transaction.WasRolledBack || IsFinal || disposedValue)
+            {
+                IsFinal = true;
+                return;
+            }
+
+            transaction.RollbackAsync();
+
+            IsFinal = true;
+        }
+
+        void AssertNotFinalised()
+        {
+            if (IsFinal || disposedValue)
+                throw new InvalidTransactionOperationException(Resources.ExceptionMessages.CannotCommitAlreadyFinalised);
         }
 
         #region IDisposable Support

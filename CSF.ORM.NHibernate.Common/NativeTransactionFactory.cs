@@ -1,5 +1,5 @@
 ﻿//
-// ITransaction.cs
+// NativeTransactionFactory.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,31 +24,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+using Nh = NHibernate;
+
+namespace CSF.ORM.NHibernate
 {
     /// <summary>
-    /// Represents a transaction, against some form of data backend.
+    /// A factory service which gets a transaction from an NHibernate <see cref="Nh.ISession"/>.
     /// </summary>
-    public interface ITransaction : IDisposable
+    public class NativeTransactionFactory : IGetsNHibernateTransaction
     {
         /// <summary>
-        /// Commit this transaction to the back-end.
+        /// Gets a transaction.
         /// </summary>
-        void Commit();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes.
-        /// </summary>
-        void Rollback();
-
-        /// <summary>
-        /// Commit this transaction to the back-end using an asynchronous API, where available.
-        /// </summary>
-        void CommitAsync();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes using an asynchronous API, where available.
-        /// </summary>
-        void RollbackAsync();
+        /// <returns>The transaction.</returns>
+        /// <param name="session">Session.</param>
+        public Nh.ITransaction GetTransaction(Nh.ISession session) => session.BeginTransaction();
     }
 }

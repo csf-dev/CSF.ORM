@@ -17,12 +17,6 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-   <PackageReference Include="NHibernate" Version="4.0.0.4000">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
-    <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
     <PackageReference Include="AutoFixture" Version="4.11.0" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.11.0" />
     <PackageReference Include="AutoFixture.NUnit3" Version="4.11.0" />
@@ -42,18 +36,16 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NunitXml.TestLogger" Version="2.1.41" />
+   <PackageReference Include="NHibernate" Version="5.0.0">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
-    <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM.NHibernate5\CSF.ORM.NHibernate5.csproj" />
     <ProjectReference Include="..\..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="TestQueryableExtensions.cs" />
-    <Compile Remove="TestTransactionCreator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TestQueryableExtensions.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
-    <None Include="TestTransactionCreator.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

@@ -60,5 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSF.ORM\CSF.ORM.csproj" />
+    <ProjectReference Include="..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
   </ItemGroup>
 </Project>
