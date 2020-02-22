@@ -50,11 +50,12 @@
     <ProjectReference Include="..\CSF.ORM.CommonTestLogic\CSF.CommonTestLogic.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="TestQueryableExtensions.cs" />
+    <Folder Include="Autofixture\" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="TestTransactionCreator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestQueryableExtensions.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
     <None Include="TestTransactionCreator.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

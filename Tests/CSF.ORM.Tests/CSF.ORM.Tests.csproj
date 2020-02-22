@@ -40,5 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="AutoMoqDataAttribute.cs" />
+    <Compile Remove="QueryableExtensionsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="QueryableExtensionsTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

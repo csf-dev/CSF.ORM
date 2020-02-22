@@ -3,16 +3,14 @@ using NUnit.Framework;
 using Moq;
 using CSF.ORM;
 using System.Linq;
-using CSF.ORM;
-using CSF.ORM.InMemory;
 using AutoFixture;
 using Test.CSF.ORM.NHibernate.Models;
 using Test.CSF.ORM.NHibernate.Entities;
 
 namespace Test.CSF.ORM.NHibernate
 {
-    [TestFixture]
-    public class TestQueryableExtensions
+    [TestFixture, Description("Tests the QueryableExtensions, using an in-memory query API"), Parallelizable(ParallelScope.Children)]
+    public class QueryableExtensionsTests
     {
         #region fields
 
@@ -46,30 +44,6 @@ namespace Test.CSF.ORM.NHibernate
         #endregion
 
         #region tests
-
-        [Test]
-        public void AnyCount_returns_true_for_results()
-        {
-            // Arrange
-
-            // Act
-            var result = _query.Query<string>().AnyCount();
-
-            // Assert
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void AnyCount_returns_false_for_empty_set()
-        {
-            // Arrange
-
-            // Act
-            var result = _query.Query<Customer>().AnyCount();
-
-            // Assert
-            Assert.IsFalse(result);
-        }
 
         [Test]
         public void FetchMany_does_not_raise_exception()
