@@ -29,12 +29,12 @@ namespace CSF.ORM
     /// <summary>
     /// An object which can begin a new transaction within a data-store.
     /// </summary>
-    public interface IBeginsTransaction
+    public interface IGetsTransaction
     {
         /// <summary>
-        /// Attempts to begin a new transaction.
+        /// Attempts to get a new transaction, perhaps starting a new one.
         /// </summary>
         /// <returns>The transaction.</returns>
-        ITransaction BeginTransaction();
+        ITransaction GetTransaction();
     }
 }

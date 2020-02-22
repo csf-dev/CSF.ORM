@@ -29,7 +29,7 @@ namespace CSF.ORM.InMemory
     /// <summary>
     /// A no-operation dummy/fake transaction creator.
     /// </summary>
-    public class NoOpTransactionCreator : IBeginsTransaction
+    public class NoOpTransactionCreator : IGetsTransaction
     {
         readonly bool throwOnRollback;
 
@@ -37,7 +37,7 @@ namespace CSF.ORM.InMemory
         /// Begins the transaction.
         /// </summary>
         /// <returns>The transaction.</returns>
-        public ITransaction BeginTransaction() => new NoOpTransaction(throwOnRollback);
+        public ITransaction GetTransaction() => new NoOpTransaction(throwOnRollback);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NoOpTransactionCreator"/> class.

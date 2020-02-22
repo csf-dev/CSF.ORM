@@ -1,10 +1,10 @@
 ﻿//
-// ITransaction.cs
+// AutoMoqDataAttribute.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-namespace CSF.ORM
+
+using AutoFixture;
+using AutoFixture.AutoMoq;
+using AutoFixture.NUnit3;
+
+namespace CSF
 {
-    /// <summary>
-    /// Represents a transaction, against some form of data backend.
-    /// </summary>
-    public interface ITransaction : IDisposable
+  public class AutoMoqDataAttribute : AutoDataAttribute
+  {
+    public AutoMoqDataAttribute() : base(() => new Fixture().Customize(new AutoMoqCustomization()))
     {
-        /// <summary>
-        /// Commit this transaction to the back-end.
-        /// </summary>
-        void Commit();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes.
-        /// </summary>
-        void Rollback();
-
-        /// <summary>
-        /// Commit this transaction to the back-end using an asynchronous API, where available.
-        /// </summary>
-        void CommitAsync();
-
-        /// <summary>
-        /// Roll the transaction back and abort changes using an asynchronous API, where available.
-        /// </summary>
-        void RollbackAsync();
     }
+  }
 }

@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Threading.Tasks;
 
 namespace CSF.ORM.InMemory
 {
@@ -60,6 +61,11 @@ namespace CSF.ORM.InMemory
         }
 
         /// <summary>
+        /// Commit this transaction to the back-end using an asynchronous API, where available.
+        /// </summary>
+        public void CommitAsync() => Task.Run(() => Commit());
+
+        /// <summary>
         /// Rollback this instance.
         /// </summary>
         public void Rollback()
@@ -73,6 +79,11 @@ namespace CSF.ORM.InMemory
             if (throwOnRollback)
                 throw new TransactionRollbackException($"A {nameof(NoOpTransaction)} is being rolled back and 'throw on rollback' is true.");
         }
+
+        /// <summary>
+        /// Roll the transaction back and abort changes using an asynchronous API, where available.
+        /// </summary>
+        public void RollbackAsync() => Task.Run(() => Rollback());
 
         /// <summary>
         /// Releases all resource used by the <see cref="NoOpTransaction"/> object.
