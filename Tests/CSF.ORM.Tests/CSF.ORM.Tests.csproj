@@ -36,5 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
+    <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="AutoMoqDataAttribute.cs" />
   </ItemGroup>
 </Project>

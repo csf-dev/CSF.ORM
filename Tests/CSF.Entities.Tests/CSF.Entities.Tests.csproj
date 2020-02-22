@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
+    <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="EntityTests.cs" />

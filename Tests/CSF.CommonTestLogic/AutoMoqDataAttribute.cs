@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2019 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,12 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoFixture.NUnit3;
 
-namespace CSF.PersistenceTester.Tests
+namespace CSF
 {
   public class AutoMoqDataAttribute : AutoDataAttribute
   {
-    public AutoMoqDataAttribute() : base(() => new Fixture().Customize(new AutoMoqCustomization())) { }
+    public AutoMoqDataAttribute() : base(() => new Fixture().Customize(new AutoMoqCustomization()))
+    {
+    }
   }
 }

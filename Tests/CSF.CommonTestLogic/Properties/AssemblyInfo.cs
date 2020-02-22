@@ -1,10 +1,10 @@
 ﻿//
-// AutoMoqDataAttribute.cs
+// AssemblyInfo.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2019 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using AutoFixture;
-using AutoFixture.AutoMoq;
-using AutoFixture.NUnit3;
-
-namespace CSF.PersistenceTester.Tests
-{
-  public class AutoMoqDataAttribute : AutoDataAttribute
-  {
-    public AutoMoqDataAttribute() : base(() => new Fixture().Customize(new AutoMoqCustomization())) { }
-  }
-}
+[assembly: NUnit.Framework.NonTestAssembly]
