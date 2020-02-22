@@ -47,7 +47,4 @@
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NHibernate\" />
-  </ItemGroup>
 </Project>

@@ -32,10 +32,16 @@ namespace CSF.ORM.NHibernate
     /// Adapter object for a data-connection factory, using a native
     /// NHibernate version 4.x <see cref="Nh.ISession"/>.
     /// </summary>
-    public class SessionFactoryAdapter : ICreatesDataConnection
+    public class SessionFactoryAdapter : ICreatesDataConnection, IHasNativeImplementation
     {
         readonly Nh.ISessionFactory sessionFactory;
         readonly bool allowTransactionNesting;
+
+        /// <summary>
+        /// Gets the native implementation which provides the service's functionality.
+        /// </summary>
+        /// <value>The native implementation.</value>
+        public object NativeImplementation => sessionFactory;
 
         /// <summary>
         /// Create a new data connection and return it.

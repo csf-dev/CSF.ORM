@@ -1,5 +1,5 @@
 ﻿//
-// IDataConnection.cs
+// IHasNativeImplementation.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,32 +24,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-
 namespace CSF.ORM
 {
     /// <summary>
-    /// An object which represents a connection to the underlying data-store.
+    /// Indicates that an object is a wrapper/adapter around a
+    /// native implementation of another service.
     /// </summary>
-    public interface IDataConnection : IDisposable
+    public interface IHasNativeImplementation
     {
         /// <summary>
-        /// Gets a query object from the current connection.
+        /// Gets the native implementation which provides the service's functionality.
         /// </summary>
-        /// <returns>The query.</returns>
-        IQuery GetQuery();
-
-        /// <summary>
-        /// Gets a persister object from the current connection.
-        /// </summary>
-        /// <returns>The persister.</returns>
-        IPersister GetPersister();
-
-        /// <summary>
-        /// Where an underlying ORM system uses an identity-map or cache of retrieved
-        /// objects, this method removes the given object from that cache.  This means that if
-        /// the object is retrieved again, it will be re-loaded from the underlying data-store.
-        /// </summary>
-        /// <param name="objectToEvict">The object to evict from the cache (if applicable).</param>
-        void EvictFromCache(object objectToEvict);
+        /// <value>The native implementation.</value>
+        object NativeImplementation { get; }
     }
 }

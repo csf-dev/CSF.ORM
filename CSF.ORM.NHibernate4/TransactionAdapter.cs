@@ -23,11 +23,17 @@ namespace CSF.ORM.NHibernate
     /// scenarios faily gracefully.
     /// </para>
     /// </remarks>
-    public class TransactionAdapter : ITransaction
+    public class TransactionAdapter : ITransaction, IHasNativeImplementation
     {
         readonly nh.ITransaction transaction;
         readonly bool mayCommitAndDispose;
         bool disposedValue;
+
+        /// <summary>
+        /// Gets the native implementation which provides the service's functionality.
+        /// </summary>
+        /// <value>The native implementation.</value>
+        public object NativeImplementation => transaction;
 
         /// <summary>
         /// Gets a value which indicates whether this transaction has been finalised or not.

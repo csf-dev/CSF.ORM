@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Builder\" />
     <Folder Include="Impl\" />
-    <Folder Include="NHibernate\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CSF.EqualityRules" Version="1.0.0" />
