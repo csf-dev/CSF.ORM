@@ -1,5 +1,5 @@
 ﻿//
-// IGetsDataConnection.cs
+// TestPersistence.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,17 +24,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.ORM
+using CSF.PersistenceTester.Builder;
+using CSF.ORM;
+
+namespace CSF.PersistenceTester
 {
     /// <summary>
-    /// A service which creates data connections.
+    /// The entry point to the persistence tester.  Use this class to begin a new persistence test.
     /// </summary>
-    public interface ICreatesDataConnection
+    public static class TestPersistence
     {
         /// <summary>
-        /// Create a new data connection and return it.
+        /// Begins building a persistence test by specifying the service which will
+        /// provide a connection to the ORM/Database.
         /// </summary>
-        /// <returns>The connection.</returns>
-        IDataConnection CreateConnection();
+        /// <returns>A persistence test builder object.</returns>
+        /// <param name="connectionProvider">The connection provider.</param>
+        public static PersistenceTestBuilder UsingConnectionProvider(IGetsDataConnection connectionProvider) => new PersistenceTestBuilder(connectionProvider);
     }
 }

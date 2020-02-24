@@ -1,5 +1,5 @@
 ﻿using System;
-using CSF.PersistenceTester.NHibernate;
+using CSF.ORM;
 
 namespace CSF.PersistenceTester.Impl
 {
@@ -31,9 +31,12 @@ namespace CSF.PersistenceTester.Impl
 
         PersistenceTestResult TrySetup()
         {
+            IDataConnection conn = null;
+
             try
             {
-                spec.Setup?.Invoke(spec.SessionProvider);
+                conn = spec.SessionProvider.GetConnection();
+                spec.Setup?.Invoke(conn);
             }
             catch(Exception ex)
             {
@@ -42,21 +45,26 @@ namespace CSF.PersistenceTester.Impl
                     SetupException = ex
                 };
             }
+            finally
+            {
+                conn?.Dispose();
+            }
 
             return null;
         }
 
         PersistenceTestResult TrySave()
         {
-            var session = spec.SessionProvider.GetSession();
+            IDataConnection conn = null;
 
             try
             {
-                using (var tran = session.BeginTransaction())
+                conn = spec.SessionProvider.GetConnection();
+                using (var tran = conn.GetTransactionFactory().GetTransaction())
                 {
-                    identity = session.Save(spec.Entity);
+                    identity = conn.GetPersister().Add(spec.Entity);
                     if (identity == null)
-                        throw new InvalidOperationException($"The entity identity returned by {nameof(ISession)}.{nameof(ISession.Save)} should not be null.");
+                        throw new InvalidOperationException($"The entity identity returned by {nameof(IPersister)}.{nameof(IPersister.Add)} should not be null.");
                     tran.Commit();
                 }
             }
@@ -67,19 +75,26 @@ namespace CSF.PersistenceTester.Impl
                     SaveException = ex
                 };
             }
+            finally
+            {
+                conn?.Dispose();
+            }
 
             return null;
         }
 
         PersistenceTestResult TryCompare()
         {
-            var session = spec.SessionProvider.GetSession();
+            IDataConnection conn = null;
 
             try
             {
-                session.Evict(spec.Entity);
+                conn = spec.SessionProvider.GetConnection();
+                conn.EvictFromCache(spec.Entity);
 
-                var retrieved = session.Get<T>(identity);
+                var retrieved = conn.GetQuery().Get<T>(identity);
+                if (ReferenceEquals(retrieved, null))
+                    return new PersistenceTestResult(typeof(T)) { SavedObjectNotFound = true };
 
                 var equalityResult = spec.EqualityRule.GetEqualityResult(spec.Entity, retrieved);
 
@@ -94,6 +109,10 @@ namespace CSF.PersistenceTester.Impl
                 {
                     ComparisonException = ex
                 };
+            }
+            finally
+            {
+                conn?.Dispose();
             }
         }
 
@@ -117,10 +136,9 @@ namespace CSF.PersistenceTester.Impl
         {
             if (!disposedValue)
             {
-                if (disposing)
-                {
-                    spec.SessionProvider.Dispose();
-                }
+                if (disposing && spec.SessionProvider is IDisposable disposableProvider)
+                    disposableProvider.Dispose();
+
                 disposedValue = true;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using CSF.EqualityRules;
+using CSF.ORM;
 using CSF.PersistenceTester.Builder;
 
 namespace CSF.PersistenceTester.Impl
@@ -13,13 +14,13 @@ namespace CSF.PersistenceTester.Impl
         /// Gets the session provider.
         /// </summary>
         /// <value>The session provider.</value>
-        public IGetsSession SessionProvider { get; }
+        public IGetsDataConnection SessionProvider { get; }
 
         /// <summary>
         /// Gets or sets an optional 'setup' (or 'pre-test') action which should be executed before the entity is saved.
         /// </summary>
         /// <value>The setup.</value>
-        public Action<IGetsSession> Setup { get; set; }
+        public Action<IDataConnection> Setup { get; set; }
 
         /// <summary>
         /// Gets the entity which is to be saved and then retrieved as part of the test.
@@ -40,7 +41,7 @@ namespace CSF.PersistenceTester.Impl
         /// <param name="sessionProvider">The session provider.</param>
         /// <param name="entity">The entity to be tested.</param>
         /// <param name="equalityRule">The equality rule.</param>
-        public PersistenceTestSpec(IGetsSession sessionProvider, T entity, IGetsEqualityResult<T> equalityRule)
+        public PersistenceTestSpec(IGetsDataConnection sessionProvider, T entity, IGetsEqualityResult<T> equalityRule)
         {
             SessionProvider = sessionProvider ?? throw new ArgumentNullException(nameof(sessionProvider));
             Entity = entity ?? throw new ArgumentNullException(nameof(entity));

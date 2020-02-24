@@ -22,11 +22,17 @@ namespace CSF.ORM.NHibernate
     /// scenarios faily gracefully.
     /// </para>
     /// </remarks>
-    public class TransactionAdapter : ITransaction
+    public class TransactionAdapter : ITransaction, IHasNativeImplementation
     {
         readonly nh.ITransaction transaction;
         readonly bool mayCommitAndDispose;
         bool disposedValue;
+
+        /// <summary>
+        /// Gets the native implementation which provides the service's functionality.
+        /// </summary>
+        /// <value>The native implementation.</value>
+        public object NativeImplementation => transaction;
 
         /// <summary>
         /// Gets a value which indicates whether this transaction has been finalised or not.
@@ -135,11 +141,11 @@ namespace CSF.ORM.NHibernate
         /// Initializes a new instance of the <see cref="TransactionAdapter"/> class.
         /// </summary>
         /// <param name="transaction">The underlying transaction.</param>
-        /// <param name="mayCommitAndDispose">Indicates whether or not this instance is permitted to commit and dispose the transaction or not.</param>
-        public TransactionAdapter(nh.ITransaction transaction, bool mayCommitAndDispose = true)
+        /// <param name="preventCommitAndDispose">Indicates whether or not this instance is permitted to commit and dispose the transaction or not.</param>
+        public TransactionAdapter(nh.ITransaction transaction, bool preventCommitAndDispose = true)
         {
             this.transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
-            this.mayCommitAndDispose = mayCommitAndDispose;
+            mayCommitAndDispose = !preventCommitAndDispose;
         }
     }
 }

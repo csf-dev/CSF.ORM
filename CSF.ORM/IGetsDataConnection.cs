@@ -1,5 +1,5 @@
 ﻿//
-// IDataConnection.cs
+// IGetsDataConnection.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,38 +24,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-
 namespace CSF.ORM
 {
     /// <summary>
-    /// An object which represents a connection to the underlying data-store.
+    /// A service which creates data connections.
     /// </summary>
-    public interface IDataConnection : IDisposable
+    public interface IGetsDataConnection
     {
         /// <summary>
-        /// Gets a query object from the current connection.
+        /// Create a new data connection and return it.
         /// </summary>
-        /// <returns>The query.</returns>
-        IQuery GetQuery();
-
-        /// <summary>
-        /// Gets a persister object from the current connection.
-        /// </summary>
-        /// <returns>The persister.</returns>
-        IPersister GetPersister();
-
-        /// <summary>
-        /// Gets a service which may be used to create transactions.
-        /// </summary>
-        /// <returns>The transaction factory</returns>
-        IGetsTransaction GetTransactionFactory();
-
-        /// <summary>
-        /// Where an underlying ORM system uses an identity-map or cache of retrieved
-        /// objects, this method removes the given object from that cache.  This means that if
-        /// the object is retrieved again, it will be re-loaded from the underlying data-store.
-        /// </summary>
-        /// <param name="objectToEvict">The object to evict from the cache (if applicable).</param>
-        void EvictFromCache(object objectToEvict);
+        /// <returns>The connection.</returns>
+        IDataConnection GetConnection();
     }
 }

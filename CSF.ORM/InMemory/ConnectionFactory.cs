@@ -1,5 +1,5 @@
 ﻿//
-// IDataConnection.cs
+// ConnectionFactory.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,38 +24,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-
-namespace CSF.ORM
+namespace CSF.ORM.InMemory
 {
     /// <summary>
-    /// An object which represents a connection to the underlying data-store.
+    /// An in-memory data-connection factory.
     /// </summary>
-    public interface IDataConnection : IDisposable
+    public class ConnectionFactory : IGetsDataConnection
     {
-        /// <summary>
-        /// Gets a query object from the current connection.
-        /// </summary>
-        /// <returns>The query.</returns>
-        IQuery GetQuery();
+        readonly DataStore sharedStore;
 
         /// <summary>
-        /// Gets a persister object from the current connection.
+        /// Create a new data connection and return it.
         /// </summary>
-        /// <returns>The persister.</returns>
-        IPersister GetPersister();
+        /// <returns>The connection.</returns>
+        public IDataConnection GetConnection() => new DataConnection(sharedStore);
 
         /// <summary>
-        /// Gets a service which may be used to create transactions.
+        /// Initializes a new instance of the <see cref="ConnectionFactory"/> class.
         /// </summary>
-        /// <returns>The transaction factory</returns>
-        IGetsTransaction GetTransactionFactory();
-
-        /// <summary>
-        /// Where an underlying ORM system uses an identity-map or cache of retrieved
-        /// objects, this method removes the given object from that cache.  This means that if
-        /// the object is retrieved again, it will be re-loaded from the underlying data-store.
-        /// </summary>
-        /// <param name="objectToEvict">The object to evict from the cache (if applicable).</param>
-        void EvictFromCache(object objectToEvict);
+        /// <param name="useSharedData">
+        /// If set to <c>true</c> then all connections created from this factory will
+        /// use a shared data-storage; if <c>false</c> then each will have its own independent data.
+        /// </param>
+        public ConnectionFactory(bool useSharedData = false)
+        {
+            if (useSharedData) sharedStore = new DataStore();
+        }
     }
 }

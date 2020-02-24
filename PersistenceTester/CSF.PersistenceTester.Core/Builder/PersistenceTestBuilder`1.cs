@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CSF.EqualityRules;
+using CSF.ORM;
 using CSF.PersistenceTester.Impl;
 
 namespace CSF.PersistenceTester.Builder
@@ -16,13 +17,13 @@ namespace CSF.PersistenceTester.Builder
         /// Gets the session provider.
         /// </summary>
         /// <value>The session provider.</value>
-        public IGetsSession SessionProvider { get; }
+        public IGetsDataConnection SessionProvider { get; }
 
         /// <summary>
         /// Gets the optional setup action.
         /// </summary>
         /// <value>The setup action.</value>
-        public Action<IGetsSession> Setup { get; }
+        public Action<IDataConnection> Setup { get; }
 
         /// <summary>
         /// Gets the entity which is to be tested.
@@ -83,13 +84,13 @@ namespace CSF.PersistenceTester.Builder
         /// <summary>
         /// Initializes a new instance of the <see cref="PersistenceTestBuilder{T}"/> class.
         /// </summary>
-        /// <param name="sessionProvider">The service which provides an <see cref="NHibernate.ISession"/>.</param>
+        /// <param name="sessionProvider">The service which provides an <see cref="IDataConnection"/>.</param>
         /// <param name="entity">The entity instance to be tested.</param>
         /// <param name="setup">An optional setup/pre-test function.</param>
         /// <param name="testerFactory">An optional function which gets an <see cref="ITestsPersistence{T}"/> from a test specification.</param>
-        public PersistenceTestBuilder(IGetsSession sessionProvider,
+        public PersistenceTestBuilder(IGetsDataConnection sessionProvider,
                                       T entity,
-                                      Action<IGetsSession> setup,
+                                      Action<IDataConnection> setup,
                                       Func<PersistenceTestSpec<T>,ITestsPersistence<T>> testerFactory = null)
         {
             this.SessionProvider = sessionProvider ?? throw new ArgumentNullException(nameof(sessionProvider));

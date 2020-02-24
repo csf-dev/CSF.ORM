@@ -32,13 +32,19 @@ namespace CSF.ORM.NHibernate
     /// An adapter for a data-connection and also a transaction-beginning
     /// service, using a native NHibernate <see cref="ISession"/>.
     /// </summary>
-    public class SessionAdapter : IDataConnection, IGetsTransaction
+    public class SessionAdapter : IDataConnection, IGetsTransaction, IHasNativeImplementation
     {
         readonly ISession session;
         readonly Func<ISession, IQuery> queryFactory;
         readonly Func<ISession, IPersister> persisterFactory;
         readonly Func<global::NHibernate.ITransaction, bool, ITransaction> transactionFactory;
         readonly bool allowTransactionNesting;
+
+        /// <summary>
+        /// Gets the native implementation which provides the service's functionality.
+        /// </summary>
+        /// <value>The native implementation.</value>
+        public object NativeImplementation => session;
 
         /// <summary>
         /// Gets a persister object from the current connection.
@@ -51,6 +57,12 @@ namespace CSF.ORM.NHibernate
         /// </summary>
         /// <returns>The query.</returns>
         public IQuery GetQuery() => queryFactory(session);
+        
+        /// <summary>
+        /// Gets a service which may be used to create transactions.
+        /// </summary>
+        /// <returns>The transaction factory</returns>
+        public IGetsTransaction GetTransactionFactory() => this;
 
         /// <summary>
         /// Attempts to get a new transaction, perhaps starting a new one.
@@ -58,10 +70,18 @@ namespace CSF.ORM.NHibernate
         /// <returns>The transaction.</returns>
         public ITransaction GetTransaction()
         {
-            var nativeTransaction = GetNativeTransaction();
             bool doNotCommitOrDispose = allowTransactionNesting && HasExistingTransaction;
+            var nativeTransaction = GetNativeTransaction();
             return transactionFactory(nativeTransaction, doNotCommitOrDispose);
         }
+
+        /// <summary>
+        /// Where an underlying ORM system uses an identity-map or cache of retrieved
+        /// objects, this method removes the given object from that cache.  This means that if
+        /// the object is retrieved again, it will be re-loaded from the underlying data-store.
+        /// </summary>
+        /// <param name="objectToEvict">The object to evict from the cache (if applicable).</param>
+        public void EvictFromCache(object objectToEvict) => session.Evict(objectToEvict);
 
         global::NHibernate.ITransaction GetNativeTransaction()
         {
