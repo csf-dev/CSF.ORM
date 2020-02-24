@@ -61,4 +61,10 @@
       <LogicalName>CreateSchema.sql</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="PersistenceTesterIntegrationTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PersistenceTesterIntegrationTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+  </ItemGroup>
 </Project>

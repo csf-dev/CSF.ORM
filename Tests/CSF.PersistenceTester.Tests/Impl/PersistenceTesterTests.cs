@@ -125,7 +125,10 @@ namespace CSF.PersistenceTester.Tests.Impl
 
         [Test, AutoMoqData]
         public void GetTestResult_evicts_the_entity_retrieves_it_and_compares_it([Frozen] IDataConnection session,
+                                                                     IGetsTransaction tranFactory,
                                                                                  [Frozen] ITransaction tran,
+                                                                     IPersister persister,
+                                                                     IQuery query,
                                                                                  [Frozen, NoRecursion] SampleEntity entity,
                                                                                  [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,
                                                                                  object id)
@@ -133,19 +136,24 @@ namespace CSF.PersistenceTester.Tests.Impl
             var evicted = false;
 
             var sut = new PersistenceTester<SampleEntity>(spec);
-            Mock.Get(spec.SessionProvider).Setup(x => x.GetSession()).Returns(session);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
             Mock.Get(session)
-                .Setup(x => x.BeginTransaction())
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
                 .Returns(tran);
-            Mock.Get(session)
-                .Setup(x => x.Save(entity))
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(session).Setup(x => x.GetQuery()).Returns(query);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
                 .Returns(id);
             Mock.Get(session)
-                .Setup(x => x.Evict(entity))
+                .Setup(x => x.EvictFromCache(entity))
                 .Callback(() => evicted = true);
 
             var retrievedEntity = new SampleEntity();
-            Mock.Get(session)
+            Mock.Get(query)
                 .Setup(x => x.Get<SampleEntity>(id))
                 .Returns(() => evicted? retrievedEntity : entity);
 
@@ -156,21 +164,29 @@ namespace CSF.PersistenceTester.Tests.Impl
 
         [Test, AutoMoqData]
         public void GetTestResult_records_error_if_retrieval_raises_an_exception([Frozen] IDataConnection session,
+                                                                     IGetsTransaction tranFactory,
                                                                                  [Frozen] ITransaction tran,
                                                                                  [Frozen, NoRecursion] SampleEntity entity,
+                                                                     IPersister persister,
+                                                                     IQuery query,
                                                                                  [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,
                                                                                  object id)
         {
             var sut = new PersistenceTester<SampleEntity>(spec);
-            Mock.Get(spec.SessionProvider).Setup(x => x.GetSession()).Returns(session);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
             Mock.Get(session)
-                .Setup(x => x.BeginTransaction())
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
                 .Returns(tran);
-            Mock.Get(session)
-                .Setup(x => x.Save(entity))
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(session).Setup(x => x.GetQuery()).Returns(query);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
                 .Returns(id);
 
-            Mock.Get(session)
+            Mock.Get(query)
                 .Setup(x => x.Get<SampleEntity>(id))
                 .Throws<ApplicationException>();
 
