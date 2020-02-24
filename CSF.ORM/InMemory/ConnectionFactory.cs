@@ -29,7 +29,7 @@ namespace CSF.ORM.InMemory
     /// <summary>
     /// An in-memory data-connection factory.
     /// </summary>
-    public class ConnectionFactory : ICreatesDataConnection
+    public class ConnectionFactory : IGetsDataConnection
     {
         readonly DataStore sharedStore;
 
@@ -37,7 +37,7 @@ namespace CSF.ORM.InMemory
         /// Create a new data connection and return it.
         /// </summary>
         /// <returns>The connection.</returns>
-        public IDataConnection CreateConnection() => new DataConnection(sharedStore);
+        public IDataConnection GetConnection() => new DataConnection(sharedStore);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionFactory"/> class.

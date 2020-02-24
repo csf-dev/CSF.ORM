@@ -31,6 +31,7 @@ namespace CSF.ORM.InMemory
     /// </summary>
     public sealed class DataConnection : IDataConnection
     {
+        readonly bool throwOnTransactionRollback;
         readonly DataStore store;
 
         /// <summary>
@@ -59,11 +60,19 @@ namespace CSF.ORM.InMemory
         public IQuery GetQuery() => new DataQuery(store);
 
         /// <summary>
+        /// Gets a service which may be used to create transactions.
+        /// </summary>
+        /// <returns>The transaction factory</returns>
+        public IGetsTransaction GetTransactionFactory() => new NoOpTransactionCreator(throwOnTransactionRollback);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataConnection"/> class.
         /// </summary>
         /// <param name="store">If this is not-null then it will be used as the data-storage for queries/persisters created from this connection.</param>
-        public DataConnection(DataStore store = null)
+        /// <param name="throwOnTransactionRollback">If set to <c>true</c> then an exception will be raised any time a transaction is being rolled-back; otherwise a rollback will be silent.</param>
+        public DataConnection(DataStore store = null, bool throwOnTransactionRollback = true)
         {
+            this.throwOnTransactionRollback = throwOnTransactionRollback;
             this.store = store ?? new DataStore();
         }
     }

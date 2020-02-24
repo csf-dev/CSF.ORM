@@ -57,6 +57,12 @@ namespace CSF.ORM.NHibernate
         /// </summary>
         /// <returns>The query.</returns>
         public IQuery GetQuery() => queryFactory(session);
+        
+        /// <summary>
+        /// Gets a service which may be used to create transactions.
+        /// </summary>
+        /// <returns>The transaction factory</returns>
+        public IGetsTransaction GetTransactionFactory() => this;
 
         /// <summary>
         /// Attempts to get a new transaction, perhaps starting a new one.

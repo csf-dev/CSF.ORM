@@ -1,5 +1,5 @@
 ﻿using System;
-using CSF.PersistenceTester.NHibernate;
+using CSF.ORM;
 
 namespace CSF.PersistenceTester.Impl
 {
@@ -33,7 +33,7 @@ namespace CSF.PersistenceTester.Impl
         {
             try
             {
-                spec.Setup?.Invoke(spec.SessionProvider);
+                spec.Setup?.Invoke(spec.SessionProvider.GetConnection());
             }
             catch(Exception ex)
             {
@@ -48,15 +48,15 @@ namespace CSF.PersistenceTester.Impl
 
         PersistenceTestResult TrySave()
         {
-            var session = spec.SessionProvider.GetSession();
+            var session = spec.SessionProvider.GetConnection();
 
             try
             {
-                using (var tran = session.BeginTransaction())
+                using (var tran = session.GetTransactionFactory().GetTransaction())
                 {
-                    identity = session.Save(spec.Entity);
+                    identity = session.GetPersister().Add(spec.Entity);
                     if (identity == null)
-                        throw new InvalidOperationException($"The entity identity returned by {nameof(ISession)}.{nameof(ISession.Save)} should not be null.");
+                        throw new InvalidOperationException($"The entity identity returned by {nameof(IPersister)}.{nameof(IPersister.Add)} should not be null.");
                     tran.Commit();
                 }
             }
@@ -73,13 +73,13 @@ namespace CSF.PersistenceTester.Impl
 
         PersistenceTestResult TryCompare()
         {
-            var session = spec.SessionProvider.GetSession();
+            var session = spec.SessionProvider.GetConnection();
 
             try
             {
-                session.Evict(spec.Entity);
+                session.EvictFromCache(spec.Entity);
 
-                var retrieved = session.Get<T>(identity);
+                var retrieved = session.GetQuery().Get<T>(identity);
 
                 var equalityResult = spec.EqualityRule.GetEqualityResult(spec.Entity, retrieved);
 
@@ -117,10 +117,9 @@ namespace CSF.PersistenceTester.Impl
         {
             if (!disposedValue)
             {
-                if (disposing)
-                {
-                    spec.SessionProvider.Dispose();
-                }
+                if (disposing && spec.SessionProvider is IDisposable disposableProvider)
+                    disposableProvider.Dispose();
+
                 disposedValue = true;
             }
         }

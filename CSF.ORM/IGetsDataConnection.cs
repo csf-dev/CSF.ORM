@@ -29,12 +29,12 @@ namespace CSF.ORM
     /// <summary>
     /// A service which creates data connections.
     /// </summary>
-    public interface ICreatesDataConnection
+    public interface IGetsDataConnection
     {
         /// <summary>
         /// Create a new data connection and return it.
         /// </summary>
         /// <returns>The connection.</returns>
-        IDataConnection CreateConnection();
+        IDataConnection GetConnection();
     }
 }

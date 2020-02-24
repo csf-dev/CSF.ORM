@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using CSF.EqualityRules;
+using CSF.ORM;
 
 namespace CSF.PersistenceTester
 {
@@ -45,26 +46,26 @@ namespace CSF.PersistenceTester
 
         /// <summary>
         /// Gets and sets an <see cref="System.Exception" /> which was raised whilst saving the entity to the
-        /// <see cref="NHibernate.ISession" /> (if applicable).
+        /// <see cref="IDataConnection" /> (if applicable).
         /// </summary>
         public Exception SaveException { get; set; }
 
         /// <summary>
         /// Gets and sets an <see cref="System.Exception" /> which was raised whilst comparing the original/saved
-        /// entity with the instance retrieved from the <see cref="NHibernate.ISession" /> (if applicable).
+        /// entity with the instance retrieved from the <see cref="IDataConnection" /> (if applicable).
         /// </summary>
         public Exception ComparisonException { get; set; }
 
         /// <summary>
         /// Gets and sets the <see cref="EqualityResult" /> with details of the comparison between the original/saved
-        /// entity and the instance retrieved from the <see cref="NHibernate.ISession" />.  This will be <c>null</c>
+        /// entity and the instance retrieved from the <see cref="IDataConnection" />.  This will be <c>null</c>
         /// if any exceptions were encountered whilst performing the test.
         /// </summary>
         public EqualityResult EqualityResult { get; set; }
         
         /// <summary>
         /// Gets a value indicating whether the original/saved entity is equal to the instance retrieved from
-        /// the <see cref="NHibernate.ISession" />.  This will also return <c>false</c> if any exceptions occurred
+        /// the <see cref="IDataConnection" />.  This will also return <c>false</c> if any exceptions occurred
         /// during the test process.
         /// </summary>
         public bool IsSuccess => EqualityResult?.AreEqual == true;

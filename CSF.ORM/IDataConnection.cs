@@ -45,6 +45,12 @@ namespace CSF.ORM
         IPersister GetPersister();
 
         /// <summary>
+        /// Gets a service which may be used to create transactions.
+        /// </summary>
+        /// <returns>The transaction factory</returns>
+        IGetsTransaction GetTransactionFactory();
+
+        /// <summary>
         /// Where an underlying ORM system uses an identity-map or cache of retrieved
         /// objects, this method removes the given object from that cache.  This means that if
         /// the object is retrieved again, it will be re-loaded from the underlying data-store.

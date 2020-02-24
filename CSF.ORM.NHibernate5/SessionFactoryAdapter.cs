@@ -32,10 +32,10 @@ namespace CSF.ORM.NHibernate
     /// Adapter object for a data-connection factory, using a native
     /// NHibernate version 5.x <see cref="Nh.ISession"/>.
     /// </summary>
-    public class SessionFactoryAdapter : ICreatesDataConnection, IHasNativeImplementation
+    public class SessionFactoryAdapter : IGetsDataConnection, IHasNativeImplementation
     {
         readonly Nh.ISessionFactory sessionFactory;
-        readonly bool allowTransactionNesting;
+        readonly bool allowTransactionNesting, reuseExistingSessionWhereAvailable;
 
         /// <summary>
         /// Gets the native implementation which provides the service's functionality.
@@ -47,24 +47,39 @@ namespace CSF.ORM.NHibernate
         /// Create a new data connection and return it.
         /// </summary>
         /// <returns>The connection.</returns>
-        public IDataConnection CreateConnection()
+        public IDataConnection GetConnection()
         {
-            Func<Nh.ISession, IQuery> queryFactory = s => new QueryAdapter(s);
-            Func<Nh.ISession, IPersister> persisterFactory = s => new PersisterAdapter(s);
-            Func<Nh.ITransaction, bool, ITransaction> transactionFactory = (nativeTran, commitAndDispose) => new TransactionAdapter(nativeTran, commitAndDispose);
+            IQuery QueryFactory(Nh.ISession s) => new QueryAdapter(s);
+            IPersister PersisterFactory(Nh.ISession s) => new PersisterAdapter(s);
+            ITransaction TransactionFactory(Nh.ITransaction nativeTran, bool commitAndDispose) => new TransactionAdapter(nativeTran, commitAndDispose);
 
-            return new SessionAdapter(sessionFactory.OpenSession(), queryFactory, persisterFactory, transactionFactory, allowTransactionNesting);
+            return new SessionAdapter(SessionCreator(), QueryFactory, PersisterFactory, TransactionFactory, allowTransactionNesting);
+        }
+
+        Func<Nh.ISession> SessionCreator
+        {
+            get
+            {
+                if (!reuseExistingSessionWhereAvailable)
+                    return () => sessionFactory.OpenSession();
+
+                return () => sessionFactory.GetCurrentSession() ?? sessionFactory.OpenSession();
+            }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionFactoryAdapter"/> class.
         /// </summary>
         /// <param name="sessionFactory">Session factory.</param>
-        /// <param name="allowTransactionNesting">Specified whether or not transaction-nesting is permitted or not.</param>
-        public SessionFactoryAdapter(Nh.ISessionFactory sessionFactory, bool allowTransactionNesting = false)
+        /// <param name="allowTransactionNesting">Specifies whether or not transaction-nesting is permitted or not.</param>
+        /// <param name="reuseExistingSessionWhereAvailable">Specifies whether or not an existing session will be re-used if it exists.</param>
+        public SessionFactoryAdapter(Nh.ISessionFactory sessionFactory,
+                                     bool allowTransactionNesting = false,
+                                     bool reuseExistingSessionWhereAvailable = false)
         {
             this.sessionFactory = sessionFactory ?? throw new ArgumentNullException(nameof(sessionFactory));
             this.allowTransactionNesting = allowTransactionNesting;
+            this.reuseExistingSessionWhereAvailable = reuseExistingSessionWhereAvailable;
         }
     }
 }

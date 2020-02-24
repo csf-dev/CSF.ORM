@@ -37,6 +37,14 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="PersistenceTestBuilderExtensions.cs" />
+    <Compile Remove="TestPersistence.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PersistenceTestBuilderExtensions.cs" />
+    <None Include="TestPersistence.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
   </ItemGroup>
   <ItemGroup>

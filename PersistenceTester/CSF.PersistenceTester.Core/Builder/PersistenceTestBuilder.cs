@@ -1,4 +1,6 @@
 ﻿using System;
+using CSF.ORM;
+
 namespace CSF.PersistenceTester.Builder
 {
     /// <summary>
@@ -7,10 +9,10 @@ namespace CSF.PersistenceTester.Builder
     /// </summary>
     public class PersistenceTestBuilder : IChoosesEntityWithOptionalSetup
     {
-        readonly IGetsSession sessionProvider;
-        Action<IGetsSession> setup;
+        readonly IGetsDataConnection sessionProvider;
+        Action<IDataConnection> setup;
 
-        IChoosesEntity IConfiguresTestSetup.WithSetup(Action<IGetsSession> setup, bool implicitTransaction)
+        IChoosesEntity IConfiguresTestSetup.WithSetup(Action<IDataConnection> setup, bool implicitTransaction)
         {
             if (setup == null) return this;
 
@@ -20,13 +22,13 @@ namespace CSF.PersistenceTester.Builder
             }
             else
             {
-                this.setup = sessionProvider =>
+                this.setup = s =>
                 {
-                    var session = sessionProvider.GetSession();
+                    var session = sessionProvider.GetConnection();
 
-                    using(var tran = session.BeginTransaction())
+                    using(var tran = session.GetTransactionFactory().GetTransaction())
                     {
-                        setup(sessionProvider);
+                        setup(s);
                         tran.Commit();
                     }
                 };
@@ -52,7 +54,7 @@ namespace CSF.PersistenceTester.Builder
         /// Initializes a new instance of the <see cref="PersistenceTestBuilder"/> class.
         /// </summary>
         /// <param name="sessionProvider">A session provider.</param>
-        public PersistenceTestBuilder(IGetsSession sessionProvider)
+        public PersistenceTestBuilder(IGetsDataConnection sessionProvider)
         {
             this.sessionProvider = sessionProvider ?? throw new ArgumentNullException(nameof(sessionProvider));
         }

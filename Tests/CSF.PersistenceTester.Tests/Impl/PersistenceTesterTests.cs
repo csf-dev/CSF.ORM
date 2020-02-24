@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoFixture.NUnit3;
+using CSF.ORM;
 using CSF.PersistenceTester.Impl;
-using CSF.PersistenceTester.NHibernate;
 using Moq;
 using NUnit.Framework;
 
@@ -60,7 +60,9 @@ namespace CSF.PersistenceTester.Tests.Impl
         #region saving the entity
 
         [Test, AutoMoqData]
-        public void GetTestResult_saves_the_entity_within_a_transaction([Frozen] ISession session,
+        public void GetTestResult_saves_the_entity_within_a_transaction([Frozen] IDataConnection session,
+                                                                        IGetsTransaction tranFactory,
+                                                                        IPersister persister,
                                                                         [Frozen] ITransaction tran,
                                                                         [Frozen,NoRecursion] SampleEntity entity,
                                                                         [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,
@@ -69,13 +71,17 @@ namespace CSF.PersistenceTester.Tests.Impl
             bool transactionOpen = false;
 
             var sut = new PersistenceTester<SampleEntity>(spec);
-            Mock.Get(spec.SessionProvider).Setup(x => x.GetSession()).Returns(session);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
             Mock.Get(session)
-                .Setup(x => x.BeginTransaction())
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
                 .Callback(() => transactionOpen = true)
                 .Returns(tran);
-            Mock.Get(session)
-                .Setup(x => x.Save(entity))
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
                 .Callback(() => Assert.That(transactionOpen, Is.True, "The save operation must occur whilst the transaction is open"))
                 .Returns(id);
             Mock.Get(tran)
@@ -84,22 +90,28 @@ namespace CSF.PersistenceTester.Tests.Impl
 
             sut.GetTestResult();
 
-            Mock.Get(session).Verify(x => x.Save(entity), Times.Once);
+            Mock.Get(persister).Verify(x => x.Add(entity, null), Times.Once);
         }
 
         [Test, AutoMoqData]
-        public void GetTestResult_records_error_if_save_returns_null([Frozen] ISession session,
+        public void GetTestResult_records_error_if_save_returns_null([Frozen] IDataConnection session,
+                                                                     IGetsTransaction tranFactory,
+                                                                     IPersister persister,
                                                                      [Frozen] ITransaction tran,
-                                                                     [Frozen, NoRecursion] SampleEntity entity,
+                                                                     [Frozen,NoRecursion] SampleEntity entity,
                                                                      [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec)
         {
             var sut = new PersistenceTester<SampleEntity>(spec);
-            Mock.Get(spec.SessionProvider).Setup(x => x.GetSession()).Returns(session);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
             Mock.Get(session)
-                .Setup(x => x.BeginTransaction())
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
                 .Returns(tran);
-            Mock.Get(session)
-                .Setup(x => x.Save(entity))
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
                 .Returns(() => null);
 
             var result = sut.GetTestResult();
@@ -112,7 +124,7 @@ namespace CSF.PersistenceTester.Tests.Impl
         #region comparing the retrieved entity
 
         [Test, AutoMoqData]
-        public void GetTestResult_evicts_the_entity_retrieves_it_and_compares_it([Frozen] ISession session,
+        public void GetTestResult_evicts_the_entity_retrieves_it_and_compares_it([Frozen] IDataConnection session,
                                                                                  [Frozen] ITransaction tran,
                                                                                  [Frozen, NoRecursion] SampleEntity entity,
                                                                                  [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,
@@ -143,7 +155,7 @@ namespace CSF.PersistenceTester.Tests.Impl
         }
 
         [Test, AutoMoqData]
-        public void GetTestResult_records_error_if_retrieval_raises_an_exception([Frozen] ISession session,
+        public void GetTestResult_records_error_if_retrieval_raises_an_exception([Frozen] IDataConnection session,
                                                                                  [Frozen] ITransaction tran,
                                                                                  [Frozen, NoRecursion] SampleEntity entity,
                                                                                  [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,

@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate.Common",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate5.Tests", "Tests\CSF.ORM.NHibernate5.Tests\CSF.ORM.NHibernate5.Tests.csproj", "{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.CommonTestLogic", "Tests\CSF.ORM.CommonTestLogic\CSF.CommonTestLogic.csproj", "{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.CommonTestLogic", "Tests\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj", "{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
