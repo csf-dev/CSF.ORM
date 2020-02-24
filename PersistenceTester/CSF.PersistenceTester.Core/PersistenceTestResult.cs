@@ -62,13 +62,20 @@ namespace CSF.PersistenceTester
         /// if any exceptions were encountered whilst performing the test.
         /// </summary>
         public EqualityResult EqualityResult { get; set; }
-        
+
+        /// <summary>
+        /// If true, then the test has failed because the object which was saved was
+        /// not retrieved successfully.
+        /// </summary>
+        /// <value><c>true</c> if saved object was not found; otherwise, <c>false</c>.</value>
+        public bool SavedObjectNotFound { get; set; }
+
         /// <summary>
         /// Gets a value indicating whether the original/saved entity is equal to the instance retrieved from
         /// the <see cref="IDataConnection" />.  This will also return <c>false</c> if any exceptions occurred
         /// during the test process.
         /// </summary>
-        public bool IsSuccess => EqualityResult?.AreEqual == true;
+        public bool IsSuccess => !SavedObjectNotFound && EqualityResult?.AreEqual == true;
 
         /// <summary>
         /// Initialises a new instance of <see cref="PersistenceTestResult" />

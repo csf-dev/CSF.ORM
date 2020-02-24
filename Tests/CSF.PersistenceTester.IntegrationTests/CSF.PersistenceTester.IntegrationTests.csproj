@@ -45,9 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NUnit\CSF.PersistenceTester.NUnit.csproj" />
-    <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NHibernate\CSF.PersistenceTester.NHibernate.csproj" />
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
     <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Impl\" />
@@ -60,11 +61,5 @@
     <EmbeddedResource Include="NHibernate\CreateSchema.sql">
       <LogicalName>CreateSchema.sql</LogicalName>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="PersistenceTesterIntegrationTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PersistenceTesterIntegrationTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

@@ -39,14 +39,15 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" Version="[3.6.0,4.0.0)" />
+    <PackageReference Include="CSF.EqualityRules" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Runtime" Condition="$(TargetFramework.StartsWith('net4'))" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSF.PersistenceTester.NHibernate\CSF.PersistenceTester.NHibernate.csproj" />
+    <Folder Include="Constraints\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Constraints\" />
+    <ProjectReference Include="..\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
   </ItemGroup>
 </Project>

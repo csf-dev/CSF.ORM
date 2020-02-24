@@ -12,7 +12,7 @@ namespace CSF.PersistenceTester.Builder
         readonly IGetsDataConnection sessionProvider;
         Action<IDataConnection> setup;
 
-        IChoosesEntity IConfiguresTestSetup.WithSetup(Action<IDataConnection> setup, bool implicitTransaction)
+        public IChoosesEntity WithSetup(Action<IDataConnection> setup, bool implicitTransaction = true)
         {
             if (setup == null) return this;
 
@@ -24,9 +24,7 @@ namespace CSF.PersistenceTester.Builder
             {
                 this.setup = s =>
                 {
-                    var session = sessionProvider.GetConnection();
-
-                    using(var tran = session.GetTransactionFactory().GetTransaction())
+                    using(var tran = s.GetTransactionFactory().GetTransaction())
                     {
                         setup(s);
                         tran.Commit();

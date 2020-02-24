@@ -6,17 +6,20 @@ using NHibernate.Cfg.MappingSchema;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Mapping.ByCode;
+using CSF.ORM;
+using CSF.ORM.NHibernate;
 
 namespace CSF.PersistenceTester.Tests.NHibernate
 {
-    public class SessionFactoryProvider
+    public class ConnectionFactoryProvider
     {
         readonly IDetectsMono monoDetector;
 
-        public ISessionFactory GetSessionFactory()
+        public IGetsDataConnection GetConnectionFactory()
         {
             var config = GetConfiguration();
-            return config.BuildSessionFactory();
+            var sessionFactory = config.BuildSessionFactory();
+            return new SessionFactoryAdapter(sessionFactory);
         }
 
         Configuration GetConfiguration()
@@ -33,7 +36,6 @@ namespace CSF.PersistenceTester.Tests.NHibernate
                     db.Driver<SQLite20Driver>();
 
                 db.Dialect<SQLiteDialect>();
-              //db.ConnectionStringName = "IntegrationTest";
                 db.ConnectionString = "Data Source=CSF.PersistenceTester.IntegrationTests.db;Version=3;";
                 db.ConnectionReleaseMode = ConnectionReleaseMode.OnClose;
             });
@@ -52,7 +54,7 @@ namespace CSF.PersistenceTester.Tests.NHibernate
             return mapper.CompileMappingForAllExplicitlyAddedEntities();
         }
 
-        public SessionFactoryProvider()
+        public ConnectionFactoryProvider()
         {
             monoDetector = new MonoRuntimeDetector();
         }

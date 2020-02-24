@@ -118,11 +118,11 @@ namespace CSF.ORM.NHibernate
         /// Initializes a new instance of the <see cref="TransactionAdapter"/> class.
         /// </summary>
         /// <param name="transaction">The underlying transaction.</param>
-        /// <param name="mayCommitAndDispose">Indicates whether or not this instance is permitted to commit and dispose the transaction or not.</param>
-        public TransactionAdapter(nh.ITransaction transaction, bool mayCommitAndDispose = true)
+        /// <param name="preventCommitAndDispose">Indicates whether or not this instance is permitted to commit and dispose the transaction or not.</param>
+        public TransactionAdapter(nh.ITransaction transaction, bool preventCommitAndDispose = true)
         {
             this.transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
-            this.mayCommitAndDispose = mayCommitAndDispose;
+            mayCommitAndDispose = !preventCommitAndDispose;
         }
     }
 }

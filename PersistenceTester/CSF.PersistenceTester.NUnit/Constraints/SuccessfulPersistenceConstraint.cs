@@ -26,6 +26,9 @@ namespace CSF.PersistenceTester.Constraints
             if (testResult.IsSuccess)
                 return new ConstraintResult(this, testResult, true);
 
+            if (testResult.SavedObjectNotFound)
+                return new NotRetrievedResult(this);
+
             result = GetExceptionCheckResult(testResult);
             if (result != null) return result;
 

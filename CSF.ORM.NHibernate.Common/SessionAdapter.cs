@@ -70,8 +70,8 @@ namespace CSF.ORM.NHibernate
         /// <returns>The transaction.</returns>
         public ITransaction GetTransaction()
         {
-            var nativeTransaction = GetNativeTransaction();
             bool doNotCommitOrDispose = allowTransactionNesting && HasExistingTransaction;
+            var nativeTransaction = GetNativeTransaction();
             return transactionFactory(nativeTransaction, doNotCommitOrDispose);
         }
 
