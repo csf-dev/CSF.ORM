@@ -1,18 +1,22 @@
-TODO: Rewrite this README for the monorepo.
+This repository contains **six** closely-related NuGet packages which facilitate development using [ORM software tools] and [NHibernate] in particular.
+
+## The packages
+* **CSF.Entities**
+* **CSF.ORM**
+* **CSF.ORM.Entities**
+* **CSF.ORM.NHibernate4**
+* **CSF.ORM.NHibernate5**
+* **CSF.PersistenceTester**
+
+## Documentation
+Documentation for each of these packages is available on [the wiki for this repository].
+
+[ORM software tools]: https://en.wikipedia.org/wiki/Object-relational_mapping
+[NHibernate]: https://nhibernate.info/
+[the wiki for this repository]: https://github.com/csf-dev/CSF.ORM/wiki
 
 ## Open source license
 All source files within this project are released as open source software,
 under the terms of [the MIT license].
 
 [the MIT license]: http://opensource.org/licenses/MIT
-
-This software is distributed in the hope that it will be useful, but please
-remember that:
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
