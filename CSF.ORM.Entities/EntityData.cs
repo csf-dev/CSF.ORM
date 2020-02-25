@@ -157,11 +157,16 @@ namespace CSF.ORM
         /// <param name="entity">Entity.</param>
         /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        public async Task<IIdentity<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        public Task<IIdentity<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
+            return AddAsyncInternal(entity, token);
+        }
+
+        async Task<IIdentity<TEntity>> AddAsyncInternal<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        {
             var identity = entity.GetIdentity();
             object idValue;
             if (identity != null)

@@ -69,5 +69,41 @@ namespace CSF.Entities.Tests
             entity2.Identity = 5;
             Assert.That(sut.Equals(entity1, entity2), Is.True);
         }
+
+        [Test, AutoMoqData]
+        public void Equals_returns_false_if_first_entity_is_null(EntityIdentityEqualityComparer sut, Cat entity)
+        {
+            Assert.That(sut.Equals(null, entity), Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void Equals_returns_false_if_second_entity_is_null(EntityIdentityEqualityComparer sut, Cat entity)
+        {
+            Assert.That(sut.Equals(entity, null), Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void Equals_returns_false_if_first_entity_has_no_identity(EntityIdentityEqualityComparer sut, Cat entity1, Animal entity2)
+        {
+            entity1.Identity = 0;
+            entity2.Identity = 5;
+            Assert.That(sut.Equals(entity1, entity2), Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void Equals_returns_false_if_second_entity_has_no_identity(EntityIdentityEqualityComparer sut, Cat entity1, Animal entity2)
+        {
+            entity1.Identity = 5;
+            entity2.Identity = 0;
+            Assert.That(sut.Equals(entity1, entity2), Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void GetHashCode_returns_identity_hash_code(EntityIdentityEqualityComparer sut, Cat entity)
+        {
+            entity.Identity = 22;
+            var identity = entity.GetIdentity();
+            Assert.That(sut.GetHashCode(entity), Is.EqualTo(identity.GetHashCode()));
+        }
     }
 }
