@@ -74,7 +74,7 @@ namespace CSF.ORM.NHibernate
         /// Initializes a new instance of the <see cref="PersisterAdapterBase"/> class.
         /// </summary>
         /// <param name="session">Session.</param>
-        public PersisterAdapterBase(ISession session)
+        protected PersisterAdapterBase(ISession session)
         {
             Session = session ?? throw new ArgumentNullException(nameof(session));
         }

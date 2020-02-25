@@ -1,5 +1,4 @@
 ﻿using System;
-using CSF.Entities;
 
 namespace CSF.Entities.Tests.Stubs
 {

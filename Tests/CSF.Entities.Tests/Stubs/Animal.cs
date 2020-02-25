@@ -1,6 +1,4 @@
-﻿using CSF.Entities;
-
-namespace CSF.Entities.Tests.Stubs
+﻿namespace CSF.Entities.Tests.Stubs
 {
   public class Animal : Entity<int>
   {
