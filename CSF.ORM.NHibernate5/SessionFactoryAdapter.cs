@@ -32,40 +32,32 @@ namespace CSF.ORM.NHibernate
     /// Adapter object for a data-connection factory, using a native
     /// NHibernate version 5.x <see cref="Nh.ISession"/>.
     /// </summary>
-    public class SessionFactoryAdapter : IGetsDataConnection, IHasNativeImplementation
+    public class SessionFactoryAdapter : SessionFactoryAdapterBase
     {
-        readonly Nh.ISessionFactory sessionFactory;
-        readonly bool allowTransactionNesting, reuseExistingSessionWhereAvailable;
+        /// <summary>
+        /// Gets a query object from an NHibernate ISession.
+        /// </summary>
+        /// <param name="s">The session</param>
+        /// <returns>A query implementation</returns>
+        protected override IQuery QueryFactory(Nh.ISession s)
+            => new QueryAdapter(s);
 
         /// <summary>
-        /// Gets the native implementation which provides the service's functionality.
+        /// Gets a persister object from an NHibernate ISession.
         /// </summary>
-        /// <value>The native implementation.</value>
-        public object NativeImplementation => sessionFactory;
+        /// <param name="s">The session</param>
+        /// <returns>A persister implementation</returns>
+        protected override IPersister PersisterFactory(Nh.ISession s)
+            => new PersisterAdapter(s);
 
         /// <summary>
-        /// Create a new data connection and return it.
+        /// Gets a transaction object from an NHibernate ITransaction.
         /// </summary>
-        /// <returns>The connection.</returns>
-        public IDataConnection GetConnection()
-        {
-            IQuery QueryFactory(Nh.ISession s) => new QueryAdapter(s);
-            IPersister PersisterFactory(Nh.ISession s) => new PersisterAdapter(s);
-            ITransaction TransactionFactory(Nh.ITransaction nativeTran, bool commitAndDispose) => new TransactionAdapter(nativeTran, commitAndDispose);
-
-            return new SessionAdapter(SessionCreator(), QueryFactory, PersisterFactory, TransactionFactory, allowTransactionNesting);
-        }
-
-        Func<Nh.ISession> SessionCreator
-        {
-            get
-            {
-                if (!reuseExistingSessionWhereAvailable)
-                    return () => sessionFactory.OpenSession();
-
-                return () => sessionFactory.GetCurrentSession() ?? sessionFactory.OpenSession();
-            }
-        }
+        /// <param name="nativeTran">The NHibernate transaction</param>
+        /// <param name="commitAndDispose">Whether the transaction wrapper is permitted to commit &amp; dispose the inner transaction.</param>
+        /// <returns>A transaction implementation</returns>
+        protected override ITransaction TransactionFactory(Nh.ITransaction nativeTran, bool commitAndDispose)
+            => new TransactionAdapter(nativeTran, commitAndDispose);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionFactoryAdapter"/> class.
@@ -75,11 +67,6 @@ namespace CSF.ORM.NHibernate
         /// <param name="reuseExistingSessionWhereAvailable">Specifies whether or not an existing session will be re-used if it exists.</param>
         public SessionFactoryAdapter(Nh.ISessionFactory sessionFactory,
                                      bool allowTransactionNesting = false,
-                                     bool reuseExistingSessionWhereAvailable = false)
-        {
-            this.sessionFactory = sessionFactory ?? throw new ArgumentNullException(nameof(sessionFactory));
-            this.allowTransactionNesting = allowTransactionNesting;
-            this.reuseExistingSessionWhereAvailable = reuseExistingSessionWhereAvailable;
-        }
+                                     bool reuseExistingSessionWhereAvailable = false) : base(sessionFactory, allowTransactionNesting, reuseExistingSessionWhereAvailable) {}
     }
 }
