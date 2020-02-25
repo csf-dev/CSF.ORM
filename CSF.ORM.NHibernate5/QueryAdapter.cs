@@ -1,6 +1,7 @@
 ﻿using NHibernate;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Linq;
 
 namespace CSF.ORM.NHibernate
 {
@@ -10,6 +11,13 @@ namespace CSF.ORM.NHibernate
     /// </summary>
     public class QueryAdapter : QueryAdapterBase
     {
+        /// <summary>
+        /// Gets a new queryable data-source.
+        /// </summary>
+        /// <typeparam name="TQueried">The type of queried-for object.</typeparam>
+        public override IQueryable<TQueried> Query<TQueried>()
+            => Session.Query<TQueried>();
+
         /// <summary>
         /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
         /// </summary>

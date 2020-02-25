@@ -33,7 +33,7 @@ using AutoFixture.NUnit3;
 namespace CSF.ORM.Tests.InMemory
 {
     [TestFixture, Parallelizable]
-    public class InMemoryQueryTests
+    public class DataQueryTests
     {
         [Test, AutoMoqData]
         public void Query_gets_queryable_of_items_of_correct_type([Frozen] DataStore store,

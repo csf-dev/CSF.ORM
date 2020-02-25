@@ -19,6 +19,7 @@
   <ItemGroup>
     <Folder Include="Stubs\" />
     <Folder Include="InMemory\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.11.0" />
@@ -37,6 +38,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
     <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM.Entities\CSF.ORM.Entities.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="AutoMoqDataAttribute.cs" />

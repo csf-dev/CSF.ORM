@@ -49,13 +49,4 @@
     <ProjectReference Include="..\..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
     <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Autofixture\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="TestTransactionCreator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TestTransactionCreator.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
-  </ItemGroup>
 </Project>

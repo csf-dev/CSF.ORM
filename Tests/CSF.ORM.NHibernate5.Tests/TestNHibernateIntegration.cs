@@ -8,7 +8,7 @@ using CSF.ORM;
 
 namespace Test.CSF.ORM.NHibernate
 {
-    [TestFixture, NonParallelizable]
+    [TestFixture,NonParallelizable]
     public class TestNHibernateIntegration
     {
         #region fields

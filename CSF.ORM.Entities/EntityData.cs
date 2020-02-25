@@ -40,19 +40,28 @@ namespace CSF.ORM
     {
         readonly IQuery query;
         readonly IPersister persister;
+        readonly IParsesIdentity parser = new IdentityParser();
 
         /// <summary>
         /// Add the specified entity.
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        public void Add<TEntity>(TEntity entity) where TEntity : class, IEntity
+        public IIdentity<TEntity> Add<TEntity>(TEntity entity) where TEntity : class, IEntity
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
             var identity = entity.GetIdentity();
-            persister.Add(entity, identity.Value);
+            object idValue;
+            if(identity != null)
+            {
+                idValue = persister.Add(entity, identity.Value);
+                return ReferenceEquals(idValue, null)? null : (IIdentity<TEntity>) parser.Parse(typeof(TEntity), idValue);
+            }
+
+            idValue = persister.Add(entity);
+            return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
         }
 
         /// <summary>
@@ -148,13 +157,21 @@ namespace CSF.ORM
         /// <param name="entity">Entity.</param>
         /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        public Task AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        public async Task<IIdentity<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
             var identity = entity.GetIdentity();
-            return persister.AddAsync(entity, identity.Value, token);
+            object idValue;
+            if (identity != null)
+            {
+                idValue = await persister.AddAsync(entity, identity.Value);
+                return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
+            }
+
+            idValue = await persister.AddAsync(entity);
+            return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
         }
 
         /// <summary>

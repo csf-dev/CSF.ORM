@@ -41,7 +41,7 @@ namespace CSF.ORM
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        void Add<TEntity>(TEntity entity) where TEntity : class, IEntity;
+        IIdentity<TEntity> Add<TEntity>(TEntity entity) where TEntity : class, IEntity;
 
         /// <summary>
         /// Update the specified entity in the data-store.
@@ -95,7 +95,7 @@ namespace CSF.ORM
         /// <param name="entity">Entity.</param>
         /// <param name="token">A token with which the task may be cancelled.</param>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        Task AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
+        Task<IIdentity<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity;
 
         /// <summary>
         /// Update the specified entity in the data-store.

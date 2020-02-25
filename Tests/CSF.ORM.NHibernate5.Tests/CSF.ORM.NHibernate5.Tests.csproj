@@ -49,4 +49,10 @@
     <ProjectReference Include="..\..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
     <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Config\" />
+  </ItemGroup>
 </Project>

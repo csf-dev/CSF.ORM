@@ -29,7 +29,7 @@ namespace CSF.ORM.InMemory
     /// <summary>
     /// An in-memory data connection.
     /// </summary>
-    public sealed class DataConnection : IDataConnection
+    public sealed class DataConnection : IDataConnection, IHasNativeImplementation
     {
         readonly bool throwOnTransactionRollback;
         readonly DataStore store;
@@ -64,6 +64,8 @@ namespace CSF.ORM.InMemory
         /// </summary>
         /// <returns>The transaction factory</returns>
         public IGetsTransaction GetTransactionFactory() => new NoOpTransactionCreator(throwOnTransactionRollback);
+
+        object IHasNativeImplementation.NativeImplementation => store;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataConnection"/> class.

@@ -32,7 +32,7 @@ using NUnit.Framework;
 namespace CSF.ORM.Tests.InMemory
 {
     [TestFixture,Parallelizable]
-    public class InMemoryPersisterTests
+    public class DataPersisterTests
     {
         [Test, AutoMoqData]
         public void Add_adds_item_to_store([Frozen] DataStore store,

@@ -50,8 +50,7 @@ namespace CSF.ORM.NHibernate
         /// Gets a new queryable data-source.
         /// </summary>
         /// <typeparam name="TQueried">The type of queried-for object.</typeparam>
-        public IQueryable<TQueried> Query<TQueried>() where TQueried : class
-            => Session.Query<TQueried>();
+        public abstract IQueryable<TQueried> Query<TQueried>() where TQueried : class;
 
         /// <summary>
         /// Creates an instance of the given object-type, based upon a theory that it exists in the underlying data-source.
