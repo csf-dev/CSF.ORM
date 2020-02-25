@@ -33,7 +33,7 @@ namespace CSF.ORM.InMemory
     /// <summary>
     /// In-memory implementation of <see cref="IGetsLazyQueryResult"/>, which just returns plain lazy objects.
     /// </summary>
-    public class LazyResultProvider : IGetsLazyQueryResult
+    public class NoOpLazyResultProvider : IGetsLazyQueryResult
     {
         /// <summary>
         /// Gets the result of the query as an <see cref="IList{T}"/>, but lazily so

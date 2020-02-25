@@ -37,7 +37,7 @@ namespace CSF.ORM.NHibernate
     /// to eagerly-fetch child/grandchild objects from the underlying database, using the same query
     /// as its parent objects are fetched.
     /// </summary>
-    public class NHibernateEagerFetchingProvider : IEagerlyFetchesFromQuery
+    public class EagerFetchingProvider : IEagerlyFetchesFromQuery
     {
         /// <summary>
         /// Eagerly fetches a 'child' object from the queried object.

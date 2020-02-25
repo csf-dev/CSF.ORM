@@ -42,6 +42,10 @@ namespace Test.CSF.ORM.NHibernate
             }
 
             _query = new QueryAdapter(_session);
+
+            QueryableExtensions.EagerFetchingProvider = new EagerFetchingProvider();
+            QueryableExtensions.LazyQueryingProvider = new LazyResultProvider();
+            QueryableExtensions.AsyncQueryingProvider = new AsyncQueryProvider();
         }
 
         [OneTimeTearDown]
@@ -227,6 +231,12 @@ namespace Test.CSF.ORM.NHibernate
             // Act & Assert
             Assert.NotNull(query2.Value, "First product price");
             Assert.NotNull(query1.Value, "Store name");
+        }
+
+        [Test]
+        public void ToListAsync_does_not_throw()
+        {
+            Assert.That(async () => await _query.Query<Store>().ToListAsync(), Throws.Nothing);
         }
 
         #endregion

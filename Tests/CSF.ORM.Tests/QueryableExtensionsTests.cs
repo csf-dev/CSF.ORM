@@ -6,6 +6,7 @@ using System.Linq;
 using AutoFixture;
 using Test.CSF.ORM.NHibernate.Models;
 using Test.CSF.ORM.NHibernate.Entities;
+using CSF.ORM.InMemory;
 
 namespace Test.CSF.ORM.NHibernate
 {
@@ -39,6 +40,10 @@ namespace Test.CSF.ORM.NHibernate
             query.Add(items, x => x.Identity);
 
             _query = query;
+
+            QueryableExtensions.EagerFetchingProvider = new NoOpEagerFetcher();
+            QueryableExtensions.LazyQueryingProvider = new NoOpLazyResultProvider();
+            QueryableExtensions.AsyncQueryingProvider = new SynchronousAsyncQueryProvider();
         }
 
         #endregion
