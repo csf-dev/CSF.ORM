@@ -175,7 +175,7 @@ namespace CSF.ORM
                 return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
             }
 
-            idValue = await persister.AddAsync(entity, token);
+            idValue = await persister.AddAsync(entity, null, token);
             return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
         }
 
