@@ -142,7 +142,7 @@ namespace CSF.ORM.NHibernate
         /// </summary>
         /// <param name="transaction">The underlying transaction.</param>
         /// <param name="preventCommitAndDispose">Indicates whether or not this instance is permitted to commit and dispose the transaction or not.</param>
-        public TransactionAdapter(nh.ITransaction transaction, bool preventCommitAndDispose = true)
+        public TransactionAdapter(nh.ITransaction transaction, bool preventCommitAndDispose = false)
         {
             this.transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
             mayCommitAndDispose = !preventCommitAndDispose;

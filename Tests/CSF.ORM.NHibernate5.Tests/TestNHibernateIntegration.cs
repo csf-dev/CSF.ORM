@@ -239,6 +239,19 @@ namespace Test.CSF.ORM.NHibernate
             Assert.That(async () => await _query.Query<Store>().ToListAsync(), Throws.Nothing);
         }
 
+        [Test]
+        public void TransactionAdapter_can_create_and_commit_a_transaction()
+        {
+            var tran = _session.BeginTransaction();
+            using (var sut = new TransactionAdapter(tran))
+            {
+                sut.Commit();
+
+                Assert.That(tran.WasCommitted, Is.True);
+            }
+            tran?.Dispose();
+        }
+
         #endregion
     }
 }
