@@ -62,4 +62,9 @@
     <ProjectReference Include="..\CSF.ORM\CSF.ORM.csproj" />
     <ProjectReference Include="..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\$(Configuration)\netstandard2.0\CSF.ORM.NHibernate.Common.*"
+          Pack="true"
+          PackagePath="lib\netstandard2.0\" />
+  </ItemGroup>
 </Project>
