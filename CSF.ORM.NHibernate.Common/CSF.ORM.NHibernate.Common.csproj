@@ -1,37 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;net461;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
     
   <PropertyGroup>
-    <PackageId>CSF.ORM.NHibernate.Common</PackageId>
-    <Authors>Craig Fowler</Authors>
-    <Summary>Implementation of CSF.ORM using NHibernate version 4.x</Summary>
-    <Title>CSF.ORM.NHibernate.Common</Title>
-    <ReleaseVersion>1.3.1</ReleaseVersion>
-    <PackageVersion>$(ReleaseVersion)</PackageVersion>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
-    <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <IsPackable>false</IsPackable>
+    <ReleaseVersion>2.0.0</ReleaseVersion>
+    <Version>$(ReleaseVersion)</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>CSF.ORM.NHibernate</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.Common.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.Common.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.Common.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
     
