@@ -8,14 +8,16 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>CSF.Entities</PackageId>
-    <Authors>CSF Software Limited</Authors>
-    <Summary>Base types used to describe entity objects, such as would be mapped to the data-store via an ORM</Summary>
-    <Title>CSF.Entities</Title>
+    <Authors>craigfowler</Authors>
+    <Title>Entity &amp; identity types</Title>
+    <Description>Interfaces &amp; base types to describe ORM-mapped entities and their identities.</Description>
     <ReleaseVersion>2.0.0</ReleaseVersion>
+    <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
     <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

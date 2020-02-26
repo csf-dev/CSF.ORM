@@ -9,15 +9,8 @@
     
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <PackageId>CSF.ORM.NHibernate.Common</PackageId>
-    <Authors>CSF Software Limited</Authors>
-    <Summary>Implementation of CSF.ORM using NHibernate version 4.x</Summary>
-    <Title>CSF.ORM.NHibernate.Common</Title>
     <ReleaseVersion>2.0.0</ReleaseVersion>
-    <PackageVersion>$(ReleaseVersion)</PackageVersion>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
-    <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <Version>$(ReleaseVersion)</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>CSF.ORM.NHibernate</RootNamespace>

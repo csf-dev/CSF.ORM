@@ -10,14 +10,16 @@
     
   <PropertyGroup>
     <PackageId>CSF.ORM.Entities</PackageId>
-    <Authors>CSF Software Limited</Authors>
-    <Summary>Integration library between CSF.Entities and CSF.ORM</Summary>
-    <Title>CSF.ORM.Entities</Title>
+    <Authors>craigfowler</Authors>
+    <Title>ORM abstractions: Entity integration</Title>
+    <Description>An integration between CSF.ORM and CSF.Entities, providing convenience functionality for projects which use both.</Description>
     <ReleaseVersion>2.0.0</ReleaseVersion>
+    <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
     <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>CSF.ORM</RootNamespace>
