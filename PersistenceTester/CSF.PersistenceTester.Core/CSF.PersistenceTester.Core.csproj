@@ -13,6 +13,11 @@
     <AssemblyOriginatorKeyFile>..\..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <Authors>CSF Software Limited</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/csf-dev/CSF.PersistenceTester</PackageProjectUrl>
+    <Summary>A testing utility for testing object/entity persistence when using an ORM</Summary>
+    <Description>A testing utility for testing object/entity persistence when using an ORM.</Description>
+    <PackageId>CSF.PersistenceTester</PackageId>
+    <Title>NHibernate persistence tester</Title>
     <ReleaseVersion>2.0.0</ReleaseVersion>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
   </PropertyGroup>
