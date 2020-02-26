@@ -8,6 +8,7 @@
   </PropertyGroup>
     
   <PropertyGroup>
+    <IsPackable>false</IsPackable>
     <PackageId>CSF.ORM.NHibernate.Common</PackageId>
     <Authors>Craig Fowler</Authors>
     <Summary>Implementation of CSF.ORM using NHibernate version 4.x</Summary>
@@ -23,15 +24,16 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.Common.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.Common.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate4.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate.Common.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
     
