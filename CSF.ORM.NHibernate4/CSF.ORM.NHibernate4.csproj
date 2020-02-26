@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -77,11 +77,8 @@
     <ProjectReference Include="..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\$(Configuration)\net45\CSF.ORM.NHibernate.Common.*"
-          Pack="true"
-          PackagePath="lib\net45\" />
-    <None Include="bin\$(Configuration)\netstandard2.0\CSF.ORM.NHibernate.Common.*"
-          Pack="true"
-          PackagePath="lib\netstandard2.0\" />
+    <None Include="bin\$(Configuration)\net45\CSF.ORM.NHibernate.Common.*" Pack="true" PackagePath="lib\net45\" />
+    <None Include="bin\$(Configuration)\netstandard2.0\CSF.ORM.NHibernate.Common.*" Pack="true" PackagePath="lib\netstandard2.0\" />
+    <None Include="bin\$(Configuration)\netcoreapp2.0\CSF.ORM.NHibernate.Common.*" Pack="true" PackagePath="lib\netcoreapp2.0\" />
   </ItemGroup>
 </Project>

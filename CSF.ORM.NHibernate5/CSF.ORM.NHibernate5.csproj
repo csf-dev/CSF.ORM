@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
     <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageId>CSF.ORM.NHibernate5</PackageId>
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions: Implementation for NHibernate 5</Title>
@@ -26,6 +32,12 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate5.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate5.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+    
+  <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
   
   <ItemGroup>
     <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\ExceptionMessages.resx">
@@ -65,8 +77,8 @@
     <ProjectReference Include="..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\$(Configuration)\netstandard2.0\CSF.ORM.NHibernate.Common.*"
-          Pack="true"
-          PackagePath="lib\netstandard2.0\" />
+    <None Include="bin\$(Configuration)\net461\CSF.ORM.NHibernate.Common.*" Pack="true" PackagePath="lib\net461\" />
+    <None Include="bin\$(Configuration)\netstandard2.0\CSF.ORM.NHibernate.Common.*" Pack="true" PackagePath="lib\netstandard2.0\" />
+    <None Include="bin\$(Configuration)\netcoreapp2.0\CSF.ORM.NHibernate.Common.*" Pack="true" PackagePath="lib\netcoreapp2.0\" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 
 
   <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
     <TargetFramework>netstandard2.0</TargetFramework>
