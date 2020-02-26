@@ -9,7 +9,7 @@
     
   <PropertyGroup>
     <PackageId>CSF.ORM</PackageId>
-    <Authors>Craig Fowler</Authors>
+    <Authors>CSF Software Limited</Authors>
     <Summary>Types related to abstracting the usage of an ORM</Summary>
     <Title>CSF.ORM</Title>
     <Description>Types which relate to the usage of an ORM, so that a business logic project does not need to depend upon the ORM directly.</Description>

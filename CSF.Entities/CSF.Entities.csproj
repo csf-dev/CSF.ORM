@@ -8,7 +8,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>CSF.Entities</PackageId>
-    <Authors>Craig Fowler</Authors>
+    <Authors>CSF Software Limited</Authors>
     <Summary>Base types used to describe entity objects, such as would be mapped to the data-store via an ORM</Summary>
     <Title>CSF.Entities</Title>
     <ReleaseVersion>2.0.0</ReleaseVersion>

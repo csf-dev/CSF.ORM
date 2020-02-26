@@ -10,7 +10,7 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <PackageId>CSF.ORM.NHibernate.Common</PackageId>
-    <Authors>Craig Fowler</Authors>
+    <Authors>CSF Software Limited</Authors>
     <Summary>Implementation of CSF.ORM using NHibernate version 4.x</Summary>
     <Title>CSF.ORM.NHibernate.Common</Title>
     <ReleaseVersion>2.0.0</ReleaseVersion>
