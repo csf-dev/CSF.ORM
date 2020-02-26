@@ -1,11 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
+    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+    
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <RootNamespace>CSF.PersistenceTester</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
-    <ReleaseVersion>1.3.1</ReleaseVersion>
+    <Authors>craigfowler</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+    <PackageId>CSF.PersistenceTester</PackageId>
+    <Title>ORM persistence tester</Title>
+    <Description>A utility for testing object/entity persistence when using an ORM.</Description>
+    <ReleaseVersion>2.0.0</ReleaseVersion>
+    <Version>$(ReleaseVersion)</Version>
+    <PackageVersion>$(ReleaseVersion)</PackageVersion>
+    <SonarQubeTestProject>false</SonarQubeTestProject>
   </PropertyGroup>
   
   <Import Project="..\..\Tools\EnableNet45BuildOnUnix.targets" />
@@ -18,14 +34,19 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.Core.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.Core.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Builder\" />
     <Folder Include="Impl\" />
-    <Folder Include="NHibernate\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CSF.EqualityRules" Version="1.0.0" />
-    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Runtime" Condition="$(TargetFramework.StartsWith('net4'))" />

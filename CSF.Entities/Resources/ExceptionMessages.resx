@@ -13,12 +13,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TypeMustBeEntityTypeFormat" xml:space="preserve">
-    <value>The type `{0}' must inherit from `{1}'.</value>
+    <value>The type `{0}' must derive from `{1}'.</value>
   </data>
   <data name="MustNotBeDefaultForDataTypeFormat" xml:space="preserve">
     <value>Identity values may not be the default for their data-type (`{0}').</value>
   </data>
   <data name="CastTypeMustImplementEntityTypeFormat" xml:space="preserve">
-    <value>The cast-to type (`{1}') must implement the identity's entity type: `{0}'</value>
+    <value>To up-cast an identity to a more specific entity type, the entity type to cast-as: `{1}' must derive from the specified identity's current entity type: `{0}'.</value>
+  </data>
+  <data name="InvalidIdentityType" xml:space="preserve">
+    <value>Identity type `{0}' was specified but provided identity value was a `{1}'.</value>
   </data>
 </root>

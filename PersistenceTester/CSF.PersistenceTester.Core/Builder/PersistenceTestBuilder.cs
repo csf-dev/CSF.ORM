@@ -1,4 +1,6 @@
 ﻿using System;
+using CSF.ORM;
+
 namespace CSF.PersistenceTester.Builder
 {
     /// <summary>
@@ -7,10 +9,17 @@ namespace CSF.PersistenceTester.Builder
     /// </summary>
     public class PersistenceTestBuilder : IChoosesEntityWithOptionalSetup
     {
-        readonly IGetsSession sessionProvider;
-        Action<IGetsSession> setup;
+        readonly IGetsDataConnection sessionProvider;
+        Action<IDataConnection> setup;
 
-        IChoosesEntity IConfiguresTestSetup.WithSetup(Action<IGetsSession> setup, bool implicitTransaction)
+        /// <summary>
+        /// Adds a 'setup' or 'pre-test' step to the persistence test.  Use this to (for example) save dependent
+        /// entities to the database before the tested entity is saved.
+        /// </summary>
+        /// <returns>A service which indicates the entity to save.</returns>
+        /// <param name="setup">The setup action.</param>
+        /// <param name="implicitTransaction">If set to <c>true</c> then the setup action will be performed within a transaction.</param>
+        public IChoosesEntity WithSetup(Action<IDataConnection> setup, bool implicitTransaction = true)
         {
             if (setup == null) return this;
 
@@ -20,13 +29,11 @@ namespace CSF.PersistenceTester.Builder
             }
             else
             {
-                this.setup = sessionProvider =>
+                this.setup = s =>
                 {
-                    var session = sessionProvider.GetSession();
-
-                    using(var tran = session.BeginTransaction())
+                    using(var tran = s.GetTransactionFactory().GetTransaction())
                     {
-                        setup(sessionProvider);
+                        setup(s);
                         tran.Commit();
                     }
                 };
@@ -52,7 +59,7 @@ namespace CSF.PersistenceTester.Builder
         /// Initializes a new instance of the <see cref="PersistenceTestBuilder"/> class.
         /// </summary>
         /// <param name="sessionProvider">A session provider.</param>
-        public PersistenceTestBuilder(IGetsSession sessionProvider)
+        public PersistenceTestBuilder(IGetsDataConnection sessionProvider)
         {
             this.sessionProvider = sessionProvider ?? throw new ArgumentNullException(nameof(sessionProvider));
         }

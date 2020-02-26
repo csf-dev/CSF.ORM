@@ -3,35 +3,52 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <OutputType>Library</OutputType>
-    <ReleaseVersion>1.3.1</ReleaseVersion>
+    <ReleaseVersion>2.0.0</ReleaseVersion>
   </PropertyGroup>
    
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
+    <DebugType></DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug_SingleTarget</OutputPath>
+    <DefineConstants></DefineConstants>
+    <NoWarn></NoWarn>
+    <NoStdLib>false</NoStdLib>
+  </PropertyGroup>
   <ItemGroup> 
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="AutoFixture.NUnit3" Version="4.11.0" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.11.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" />
     <PackageReference Include="System.Security.Permissions" Version="4.6.0" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.6.0">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
-   <PackageReference Include="NHibernate" Version="4.0.0.4000">
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+    <PackageReference Include="NHibernate" Version="4.0.0.4000">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="2.8.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="NunitXml.TestLogger" Version="2.1.41" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NUnit\CSF.PersistenceTester.NUnit.csproj" />
-    <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NHibernate\CSF.PersistenceTester.NHibernate.csproj" />
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
+    <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Impl\" />

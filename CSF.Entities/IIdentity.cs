@@ -29,12 +29,14 @@ using System;
 namespace CSF.Entities
 {
   /// <summary>
-  /// Base non-generic interface for an entity identity.
+  /// Represents the identity for a <see cref="IEntity"/>.  This is a value-object
+  /// which holds just the information which which entity type it relates to, and what
+  /// the identity value is.
   /// </summary>
   public interface IIdentity : IEquatable<IIdentity>
   {
     /// <summary>
-    /// Gets a <see cref="System.Type"/> that indicates the type of entity that this instance describes.
+    /// Gets a <see cref="Type"/> that indicates the type of entity that this instance describes.
     /// </summary>
     /// <value>The entity type.</value>
     Type EntityType { get; }

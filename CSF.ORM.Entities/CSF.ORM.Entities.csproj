@@ -1,19 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
+    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+    
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <PackOnBuild>true</PackOnBuild>
     <PackageId>CSF.ORM.Entities</PackageId>
-    <Authors>Craig Fowler</Authors>
-    <Summary>Integration library between CSF.Entities and CSF.ORM</Summary>
-    <Title>CSF.ORM.Entities</Title>
-    <ReleaseVersion>1.3.1</ReleaseVersion>
+    <Authors>craigfowler</Authors>
+    <Title>ORM abstractions: Entity integration</Title>
+    <Description>An integration between CSF.ORM and CSF.Entities, providing convenience functionality for projects which use both.</Description>
+    <ReleaseVersion>2.0.0</ReleaseVersion>
+    <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2020 - CSF Software Limited</Copyright>
     <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>CSF.ORM</RootNamespace>
   </PropertyGroup>
     
   <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
@@ -25,6 +34,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.Entities.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.Entities.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSF.Entities\CSF.Entities.csproj" />

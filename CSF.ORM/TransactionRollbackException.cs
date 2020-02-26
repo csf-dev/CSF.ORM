@@ -4,7 +4,7 @@
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,45 +27,45 @@ using System;
 
 namespace CSF.ORM
 {
-  /// <summary>
-  /// Exception raised when a transaction has been rolled back.
-  /// Note that this is not always thrown, only in specific scenarios in which it must.
-  /// As a rule of thumb, if you don't need to throw this, don't!
-  /// </summary>
-  [Serializable]
-  public class TransactionRollbackException : Exception
-  {
     /// <summary>
-    /// Initializes a new instance of the <see cref="T:TransactionRollbackException"/> class
+    /// Exception raised when a transaction has been rolled back.
+    /// Note that this is not always thrown, only in specific scenarios in which it must.
+    /// As a rule of thumb, if you don't need to throw this, don't!
     /// </summary>
-    public TransactionRollbackException()
+    [Serializable]
+    public class TransactionRollbackException : Exception
     {
-    }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionRollbackException"/> class
+        /// </summary>
+        public TransactionRollbackException()
+        {
+        }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:MyException"/> class
-    /// </summary>
-    /// <param name="message">A <see cref="T:System.String"/> that describes the exception. </param>
-    public TransactionRollbackException(string message) : base(message)
-    {
-    }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionRollbackException"/> class
+        /// </summary>
+        /// <param name="message">A <see cref="String"/> that describes the exception. </param>
+        public TransactionRollbackException(string message) : base(message)
+        {
+        }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:MyException"/> class
-    /// </summary>
-    /// <param name="message">A <see cref="T:System.String"/> that describes the exception. </param>
-    /// <param name="inner">The exception that is the cause of the current exception. </param>
-    public TransactionRollbackException(string message, Exception inner) : base(message, inner)
-    {
-    }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionRollbackException"/> class
+        /// </summary>
+        /// <param name="message">A <see cref="String"/> that describes the exception. </param>
+        /// <param name="inner">The exception that is the cause of the current exception. </param>
+        public TransactionRollbackException(string message, Exception inner) : base(message, inner)
+        {
+        }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:MyException"/> class
-    /// </summary>
-    /// <param name="context">The contextual information about the source or destination.</param>
-    /// <param name="info">The object that holds the serialized object data.</param>
-    protected TransactionRollbackException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context)
-    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionRollbackException"/> class
+        /// </summary>
+        /// <param name="context">The contextual information about the source or destination.</param>
+        /// <param name="info">The object that holds the serialized object data.</param>
+        protected TransactionRollbackException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context)
+        {
+        }
     }
-  }
 }

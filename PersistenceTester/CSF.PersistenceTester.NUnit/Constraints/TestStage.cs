@@ -1,5 +1,4 @@
-﻿using System;
-namespace CSF.PersistenceTester.Constraints
+﻿namespace CSF.PersistenceTester.Constraints
 {
     /// <summary>
     /// Enumerates the various stages of a persistence test.

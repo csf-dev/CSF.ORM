@@ -1,20 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
+    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+    
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <RootNamespace>CSF.PersistenceTester</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
-    <Authors>CSF Software Limited</Authors>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/csf-dev/CSF.PersistenceTester</PackageProjectUrl>
-    <Summary>NUnit integration for CSF.PersistenceTester</Summary>
-    <Description>An integration between CSF.PersistenceTester and NUnit 3.x.  Provides a convenient way to assert that a persietence test passed.</Description>
+    <Authors>craigfowler</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/csf-dev/CSF.ORM</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <PackageId>CSF.PersistenceTester.NUnit</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
-    <Title>NHibernate persistence tester: NUnit integration</Title>
-    <PackOnBuild>true</PackOnBuild>
-    <ReleaseVersion>1.3.1</ReleaseVersion>
+    <Title>ORM persistence tester: NUnit integration</Title>
+    <Description>An integration for the ORM persistence tester and NUnit 3.x.  Provides an NUnit constraint for asserting that the test passed.</Description>
+    <ReleaseVersion>2.0.0</ReleaseVersion>
+    <Version>$(ReleaseVersion)</Version>
+    <PackageVersion>$(ReleaseVersion)</PackageVersion>
+    <SonarQubeTestProject>false</SonarQubeTestProject>
   </PropertyGroup>
   
   <Import Project="..\..\Tools\EnableNet45BuildOnUnix.targets" />
@@ -27,17 +34,21 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.NUnit.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.NUnit.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="[3.0.0,4.0.0)" />
-    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />
+    <PackageReference Include="NUnit" Version="[3.6.0,4.0.0)" />
+    <PackageReference Include="CSF.EqualityRules" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Runtime" Condition="$(TargetFramework.StartsWith('net4'))" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSF.PersistenceTester.NHibernate\CSF.PersistenceTester.NHibernate.csproj" />
+    <Folder Include="Constraints\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Constraints\" />
+    <ProjectReference Include="..\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
   </ItemGroup>
 </Project>

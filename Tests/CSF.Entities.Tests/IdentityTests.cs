@@ -1,96 +1,87 @@
-﻿using System;
-using NUnit.Framework;
-using CSF.Entities;
-using Test.CSF.Entities.Stubs;
+﻿using NUnit.Framework;
+using CSF.Entities.Tests.Stubs;
 
-namespace Test.CSF.Entities
+namespace CSF.Entities.Tests
 {
-  [TestFixture]
-  public class IdentityTests
-  {
-    #region tests
-
-    //          First val   Second type         Second val  Expected result
-    //          ---------   -----------         ----------  ---------------
-    [TestCase(  5,          typeof(Person),     5,          true)]
-    [TestCase(  5,          typeof(Employee),   5,          true)]
-    [TestCase(  5,          typeof(Animal),     5,          false)]
-    [TestCase(  5,          typeof(Person),     10,         false)]
-    [TestCase(  5,          typeof(Employee),   10,         false)]
-    [TestCase(  5,          typeof(Animal),     10,         false)]
-    public void Equals_object_various_scenarios(int firstVal, Type secondType, int secondVal, bool expected)
+    [TestFixture,Parallelizable]
+    public class IdentityTests
     {
-      // Arrange
-      var firstIdentity = new Identity<int,Person>(firstVal);
-      var secondIdentity = Identity.Create(secondType, typeof(int), secondVal);
+        [Test, AutoMoqData]
+        public void Equals_returns_true_for_two_equal_identities()
+        {
+            var identity1 = new Identity<long, Cat>(5);
+            var identity2 = new Identity<long, Cat>(5);
+            Assert.That(identity1.Equals(identity2), Is.True);
+        }
 
-      // Act
-      var result = firstIdentity.Equals((object) secondIdentity);
+        [Test, AutoMoqData]
+        public void Equals_returns_true_for_two_identities_with_compatible_entity_types()
+        {
+            var identity1 = new Identity<long, Cat>(5);
+            var identity2 = new Identity<long, Dog>(5);
+            Assert.That(identity1.Equals(identity2), Is.True);
+        }
 
-      // Assert
-      Assert.AreEqual(expected, result);
+        [Test, AutoMoqData]
+        public void Equals_returns_false_for_two_identities_with_compatible_entity_types_but_differing_values()
+        {
+            var identity1 = new Identity<long, Cat>(10);
+            var identity2 = new Identity<long, Dog>(20);
+            Assert.That(identity1.Equals(identity2), Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void Equals_returns_false_for_two_identities_with_incompatible_entity_types()
+        {
+            var identity1 = new Identity<long, Cat>(5);
+            var identity2 = new Identity<long, Person>(5);
+            Assert.That(identity1.Equals(identity2), Is.False);
+        }
+        [Test, AutoMoqData]
+        public void Equals_operator_returns_true_for_two_equal_identities()
+        {
+            var identity1 = new Identity<long, Cat>(5);
+            var identity2 = new Identity<long, Cat>(5);
+            Assert.That(identity1 == identity2, Is.True);
+        }
+
+        [Test, AutoMoqData]
+        public void Equals_operator_returns_true_for_two_identities_with_compatible_entity_types()
+        {
+            var identity1 = new Identity<long, Cat>(5);
+            var identity2 = new Identity<long, Dog>(5);
+            Assert.That(identity1 == identity2, Is.True);
+        }
+
+        [Test, AutoMoqData]
+        public void Equals_operator_returns_false_for_two_identities_with_compatible_entity_types_but_differing_values()
+        {
+            var identity1 = new Identity<long, Cat>(10);
+            var identity2 = new Identity<long, Dog>(20);
+            Assert.That(identity1 == identity2, Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void Equals_operator_returns_false_for_two_identities_with_incompatible_entity_types()
+        {
+            var identity1 = new Identity<long, Cat>(5);
+            var identity2 = new Identity<long, Person>(5);
+            Assert.That(identity1 == identity2, Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void GetValueAsString_returns_correct_value()
+        {
+            var identity = new Identity<long, Cat>(5);
+            Assert.That(identity.GetValueAsString(), Is.EqualTo("5"));
+        }
+
+        [Test, AutoMoqData]
+        public void ToString_returns_correct_value()
+        {
+            var identity = new Identity<long, Cat>(5);
+            Assert.That(identity.ToString(), Is.EqualTo("[Cat#5]"));
+        }
     }
-
-    //          First val   Second type         Second val  Expected result
-    //          ---------   -----------         ----------  ---------------
-    [TestCase(  5,          typeof(Person),     5,          true)]
-    [TestCase(  5,          typeof(Employee),   5,          true)]
-    [TestCase(  5,          typeof(Animal),     5,          false)]
-    [TestCase(  5,          typeof(Person),     10,         false)]
-    [TestCase(  5,          typeof(Employee),   10,         false)]
-    [TestCase(  5,          typeof(Animal),     10,         false)]
-    public void Equals_IIdentity_various_scenarios(int firstVal, Type secondType, int secondVal, bool expected)
-    {
-      // Arrange
-      var firstIdentity = new Identity<int,Person>(firstVal);
-      var secondIdentity = Identity.Create(secondType, typeof(int), secondVal);
-
-      // Act
-      var result = firstIdentity.Equals((IIdentity) secondIdentity);
-
-      // Assert
-      Assert.AreEqual(expected, result);
-    }
-
-    [Test]
-    public void Cast_creates_correct_new_identity()
-    {
-      // Arrange
-      var person = Identity.Create<Person>(5);
-
-      // Act
-      IIdentity<Customer> customer = person.Cast<Customer>();
-
-      // Assert
-      Assert.AreEqual(typeof(Customer), customer.EntityType, "Entity type as expected");
-      Assert.AreEqual(5, customer.Value, "Identity value as expected");
-    }
-
-    [Test]
-    public void Identity_interface_is_covariant()
-    {
-      // Act
-      IIdentity<Person> person = Identity.Create<Customer>(5);
-
-      // Assert
-      Assert.AreEqual(typeof(Customer), person.EntityType, "Entity type as expected");
-      Assert.AreEqual(5, person.Value, "Identity value as expected");
-    }
-
-    [Test]
-    public void GetValueAsString_returns_string_value()
-    {
-      // Arrange
-      var identity = new Identity<int,Person>(20);
-
-      // Act
-      var result = identity.GetValueAsString();
-
-      // Assert
-      Assert.AreEqual("20", result);
-    }
-
-    #endregion
-  }
 }
 

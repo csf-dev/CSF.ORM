@@ -1,5 +1,5 @@
 ﻿using System;
-using CSF.PersistenceTester.Builder;
+using CSF.ORM;
 
 namespace CSF.PersistenceTester
 {
@@ -15,6 +15,6 @@ namespace CSF.PersistenceTester
         /// <returns>A service which indicates the entity to save.</returns>
         /// <param name="setup">The setup action.</param>
         /// <param name="implicitTransaction">If set to <c>true</c> then the setup action will be performed within a transaction.</param>
-        IChoosesEntity WithSetup(Action<IGetsSession> setup, bool implicitTransaction = true);
+        IChoosesEntity WithSetup(Action<IDataConnection> setup, bool implicitTransaction = true);
     }
 }

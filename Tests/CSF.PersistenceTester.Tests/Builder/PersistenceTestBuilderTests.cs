@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using AutoFixture.NUnit3;
 using CSF.EqualityRules;
+using CSF.ORM;
 using CSF.PersistenceTester.Builder;
 using CSF.PersistenceTester.Impl;
-using CSF.PersistenceTester.NHibernate;
 using Moq;
 using NUnit.Framework;
 
@@ -25,10 +25,10 @@ namespace CSF.PersistenceTester.Tests.Builder
         }
 
         [Test, AutoMoqData]
-        public void WithSetup_sets_setup_to_action_when_provided([Frozen] IGetsSession sessionProvider,
+        public void WithSetup_sets_setup_to_action_when_provided([Frozen] IGetsDataConnection sessionProvider,
                                                                  PersistenceTestBuilder sut,
                                                                  [NoRecursion] SampleEntity entity,
-                                                                 [Frozen] ISession session,
+                                                                 [Frozen] IDataConnection session,
                                                                  [Frozen] ITransaction tran)
         {
             bool executed = false;
@@ -38,54 +38,58 @@ namespace CSF.PersistenceTester.Tests.Builder
                 .WithSetup(action)
                 .WithEntity(entity);
 
-            result.Setup(sessionProvider);
+            result.Setup(session);
 
             Assert.That(executed, Is.True);
         }
 
         [Test, AutoMoqData]
-        public void WithSetup_executes_setup_within_transaction_when_no_preference_specified([Frozen] IGetsSession sessionProvider, 
+        public void WithSetup_executes_setup_within_transaction_when_no_preference_specified([Frozen] IGetsDataConnection sessionProvider, 
                                                                                              PersistenceTestBuilder sut,
                                                                                              [NoRecursion] SampleEntity entity,
-                                                                                             ISession session,
+                                                                                             IDataConnection session,
+                                                                                             IGetsTransaction tranFactory,
                                                                                              ITransaction tran)
         {
-            Mock.Get(sessionProvider).Setup(x => x.GetSession()).Returns(session);
-            Mock.Get(session).Setup(x => x.BeginTransaction()).Returns(tran);
+            Mock.Get(sessionProvider).Setup(x => x.GetConnection()).Returns(session);
+            Mock.Get(session).Setup(x => x.GetTransactionFactory()).Returns(tranFactory);
+            Mock.Get(tranFactory).Setup(x => x.GetTransaction()).Returns(tran);
             var action = GetSetup(getter => { /* Noop */ });
 
             var result = (PersistenceTestBuilder<SampleEntity>)AsSetupChooser(sut)
                 .WithSetup(action)
                 .WithEntity(entity);
 
-            result.Setup(sessionProvider);
+            result.Setup(session);
 
-            Mock.Get(session).Verify(x => x.BeginTransaction(), Times.Once);
+            Mock.Get(tranFactory).Verify(x => x.GetTransaction(), Times.Once);
         }
 
         [Test, AutoMoqData]
-        public void WithSetup_does_not_use_transaction_when_specified_not_to([Frozen] IGetsSession sessionProvider,
+        public void WithSetup_does_not_use_transaction_when_specified_not_to([Frozen] IGetsDataConnection sessionProvider,
                                                                              PersistenceTestBuilder sut,
                                                                              [NoRecursion] SampleEntity entity,
-                                                                             ISession session,
+                                                                             IDataConnection session,
+                                                                             IGetsTransaction tranFactory,
                                                                              ITransaction tran)
         {
-            Mock.Get(sessionProvider).Setup(x => x.GetSession()).Returns(session);
-            Mock.Get(session).Setup(x => x.BeginTransaction()).Returns(tran);
+            Mock.Get(sessionProvider).Setup(x => x.GetConnection()).Returns(session);
+            Mock.Get(session).Setup(x => x.GetTransactionFactory()).Returns(tranFactory);
+            Mock.Get(tranFactory).Setup(x => x.GetTransaction()).Returns(tran);
             var action = GetSetup(getter => { /* Noop */ });
 
             var result = (PersistenceTestBuilder<SampleEntity>)AsSetupChooser(sut)
                 .WithSetup(action, false)
                 .WithEntity(entity);
 
-            result.Setup(sessionProvider);
+            result.Setup(session);
 
-            Mock.Get(session).Verify(x => x.BeginTransaction(), Times.Never);
+            Mock.Get(tranFactory).Verify(x => x.GetTransaction(), Times.Never);
         }
 
         [Test, AutoMoqData]
         public void WithEqualityComparer_uses_comparer_in_spec(IEqualityComparer<SampleEntity> comparer,
-                                                               IGetsSession sessionProvider,
+                                                               IGetsDataConnection sessionProvider,
                                                                [NoRecursion] SampleEntity entity,
                                                                ITestsPersistence<SampleEntity> tester)
         {
@@ -109,7 +113,7 @@ namespace CSF.PersistenceTester.Tests.Builder
 
         [Test, AutoMoqData]
         public void WithEqualityRule_uses_rule_in_spec(IGetsEqualityResult<SampleEntity> equalityRule,
-                                                       IGetsSession sessionProvider,
+                                                       IGetsDataConnection sessionProvider,
                                                        [NoRecursion] SampleEntity entity,
                                                        ITestsPersistence<SampleEntity> tester)
         {
@@ -129,7 +133,7 @@ namespace CSF.PersistenceTester.Tests.Builder
 
         [Test, AutoMoqData]
         public void WithEqualityRule_can_configure_a_rule(IEqualityComparer<string> comparer,
-                                                          IGetsSession sessionProvider,
+                                                          IGetsDataConnection sessionProvider,
                                                           [NoRecursion] SampleEntity entity,
                                                           ITestsPersistence<SampleEntity> tester)
         {
@@ -153,6 +157,6 @@ namespace CSF.PersistenceTester.Tests.Builder
 
         IConfiguresComparison<SampleEntity> AsComparerChooser(PersistenceTestBuilder<SampleEntity> sut) => sut;
 
-        Action<IGetsSession> GetSetup(Action<IGetsSession> action) => action;
+        Action<IDataConnection> GetSetup(Action<IDataConnection> action) => action;
     }
 }

@@ -25,12 +25,10 @@
 // THE SOFTWARE.
 
 
-using System;
-
 namespace CSF.Entities
 {
   /// <summary>
-  /// Generic interface for a type which describes the identity of an <see cref="T:Entity{TIdentity}"/>.
+  /// An entity identity which is generic for the type of <see cref="IEntity"/> to which it relates.
   /// </summary>
   public interface IIdentity<out TEntity> : IIdentity where TEntity : IEntity
   {
