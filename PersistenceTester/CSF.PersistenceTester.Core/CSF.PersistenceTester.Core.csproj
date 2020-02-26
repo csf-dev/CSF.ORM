@@ -13,6 +13,7 @@
     <AssemblyOriginatorKeyFile>..\..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <ReleaseVersion>2.0.0</ReleaseVersion>
+    <PackageVersion>$(ReleaseVersion)</PackageVersion>
   </PropertyGroup>
   
   <Import Project="..\..\Tools\EnableNet45BuildOnUnix.targets" />

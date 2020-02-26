@@ -17,7 +17,7 @@
     <Summary>NUnit integration for CSF.PersistenceTester</Summary>
     <Description>An integration between CSF.PersistenceTester and NUnit 3.x.  Provides a convenient way to assert that a persietence test passed.</Description>
     <PackageId>CSF.PersistenceTester.NUnit</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <Title>NHibernate persistence tester: NUnit integration</Title>
     <ReleaseVersion>2.0.0</ReleaseVersion>
     <SonarQubeTestProject>false</SonarQubeTestProject>
