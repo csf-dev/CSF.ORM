@@ -15,19 +15,19 @@
     <repository url="https://github.com/csf-dev/CSF.ORM" />
     <dependencies>
       <group targetFramework=".NETFramework4.6.1">
-        <dependency id="CSF.ORM" version="2.0.0" />
-        <dependency id="Iesi.Collections" version="4.0.0.4000" />
-        <dependency id="NHibernate" version="5.0.0" />
+        <dependency id="CSF.ORM" version="[2.0.0,3.0.0)" />
+        <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0)" />
+        <dependency id="NHibernate" version="[5.0.0,6.0.0)" />
       </group>
       <group targetFramework=".NETCoreApp2.0">
-        <dependency id="CSF.ORM" version="2.0.0" />
-        <dependency id="Iesi.Collections" version="4.0.0.4000" />
-        <dependency id="NHibernate" version="5.0.0" />
+        <dependency id="CSF.ORM" version="[2.0.0,3.0.0)" />
+        <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0)" />
+        <dependency id="NHibernate" version="[5.0.0,6.0.0)" />
       </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="CSF.ORM" version="2.0.0" />
-        <dependency id="Iesi.Collections" version="4.0.0.4000" />
-        <dependency id="NHibernate" version="5.0.0" />
+        <dependency id="CSF.ORM" version="[2.0.0,3.0.0)" />
+        <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0)" />
+        <dependency id="NHibernate" version="[5.0.0,6.0.0)" />
         <dependency id="System.Configuration.ConfigurationManager" version="4.4.0" />
         <dependency id="System.Data.SQLite.Core" version="1.0.112" />
         <dependency id="System.Security.Permissions" version="4.4.0" />
