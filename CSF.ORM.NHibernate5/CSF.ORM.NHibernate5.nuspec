@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>CSF.ORM.NHibernate5</id>
+    <version>0.0.0</version>
+    <title>ORM abstractions: Implementation for NHibernate 5</title>
+    <authors>craigfowler</authors>
+    <owners>craigfowler</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/csf-dev/CSF.ORM</projectUrl>
+    <description>Implementation of the ORM abstractions for users of NHibernate version 5.x.</description>
+    <copyright>Copyright 2020 - CSF Software Limited</copyright>
+    <repository url="https://github.com/csf-dev/CSF.ORM" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.1">
+        <dependency id="CSF.ORM" version="2.0.0" />
+        <dependency id="Iesi.Collections" version="4.0.0.4000" />
+        <dependency id="NHibernate" version="5.0.0" />
+      </group>
+      <group targetFramework=".NETCoreApp2.0">
+        <dependency id="CSF.ORM" version="2.0.0" />
+        <dependency id="Iesi.Collections" version="4.0.0.4000" />
+        <dependency id="NHibernate" version="5.0.0" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="CSF.ORM" version="2.0.0" />
+        <dependency id="Iesi.Collections" version="4.0.0.4000" />
+        <dependency id="NHibernate" version="5.0.0" />
+        <dependency id="System.Configuration.ConfigurationManager" version="4.4.0" />
+        <dependency id="System.Data.SQLite.Core" version="1.0.112" />
+        <dependency id="System.Security.Permissions" version="4.4.0" />
+        <dependency id="System.ServiceModel.Primitives" version="4.4.0" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.6.1" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="bin/Release/**/CSF.ORM.NHibernate*.dll" target="lib" />
+    <file src="bin/Release/**/CSF.ORM.NHibernate*.xml" target="lib" />
+  </files>
+</package>

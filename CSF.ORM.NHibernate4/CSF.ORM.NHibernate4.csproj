@@ -22,6 +22,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>CSF.ORM.NHibernate</RootNamespace>
+    <NuspecFile>CSF.ORM.NHibernate4.nuspec</NuspecFile>
+    <NuspecProperties>Version=$(ReleaseVersion)</NuspecProperties>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
