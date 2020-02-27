@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <OutputType>Library</OutputType>
-    <ReleaseVersion>2.0.0</ReleaseVersion>
+    <ReleaseVersion>2.0.1</ReleaseVersion>
   </PropertyGroup>
    
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />

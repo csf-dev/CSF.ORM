@@ -9,7 +9,7 @@
     
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <ReleaseVersion>2.0.0</ReleaseVersion>
+    <ReleaseVersion>2.0.1</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
