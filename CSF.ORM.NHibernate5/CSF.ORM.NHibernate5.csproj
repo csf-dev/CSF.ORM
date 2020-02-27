@@ -12,7 +12,7 @@
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions: Implementation for NHibernate 5</Title>
     <Description>Implementation of the ORM abstractions for users of NHibernate version 5.x.</Description>
-    <ReleaseVersion>2.0.0</ReleaseVersion>
+    <ReleaseVersion>2.0.1</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -22,6 +22,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>CSF.ORM.NHibernate</RootNamespace>
+    <NuspecFile>CSF.ORM.NHibernate5.nuspec</NuspecFile>
+    <NuspecProperties>Version=$(ReleaseVersion)</NuspecProperties>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
