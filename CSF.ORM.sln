@@ -15,10 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSF.ORM.Tests", "Tests\CSF.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{671772C1-0FCB-4B27-846D-329CBA7A1845}"
 	ProjectSection(SolutionItems) = preProject
-		Tools\build.sh = Tools\build.sh
-		Tools\common-vars.txt = Tools\common-vars.txt
 		Tools\EnableNet45BuildOnUnix.targets = Tools\EnableNet45BuildOnUnix.targets
-		Tools\install.sh = Tools\install.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.Entities", "CSF.ORM.Entities\CSF.ORM.Entities.csproj", "{3EF001E2-A559-42DB-A2DB-1A8629E7486D}"
