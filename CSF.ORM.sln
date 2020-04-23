@@ -171,6 +171,6 @@ Global
 		$0.NameConventionPolicy = $4
 		$4.Rules = $5
 		$5.NamingRule = $25
-		version = 2.0.1
+		version = 2.0.2
 	EndGlobalSection
 EndGlobal
