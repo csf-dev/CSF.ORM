@@ -11,7 +11,7 @@
     <Authors>craigfowler</Authors>
     <Title>Entity &amp; identity types</Title>
     <Description>Interfaces &amp; base types to describe ORM-mapped entities and their identities.</Description>
-    <ReleaseVersion>2.0.1</ReleaseVersion>
+    <ReleaseVersion>2.0.2</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
