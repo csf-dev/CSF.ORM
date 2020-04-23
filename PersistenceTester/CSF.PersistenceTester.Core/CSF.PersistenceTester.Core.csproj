@@ -18,7 +18,7 @@
     <PackageId>CSF.PersistenceTester</PackageId>
     <Title>ORM persistence tester</Title>
     <Description>A utility for testing object/entity persistence when using an ORM.</Description>
-    <ReleaseVersion>2.0.1</ReleaseVersion>
+    <ReleaseVersion>2.0.2</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <SonarQubeTestProject>false</SonarQubeTestProject>

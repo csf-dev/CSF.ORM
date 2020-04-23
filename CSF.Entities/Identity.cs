@@ -37,7 +37,7 @@ namespace CSF.Entities
     {
         static readonly IGetsIdentityType identityTypeProvider = new IdentityTypeProvider();
         static readonly ICreatesIdentity identityFactory = new IdentityFactory();
-        static readonly IUpCastsIdentity caster = new IdentityCaster();
+        static readonly ICastsIdentityType caster = new IdentityTypeCaster();
         static readonly IParsesIdentity parser = new IdentityParser();
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace CSF.Entities
         /// <param name="identity">The identity to convert to a different entity type.</param>
         /// <typeparam name="TCast">The desired entity type.</typeparam>
         /// <exception cref="InvalidCastException">If the <paramref name="identity"/> is not suitable for the entity type <typeparamref name="TCast"/>.</exception>
-        public static IIdentity<TCast> Cast<TCast>(this IIdentity identity)
+        public static IIdentity<TCast> Cast<TCast>(this IIdentity identity) where TCast : IEntity
             => caster.CastIdentity<TCast>(identity);
     }
 }

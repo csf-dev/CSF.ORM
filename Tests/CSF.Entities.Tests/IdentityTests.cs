@@ -37,6 +37,7 @@ namespace CSF.Entities.Tests
             var identity2 = new Identity<long, Person>(5);
             Assert.That(identity1.Equals(identity2), Is.False);
         }
+
         [Test, AutoMoqData]
         public void Equals_operator_returns_true_for_two_equal_identities()
         {
@@ -67,6 +68,27 @@ namespace CSF.Entities.Tests
             var identity1 = new Identity<long, Cat>(5);
             var identity2 = new Identity<long, Person>(5);
             Assert.That(identity1 == identity2, Is.False);
+        }
+
+        [Test, AutoMoqData]
+        public void Create_creates_identity_with_correct_value()
+        {
+            var identity = Identity.Create<Cat>(5);
+            Assert.That(identity.Value, Is.EqualTo(5));
+        }
+
+        [Test, AutoMoqData]
+        public void Parse_returns_identity_with_correct_value()
+        {
+            var identity = Identity.Parse<Cat>("66");
+            Assert.That(identity.Value, Is.EqualTo(66));
+        }
+
+        [Test, AutoMoqData]
+        public void Cast_returns_appropriate_identity()
+        {
+            var identity = new Identity<long,Animal>(5);
+            Assert.That(() => Identity.Cast<Cat>(identity).Value, Is.EqualTo(5));
         }
 
         [Test, AutoMoqData]

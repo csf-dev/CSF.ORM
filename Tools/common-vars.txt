@@ -1,2 +1,0 @@
-SCRIPT_PATH="$(dirname $0)"
-PROJECT_ROOT="$SCRIPT_PATH/.."
