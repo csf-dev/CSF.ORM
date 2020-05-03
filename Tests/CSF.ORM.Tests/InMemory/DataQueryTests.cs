@@ -49,7 +49,8 @@ namespace CSF.ORM.Tests.InMemory
 
         [Test, AutoMoqData]
         public void Query_does_not_include_items_of_other_types([Frozen] DataStore store,
-                                                                DataQuery sut,                                                           Person item1,
+                                                                DataQuery sut,
+                                                                Person item1,
                                                                 Person item2,
                                                                 Animal animal1,
                                                                 Animal animal2)
@@ -64,14 +65,42 @@ namespace CSF.ORM.Tests.InMemory
 
         [Test, AutoMoqData]
         public void Get_retrieves_correct_item([Frozen] DataStore store,
-                                                                DataQuery sut,
-             Person item1,
+                                               DataQuery sut,
+                                               Person item1,
                                                Person item2)
         {
             AddToStore(store, item1);
             AddToStore(store, item2);
 
             Assert.That(sut.Get<Person>(item1.Identity), Is.SameAs(item1));
+        }
+
+        [Test, AutoMoqData]
+        public void Theorise_retrieves_correct_item_if_it_exists([Frozen] DataStore store,
+                                                                 DataQuery sut,
+                                                                 Person item1,
+                                                                 Person item2)
+        {
+            AddToStore(store, item1);
+            AddToStore(store, item2);
+
+            Assert.That(sut.Theorise<Person>(item1.Identity), Is.SameAs(item1));
+        }
+
+        [Test, AutoMoqData]
+        public void Theorise_returns_new_instance_if_it_does_not_exist([Frozen] DataStore store,
+                                                                       DataQuery sut,
+                                                                       long id)
+        {
+            Assert.That(sut.Theorise<Person>(id), Is.Not.Null);
+        }
+
+        [Test, AutoMoqData]
+        public void Theorise_throws_CannotTheoriseException_for_a_nonexistent_object_which_cannot_be_created([Frozen] DataStore store,
+                                                                                                             DataQuery sut,
+                                                                                                             long id)
+        {
+            Assert.That(() => sut.Theorise<ObjectWithoutAPublicParameterlessConstructor>(id), Throws.InstanceOf<CannotTheoriseException>());
         }
 
         void AddToStore(DataStore store, Person person)
