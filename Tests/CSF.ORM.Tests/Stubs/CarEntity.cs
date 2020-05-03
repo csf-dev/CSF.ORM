@@ -26,7 +26,7 @@
 using System;
 using CSF.Entities;
 
-namespace CSF.ORM.Tests.Stubs
+namespace CSF.ORM.Stubs
 {
     public class Car : Entity<long>
     {

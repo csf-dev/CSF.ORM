@@ -1,5 +1,5 @@
 ﻿//
-// LongIdEntity.cs
+// IdentityParserTests.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -23,10 +23,26 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-namespace CSF.Entities.Tests.Stubs
+
+using CSF.Entities.Stubs;
+using CSF.Entities;
+using NUnit.Framework;
+
+namespace CSF.ORM.Entities
 {
-    public class LongIdEntity : Entity<long>
+    [TestFixture,Parallelizable]
+    public class IdentityParserTests
     {
+        [Test, AutoMoqData]
+        public void Parse_gets_identity_when_value_can_be_converted(IdentityParser sut)
+        {
+            Assert.That(sut.Parse(typeof(Cat), "55"), Is.EqualTo(new Identity<int, Cat>(55)));
+        }
+
+        [Test, AutoMoqData]
+        public void Parse_returns_null_when_value_cannot_be_converted(IdentityParser sut)
+        {
+            Assert.That(sut.Parse(typeof(Cat), "Nope"), Is.Null);
+        }
     }
 }

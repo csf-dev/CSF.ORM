@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSF.Entities.Tests.Stubs
+namespace CSF.Entities.Stubs
 {
     /// <summary>
     /// This entity type mimicks an NHibernate proxy (in that it will throw an exception from all virtual methods except the primary key value property).

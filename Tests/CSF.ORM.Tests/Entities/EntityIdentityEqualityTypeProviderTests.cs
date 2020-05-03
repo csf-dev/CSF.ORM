@@ -25,9 +25,10 @@
 // THE SOFTWARE.
 
 using NUnit.Framework;
-using CSF.Entities.Tests.Stubs;
+using CSF.Entities.Stubs;
+using CSF.Entities;
 
-namespace CSF.Entities.Tests
+namespace CSF.ORM.Entities
 {
     [TestFixture,Parallelizable]
     public class EntityIdentityEqualityTypeProviderTests

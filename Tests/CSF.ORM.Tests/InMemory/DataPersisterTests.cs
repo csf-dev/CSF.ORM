@@ -25,11 +25,10 @@
 // THE SOFTWARE.
 
 using AutoFixture.NUnit3;
-using CSF.ORM.InMemory;
-using CSF.ORM.Tests.Stubs;
+using CSF.ORM.Stubs;
 using NUnit.Framework;
 
-namespace CSF.ORM.Tests.InMemory
+namespace CSF.ORM.InMemory
 {
     [TestFixture,Parallelizable]
     public class DataPersisterTests

@@ -24,10 +24,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using CSF.Entities.Tests.Stubs;
+using CSF.Entities.Stubs;
+using CSF.Entities;
 using NUnit.Framework;
 
-namespace CSF.Entities.Tests
+namespace CSF.ORM.Entities
 {
     [TestFixture,Parallelizable]
     public class EntityIdentityEqualityComparerTests
