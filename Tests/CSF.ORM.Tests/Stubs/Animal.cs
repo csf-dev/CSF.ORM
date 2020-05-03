@@ -24,7 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace CSF.ORM.Tests.Stubs
+namespace CSF.ORM.Stubs
 {
   public class Animal
   {

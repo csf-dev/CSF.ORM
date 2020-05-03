@@ -8,7 +8,7 @@ using Test.CSF.ORM.NHibernate.Models;
 using Test.CSF.ORM.NHibernate.Entities;
 using CSF.ORM.InMemory;
 
-namespace Test.CSF.ORM.NHibernate
+namespace CSF.ORM
 {
     [TestFixture, Description("Tests the QueryableExtensions, using an in-memory query API"), Parallelizable(ParallelScope.Children)]
     public class QueryableExtensionsTests

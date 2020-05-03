@@ -25,12 +25,11 @@
 // THE SOFTWARE.
 
 using NUnit.Framework;
-using CSF.ORM.Tests.Stubs;
-using CSF.ORM.InMemory;
 using System.Linq;
 using AutoFixture.NUnit3;
+using CSF.ORM.Stubs;
 
-namespace CSF.ORM.Tests.InMemory
+namespace CSF.ORM.InMemory
 {
     [TestFixture, Parallelizable]
     public class DataQueryTests
