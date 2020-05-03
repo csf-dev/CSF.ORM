@@ -4,291 +4,36 @@ using CSF.Entities;
 
 namespace CSF.ORM.Entities
 {
-    [TestFixture]
-  public class EntityTests
-  {
-    #region tests
-
-    [Test]
-    public void GetHashCode_returns_identity_hash_code()
+    [TestFixture,Parallelizable]
+    public class EntityTests
     {
-      // Arrange
-      var identity = 10;
-      var entity = new Person() { Identity = identity };
+        [Test, AutoMoqData]
+        public void ToString_returns_string_in_correct_format_for_entity_which_has_identity()
+        {
+            var entity = new Person { Identity = 10 };
+            Assert.That(() => entity.ToString(), Is.EqualTo("[Person#10]"));
+        }
 
-      // Act
-      var result = entity.GetHashCode();
+        [Test, AutoMoqData]
+        public void ToString_returns_string_in_correct_format_for_entity_which_has_no_identity()
+        {
+            var entity = new Person();
+            Assert.That(() => entity.ToString(), Is.EqualTo("[Person#(no identity)]"));
+        }
 
-      // Assert
-      Assert.AreEqual(identity.GetHashCode(), result);
+        [Test, AutoMoqData]
+        public void HasIdentity_returns_correct_result_for_entity_with_identity()
+        {
+            var entity = new Person { Identity = 10 };
+            Assert.That(() => ((IEntity) entity).HasIdentity, Is.True);
+        }
+
+        [Test, AutoMoqData]
+        public void HasIdentity_returns_correct_result_for_entity_without_identity()
+        {
+            var entity = new Person();
+            Assert.That(() => ((IEntity)entity).HasIdentity, Is.False);
+        }
     }
-
-    [Test]
-    public void GetHashCode_does_not_change_after_resetting_identity()
-    {
-      // Arrange
-      var entity = new Person() { Identity = 5 };
-
-      // Act
-      var result1 = entity.GetHashCode();
-      entity.Identity = 10;
-      var result2 = entity.GetHashCode();
-
-      // Assert
-      Assert.AreEqual(result1, result2);
-    }
-
-    [Test]
-    public void GetHashCode_does_not_change_after_setting_identity()
-    {
-      // Arrange
-      var entity = new Person();
-
-      // Act
-      var result1 = entity.GetHashCode();
-      entity.Identity = 10;
-      var result2 = entity.GetHashCode();
-
-      // Assert
-      Assert.AreEqual(result1, result2);
-    }
-
-    [Test]
-    public void ToString_returns_identity()
-    {
-      // Arrange
-      var entity = new Person() { Identity = 10 };
-
-      // Act
-      var result = entity.ToString();
-
-      // Assert
-      Assert.AreEqual("[Person#10]", result);
-    }
-
-    [Test]
-    public void ToString_uses_actual_entity_type()
-    {
-      // Arrange
-      var entity = new Employee() { Identity = 10 };
-
-      // Act
-      var result = entity.ToString();
-
-      // Assert
-      Assert.AreEqual("[Employee#10]", result);
-    }
-
-    [Test]
-    public void ToString_returns_no_identity()
-    {
-      // Arrange
-      var entity = new Person();
-
-      // Act
-      var result = entity.ToString();
-
-      // Assert
-      Assert.AreEqual("[Person#(no identity)]", result);
-    }
-
-    [Test]
-    public void Equals_returns_true_for_reference_equality()
-    {
-      // Arrange
-      var entity = new Person();
-
-      // Act
-      var result = entity.Equals(entity);
-
-      // Assert
-      Assert.IsTrue(result);
-    }
-
-    [Test]
-    public void Equals_returns_false_for_identity_equality()
-    {
-      // Arrange
-      var entity1 = new Person() {Identity = 5};
-      var entity2 = new Person() {Identity = 5};
-
-      // Act
-      var result = entity1.Equals(entity2);
-
-      // Assert
-      Assert.IsFalse(result);
-    }
-
-    [Test]
-    public void GetIdentityType_returns_correct_value()
-    {
-      // Arrange
-      IEntity entity = new Person();
-
-      // Act
-      var result = entity.GetIdentityType();
-
-      // Assert
-      Assert.AreEqual(typeof(int), result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_true_for_reference_equal_entities()
-    {
-      // Arrange
-      var person = new Person() {
-        Identity = 5
-      };
-
-      // Act
-      var result = person.IdentityEquals(person);
-
-      // Assert
-      Assert.IsTrue(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_true_for_identity_equal_entities()
-    {
-      // Arrange
-      var personOne = new Person() {
-        Identity = 5
-      };
-      var personTwo = new Person() {
-        Identity = 5
-      };
-
-      // Act
-      var result = personOne.IdentityEquals(personTwo);
-
-      // Assert
-      Assert.IsTrue(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_true_for_identity_equal_entities_of_different_types_when_decorated_with_BaseType()
-    {
-      // Arrange
-      var personOne = new Person() {
-        Identity = 5
-      };
-      var personTwo = new Customer() {
-        Identity = 5
-      };
-
-      // Act
-      var result = personOne.IdentityEquals(personTwo);
-
-      // Assert
-      Assert.IsTrue(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_false_for_incompatible_entity_types_when_decorated_with_BaseType()
-    {
-      // Arrange
-      var personOne = new Person() {
-        Identity = 5
-      };
-      var personTwo = new Animal() {
-        Identity = 5
-      };
-
-      // Act
-      var result = personOne.IdentityEquals(personTwo);
-
-      // Assert
-      Assert.IsFalse(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_false_for_different_identity_values()
-    {
-      // Arrange
-      var personOne = new Person() {
-        Identity = 5
-      };
-      var personTwo = new Person() {
-        Identity = 6
-      };
-
-      // Act
-      var result = personOne.IdentityEquals(personTwo);
-
-      // Assert
-      Assert.IsFalse(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_false_for_comparing_null()
-    {
-      // Arrange
-      var personOne = new Person() {
-        Identity = 5
-      };
-
-      // Act
-      var result = personOne.IdentityEquals(null);
-
-      // Assert
-      Assert.IsFalse(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_true_for_identity_equal_entities_not_decorated_with_BaseType()
-    {
-      // Arrange
-      var animalOne = new Animal() {
-        Identity = 5
-      };
-      var animalTwo = new Animal() {
-        Identity = 5
-      };
-
-      // Act
-      var result = animalOne.IdentityEquals(animalTwo);
-
-      // Assert
-      Assert.IsTrue(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_true_for_identity_equal_entities_of_different_types_not_decorated_with_BaseType()
-    {
-      // Arrange
-      var animalOne = new Animal() {
-        Identity = 5
-      };
-      var animalTwo = new Cat() {
-        Identity = 5
-      };
-
-      // Act
-      var result = animalOne.IdentityEquals(animalTwo);
-
-      // Assert
-      Assert.IsTrue(result);
-    }
-
-    [Test]
-    public void IdentityEquals_returns_false_for_incompatible_entity_types_not_decorated_with_BaseType()
-    {
-      // Arrange
-      var animalOne = new Animal() {
-        Identity = 5
-      };
-      var personOne = new Person() {
-        Identity = 5
-      };
-
-      // Act
-      var result = animalOne.IdentityEquals(personOne);
-
-      // Assert
-      Assert.IsFalse(result);
-    }
-
-    #endregion
-  }
 }
 

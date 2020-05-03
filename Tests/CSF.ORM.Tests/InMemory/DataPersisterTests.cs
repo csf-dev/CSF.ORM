@@ -36,7 +36,7 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Add_adds_item_to_store([Frozen] DataStore store,
                                            DataPersister sut,
-                                           Person item,
+                                           [NoRecursion] Person item,
                                            long identity)
         {
             sut.Add(item, identity);
@@ -48,7 +48,7 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Add_adds_item_to_store_using_actual_type_not_generic_type([Frozen] DataStore store,
                                                                               DataPersister sut,
-                                                                      Employee item,
+                                                                      [NoRecursion] Employee item,
                                                                               long identity)
         {
             sut.Add((Person) item, identity);
@@ -60,7 +60,7 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Addding_the_same_item_twice_does_not_create_a_duplicate([Frozen] DataStore store,
                                                                             DataPersister sut,
-                                                                    Person item,
+                                                                    [NoRecursion] Person item,
                                                                             long identity)
         {
             sut.Add(item, identity);
@@ -71,8 +71,8 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void BulkAdd_may_add_more_than_one_item([Frozen] DataStore store,
                                                        DataPersister sut,
-                                               Person item1,
-                                                       Person item2)
+                                               [NoRecursion] Person item1,
+                                                       [NoRecursion] Person item2)
         {
             sut.BulkAdd(new[] { item1, item2 }, x => x.Identity);
             Assert.That(store.Items, Has.Count.EqualTo(2));
@@ -81,7 +81,7 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Delete_removes_an_added_item([Frozen] DataStore store,
                                                  DataPersister sut,
-                                         Person item,
+                                         [NoRecursion] Person item,
                                                  long identity)
         {
             store.Items.Add(new DataItem(typeof(Person), identity, item));

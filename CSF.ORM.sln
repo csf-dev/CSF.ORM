@@ -38,8 +38,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate.Common",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate5.Tests", "Tests\CSF.ORM.NHibernate5.Tests\CSF.ORM.NHibernate5.Tests.csproj", "{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.CommonTestLogic", "Tests\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj", "{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_SingleTarget|Any CPU = Debug_SingleTarget|Any CPU
@@ -119,12 +117,6 @@ Global
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug_SingleTarget|Any CPU.ActiveCfg = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug_SingleTarget|Any CPU.Build.0 = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,7 +128,6 @@ Global
 		{059AB2A6-2BD3-40F0-B320-7586FA93C4B0} = {0C6BAB9E-894E-4BC5-9017-05DC854F9BDC}
 		{F44DE9F1-0639-4F9E-9D7C-3ABD5A2DE8B5} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCAF1786-9B77-4180-BDE8-D63DDA7F5531}

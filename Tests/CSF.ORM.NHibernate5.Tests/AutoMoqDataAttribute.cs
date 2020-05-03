@@ -1,10 +1,10 @@
 ﻿//
-// AssemblyInfo.cs
+// AutoMoqDataAttribute.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2020 Craig Fowler
+// Copyright (c) 2017 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,4 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-[assembly: NUnit.Framework.NonTestAssembly]
+using AutoFixture;
+using AutoFixture.AutoMoq;
+using AutoFixture.NUnit3;
+
+namespace CSF
+{
+  public class AutoMoqDataAttribute : AutoDataAttribute
+  {
+    public AutoMoqDataAttribute() : base(() => new Fixture().Customize(new AutoMoqCustomization()))
+    {
+    }
+  }
+}

@@ -2,7 +2,7 @@
 using System.Reflection;
 using AutoFixture;
 
-namespace CSF.PersistenceTester
+namespace CSF
 {
     public class NoRecursionAttribute : AutoFixture.NUnit3.CustomizeAttribute
     {

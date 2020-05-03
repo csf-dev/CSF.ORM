@@ -47,7 +47,6 @@
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
     <ProjectReference Include="..\..\CSF.ORM.NHibernate5\CSF.ORM.NHibernate5.csproj" />
     <ProjectReference Include="..\..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
-    <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

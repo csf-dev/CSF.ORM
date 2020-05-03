@@ -37,8 +37,8 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Query_gets_queryable_of_items_of_correct_type([Frozen] DataStore store,
                                                                   DataQuery sut,
-                                                                  Person item1,
-                                                                  Person item2)
+                                                                  [NoRecursion] Person item1,
+                                                                  [NoRecursion] Person item2)
         {
             AddToStore(store, item1);
             AddToStore(store, item2);
@@ -49,10 +49,10 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Query_does_not_include_items_of_other_types([Frozen] DataStore store,
                                                                 DataQuery sut,
-                                                                Person item1,
-                                                                Person item2,
-                                                                Animal animal1,
-                                                                Animal animal2)
+                                                                [NoRecursion] Person item1,
+                                                                [NoRecursion] Person item2,
+                                                                [NoRecursion] Animal animal1,
+                                                                [NoRecursion] Animal animal2)
         {
             AddToStore(store, item1);
             AddToStore(store, item2);
@@ -65,8 +65,8 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Get_retrieves_correct_item([Frozen] DataStore store,
                                                DataQuery sut,
-                                               Person item1,
-                                               Person item2)
+                                               [NoRecursion] Person item1,
+                                               [NoRecursion] Person item2)
         {
             AddToStore(store, item1);
             AddToStore(store, item2);
@@ -77,8 +77,8 @@ namespace CSF.ORM.InMemory
         [Test, AutoMoqData]
         public void Theorise_retrieves_correct_item_if_it_exists([Frozen] DataStore store,
                                                                  DataQuery sut,
-                                                                 Person item1,
-                                                                 Person item2)
+                                                                [NoRecursion] Person item1,
+                                                                 [NoRecursion] Person item2)
         {
             AddToStore(store, item1);
             AddToStore(store, item2);

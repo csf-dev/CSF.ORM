@@ -46,7 +46,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NUnit\CSF.PersistenceTester.NUnit.csproj" />
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
-    <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
     <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" />
   </ItemGroup>

@@ -40,18 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
-    <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
     <ProjectReference Include="..\..\CSF.ORM.Entities\CSF.ORM.Entities.csproj" />
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="AutoMoqDataAttribute.cs" />
-    <Compile Remove="QueryableExtensionsTests.cs" />
-    <Compile Remove="Entities\EntityTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="QueryableExtensionsTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
-    <None Include="Entities\EntityTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>
