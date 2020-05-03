@@ -21,6 +21,7 @@
     <Folder Include="Stubs\" />
     <Folder Include="InMemory\" />
     <Folder Include="Entities\" />
+    <Folder Include="Entities\Stubs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.11.0" />
@@ -45,8 +46,10 @@
   <ItemGroup>
     <Compile Remove="AutoMoqDataAttribute.cs" />
     <Compile Remove="QueryableExtensionsTests.cs" />
+    <Compile Remove="Entities\EntityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="QueryableExtensionsTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <None Include="Entities\EntityTests.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

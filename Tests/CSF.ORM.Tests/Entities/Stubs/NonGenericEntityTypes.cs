@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSF.Entities.Tests.Stubs
+namespace CSF.Entities.Stubs
 {
     public class NonGenericEntityType : IEntity
     {

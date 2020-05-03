@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using CSF.Entities.Tests.Stubs;
+using CSF.Entities.Stubs;
 using CSF.Entities;
 
-namespace Test.CSF.Entities
+namespace CSF.ORM.Entities
 {
-  [TestFixture]
+    [TestFixture]
   public class EntityTests
   {
     #region tests

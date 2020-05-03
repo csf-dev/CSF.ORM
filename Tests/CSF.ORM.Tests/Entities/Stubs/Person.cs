@@ -1,6 +1,6 @@
-﻿namespace CSF.Entities.Tests.Stubs
+﻿namespace CSF.Entities.Stubs
 {
-  public class Person : Entity<int>
+    public class Person : Entity<int>
   {
     public virtual int Identity
     {
