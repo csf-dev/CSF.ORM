@@ -22,6 +22,7 @@
     <Folder Include="InMemory\" />
     <Folder Include="Entities\" />
     <Folder Include="Entities\Stubs\" />
+    <Folder Include="PersistenceTester\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.11.0" />
@@ -42,6 +43,7 @@
     <ProjectReference Include="..\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj" />
     <ProjectReference Include="..\..\CSF.ORM.Entities\CSF.ORM.Entities.csproj" />
     <ProjectReference Include="..\..\CSF.Entities\CSF.Entities.csproj" />
+    <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="AutoMoqDataAttribute.cs" />

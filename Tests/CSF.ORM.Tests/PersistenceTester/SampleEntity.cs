@@ -1,4 +1,4 @@
-﻿namespace CSF.PersistenceTester.Tests
+﻿namespace CSF.PersistenceTester
 {
     public class SampleEntity
     {

@@ -5,7 +5,7 @@ using CSF.PersistenceTester.Impl;
 using Moq;
 using NUnit.Framework;
 
-namespace CSF.PersistenceTester.Tests.Impl
+namespace CSF.PersistenceTester
 {
     [TestFixture,Parallelizable]
     public class PersistenceTesterTests
