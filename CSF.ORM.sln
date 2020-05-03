@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Entities", "CSF.Entitie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSF.ORM.Tests", "Tests\CSF.ORM.Tests\CSF.ORM.Tests.csproj", "{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.Tests", "Tests\CSF.ORM.Tests\CSF.ORM.Tests.csproj", "{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{671772C1-0FCB-4B27-846D-329CBA7A1845}"
 	ProjectSection(SolutionItems) = preProject
@@ -146,6 +146,6 @@ Global
 		$0.NameConventionPolicy = $4
 		$4.Rules = $5
 		$5.NamingRule = $25
-		version = 2.0.2
+		version = 2.0.3
 	EndGlobalSection
 EndGlobal
