@@ -63,11 +63,20 @@ namespace CSF.Entities
                 throw new ArgumentNullException(nameof(identityType));
             if (Equals(identityValue, GetDefaultValue(identityType)))
                 return null;
-            if (!identityType.IsInstanceOfType(identityValue))
-                throw new ArgumentException(String.Format(Resources.ExceptionMessages.InvalidIdentityType, identityType.Name, identityValue.GetType()), nameof(identityValue));
+
+            object convertedValue;
+            try
+            {
+                convertedValue = Convert.ChangeType(identityValue, identityType);
+            }
+            catch (Exception e)
+            {
+                var message = String.Format(Resources.ExceptionMessages.InvalidIdentityType, identityType.Name, identityValue.GetType());
+                throw new ArgumentException(message, nameof(identityValue), e);
+            }
 
             var closedIdentityType = typeof(Identity<,>).MakeGenericType(identityType, entityType);
-            return (IIdentity)Activator.CreateInstance(closedIdentityType, new[] { identityValue });
+            return (IIdentity)Activator.CreateInstance(closedIdentityType, new[] { convertedValue });
         }
 
         object GetDefaultValue(Type identityType)

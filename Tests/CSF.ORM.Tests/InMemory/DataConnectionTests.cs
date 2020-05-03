@@ -27,7 +27,7 @@ using System;
 using CSF.ORM.InMemory;
 using NUnit.Framework;
 
-namespace CSF.ORM.Tests.InMemory
+namespace CSF.ORM.InMemory
 {
     [TestFixture,Parallelizable]
     public class DataConnectionTests

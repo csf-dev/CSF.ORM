@@ -63,7 +63,7 @@ namespace CSF.ORM.InMemory
             {
                 store.SyncRoot.EnterReadLock();
 
-                var actualObject = Get<TQueried>(identityValue);
+                var actualObject = GetLocked<TQueried>(identityValue);
                 if (actualObject != null) return actualObject;
 
                 try
@@ -100,12 +100,7 @@ namespace CSF.ORM.InMemory
             try
             {
                 store.SyncRoot.EnterReadLock();
-
-                return GetItemsOfType<TQueried>()
-                  .Where(x => identityValue.Equals(x.Identity))
-                  .Select(x => x.Value)
-                  .Cast<TQueried>()
-                  .FirstOrDefault();
+                return GetLocked<TQueried>(identityValue);
             }
             finally
             {
@@ -172,6 +167,15 @@ namespace CSF.ORM.InMemory
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public Task<TQueried> GetAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
             => Task.Run(() => Get<TQueried>(identityValue), token);
+
+        TQueried GetLocked<TQueried>(object identityValue) where TQueried : class
+        {
+            return GetItemsOfType<TQueried>()
+              .Where(x => identityValue.Equals(x.Identity))
+              .Select(x => x.Value)
+              .Cast<TQueried>()
+              .FirstOrDefault();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemory.DataQuery"/> class.

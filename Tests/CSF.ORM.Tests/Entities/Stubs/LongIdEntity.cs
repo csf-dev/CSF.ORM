@@ -1,10 +1,10 @@
 ﻿//
-// Animal.cs
+// LongIdEntity.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-namespace CSF.ORM.Stubs
+using System;
+namespace CSF.Entities.Stubs
 {
-  public class Animal
-  {
-    public long Identity
+    public class LongIdEntity : Entity<long>
     {
-      get;
-      set;
-    }
-
-    public string Name
-    {
-      get;
-      set;
-    }
-
-        public Person Owner { get; set; }
     }
 }

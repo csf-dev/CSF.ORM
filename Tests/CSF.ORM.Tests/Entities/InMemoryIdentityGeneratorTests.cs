@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 using System;
 using AutoFixture.NUnit3;
-using CSF.ORM.Tests.Stubs;
+using CSF.ORM.Stubs;
 using Moq;
 using NUnit.Framework;
 
-namespace CSF.ORM.Tests.Entities
+namespace CSF.ORM.Entities
 {
     [TestFixture, Parallelizable]
     public class InMemoryIdentityGeneratorTests

@@ -24,21 +24,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace CSF.ORM.Tests.Stubs
-{
-  public class Person
-  {
-    public long Identity
-    {
-      get;
-      set;
-    }
+using System.Collections.Generic;
 
-    public string Name
+namespace CSF.ORM.Stubs
+{
+    public class Person
     {
-      get;
-      set;
+        public long Identity
+        {
+            get;
+            set;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public ICollection<Animal> Pets { get; set; }
     }
-  }
 }
 

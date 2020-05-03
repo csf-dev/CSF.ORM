@@ -9,13 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Entities", "CSF.Entitie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.Entities.Tests", "Tests\CSF.Entities.Tests\CSF.Entities.Tests.csproj", "{45C0A71D-3FF3-46B1-8632-BC24431CD80C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSF.ORM.Tests", "Tests\CSF.ORM.Tests\CSF.ORM.Tests.csproj", "{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.Tests", "Tests\CSF.ORM.Tests\CSF.ORM.Tests.csproj", "{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{671772C1-0FCB-4B27-846D-329CBA7A1845}"
 	ProjectSection(SolutionItems) = preProject
 		Tools\EnableNet45BuildOnUnix.targets = Tools\EnableNet45BuildOnUnix.targets
+		.appveyor.yml = .appveyor.yml
+		.travis.yml = .travis.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.Entities", "CSF.ORM.Entities\CSF.ORM.Entities.csproj", "{3EF001E2-A559-42DB-A2DB-1A8629E7486D}"
@@ -32,15 +32,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.PersistenceTester.NUnit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.PersistenceTester.IntegrationTests", "Tests\CSF.PersistenceTester.IntegrationTests\CSF.PersistenceTester.IntegrationTests.csproj", "{F44DE9F1-0639-4F9E-9D7C-3ABD5A2DE8B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.PersistenceTester.Tests", "Tests\CSF.PersistenceTester.Tests\CSF.PersistenceTester.Tests.csproj", "{BAC44195-487E-4066-B279-8D2B3AF27B9C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate5", "CSF.ORM.NHibernate5\CSF.ORM.NHibernate5.csproj", "{CE7B7310-F6FE-4F51-9E6D-CE7F4C9044D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate.Common", "CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj", "{BE566E44-E148-43B5-9BAD-D49BBE2DC119}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.ORM.NHibernate5.Tests", "Tests\CSF.ORM.NHibernate5.Tests\CSF.ORM.NHibernate5.Tests.csproj", "{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSF.CommonTestLogic", "Tests\CSF.CommonTestLogic\CSF.CommonTestLogic.csproj", "{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,12 +57,6 @@ Global
 		{2EE2F785-5655-432E-9726-41349A4FA958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EE2F785-5655-432E-9726-41349A4FA958}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EE2F785-5655-432E-9726-41349A4FA958}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Debug_SingleTarget|Any CPU.ActiveCfg = Debug|Any CPU
-		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Debug_SingleTarget|Any CPU.Build.0 = Debug|Any CPU
-		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45C0A71D-3FF3-46B1-8632-BC24431CD80C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8}.Debug_SingleTarget|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8}.Debug_SingleTarget|Any CPU.Build.0 = Debug|Any CPU
 		{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -109,12 +99,6 @@ Global
 		{F44DE9F1-0639-4F9E-9D7C-3ABD5A2DE8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F44DE9F1-0639-4F9E-9D7C-3ABD5A2DE8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F44DE9F1-0639-4F9E-9D7C-3ABD5A2DE8B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAC44195-487E-4066-B279-8D2B3AF27B9C}.Debug_SingleTarget|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAC44195-487E-4066-B279-8D2B3AF27B9C}.Debug_SingleTarget|Any CPU.Build.0 = Debug|Any CPU
-		{BAC44195-487E-4066-B279-8D2B3AF27B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAC44195-487E-4066-B279-8D2B3AF27B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAC44195-487E-4066-B279-8D2B3AF27B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAC44195-487E-4066-B279-8D2B3AF27B9C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CE7B7310-F6FE-4F51-9E6D-CE7F4C9044D5}.Debug_SingleTarget|Any CPU.ActiveCfg = Debug_SingleTarget|Any CPU
 		{CE7B7310-F6FE-4F51-9E6D-CE7F4C9044D5}.Debug_SingleTarget|Any CPU.Build.0 = Debug_SingleTarget|Any CPU
 		{CE7B7310-F6FE-4F51-9E6D-CE7F4C9044D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -133,26 +117,17 @@ Global
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug_SingleTarget|Any CPU.ActiveCfg = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug_SingleTarget|Any CPU.Build.0 = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{45C0A71D-3FF3-46B1-8632-BC24431CD80C} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
 		{E9B42CB3-1B7A-4DD8-8A70-0A1BAD0A71B8} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
 		{11DCF35A-6E2A-4C62-B536-14B83FF5AE07} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
 		{B9340BCF-E5D4-4CEF-A000-010DE433CFEB} = {0C6BAB9E-894E-4BC5-9017-05DC854F9BDC}
 		{059AB2A6-2BD3-40F0-B320-7586FA93C4B0} = {0C6BAB9E-894E-4BC5-9017-05DC854F9BDC}
 		{F44DE9F1-0639-4F9E-9D7C-3ABD5A2DE8B5} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
-		{BAC44195-487E-4066-B279-8D2B3AF27B9C} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
 		{0E45EB59-88B8-42C6-BAC3-0F3D2DA8E5EE} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
-		{14F89C9C-7FA5-40FF-904D-6F7C46E73B39} = {CB5A2AFE-77C4-4EEA-9A86-A77C8BD7715B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCAF1786-9B77-4180-BDE8-D63DDA7F5531}
@@ -171,6 +146,6 @@ Global
 		$0.NameConventionPolicy = $4
 		$4.Rules = $5
 		$5.NamingRule = $25
-		version = 2.0.2
+		version = 2.0.3
 	EndGlobalSection
 EndGlobal

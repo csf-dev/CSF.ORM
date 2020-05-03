@@ -31,7 +31,6 @@ namespace CSF.Entities
     /// </summary>
     public class IdentityParser : IParsesIdentity
     {
-        static readonly IGetsIdentityType identityTypeProvider = new IdentityTypeProvider();
         static readonly ICreatesIdentity identityFactory = new IdentityFactory();
 
         /// <summary>
@@ -42,22 +41,15 @@ namespace CSF.Entities
         /// <param name="value">The identity value.</param>
         public IIdentity Parse(Type entityType, object value)
         {
-            if (entityType == null)
-                throw new ArgumentNullException(nameof(entityType));
-            if (value == null)
-                return null;
-
-            var identityType = identityTypeProvider.GetIdentityType(entityType);
-            if (identityType == null) return null;
-
-            object convertedValue;
             try
             {
-                convertedValue = Convert.ChangeType(value, identityType);
+                return identityFactory.Create(entityType, value);
             }
-            catch(Exception) { return null; }
-
-            return identityFactory.Create(entityType, identityType, convertedValue);
+            catch(ArgumentException e)
+            {
+                if (e.ParamName == "identityValue") return null;
+                throw;
+            }
         }
     }
 }

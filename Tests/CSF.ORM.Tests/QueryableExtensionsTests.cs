@@ -1,225 +1,116 @@
-﻿using System;
-using NUnit.Framework;
-using Moq;
-using CSF.ORM;
+﻿using NUnit.Framework;
 using System.Linq;
-using AutoFixture;
-using Test.CSF.ORM.NHibernate.Models;
-using Test.CSF.ORM.NHibernate.Entities;
 using CSF.ORM.InMemory;
+using CSF.ORM.Stubs;
 
-namespace Test.CSF.ORM.NHibernate
+namespace CSF.ORM
 {
-    [TestFixture, Description("Tests the QueryableExtensions, using an in-memory query API"), Parallelizable(ParallelScope.Children)]
+    [TestFixture, Parallelizable(ParallelScope.Children)]
     public class QueryableExtensionsTests
     {
-        #region fields
-
-        private IFixture _autoFixture;
-        private IQuery _query;
-
-        #endregion
-
-        #region setup
-
-        [SetUp]
-        public void Setup()
+        [OneTimeSetUp]
+        public void OneTimeSetup()
         {
-            _autoFixture = new Fixture();
-            var query = new InMemoryQuery();
-
-            query.Add(_autoFixture.CreateMany<string>(), x => x);
-            query.Add(new Customer[0], x => x.Identity);
-
-            var queryModel = new NHibernateQueryingModel();
-
-            var stores = queryModel.CreateStores();
-            var items = queryModel.CreateInventoryItems(stores[0]);
-
-            query.Add(stores, x => x.Identity);
-            query.Add(items, x => x.Identity);
-
-            _query = query;
-
             QueryableExtensions.EagerFetchingProvider = new NoOpEagerFetcher();
             QueryableExtensions.LazyQueryingProvider = new NoOpLazyResultProvider();
             QueryableExtensions.AsyncQueryingProvider = new SynchronousAsyncQueryProvider();
         }
 
-        #endregion
-
-        #region tests
-
-        [Test]
-        public void FetchMany_does_not_raise_exception()
+        [Test,AutoMoqData]
+        public void FetchChildren_does_not_raise_exception(DataQuery queryProvider)
         {
-            // Arrange
-            var query = (from store in _query.Query<Store>()
+            var query = (from store in queryProvider.Query<Person>()
                          select store)
-              .FetchMany(x => x.Inventory);
+              .FetchChildren(x => x.Pets);
 
-            // Act & Assert
-            Assert.DoesNotThrow(() => query.ToList());
+            Assert.That(() => query.ToList(), Throws.Nothing);
         }
 
-        [Test]
-        public void FetchMany_returns_non_null_result()
+        [Test, AutoMoqData]
+        public void FetchChildren_returns_non_null_result(DataQuery queryProvider)
         {
-            // Arrange
-            var query = (from store in _query.Query<Store>()
+            var query = (from store in queryProvider.Query<Person>()
                          select store)
-              .FetchMany(x => x.Inventory);
+              .FetchChildren(x => x.Pets);
 
-            // Act & Assert
-            Assert.NotNull(query.ToList());
+            Assert.That(() => query.ToList(), Is.Not.Null);
         }
 
-        [Test]
-        public void Fetch_does_not_raise_exception()
+        [Test, AutoMoqData]
+        public void FetchChild_does_not_raise_exception(DataQuery queryProvider)
         {
-            // Arrange
-            var query = (from store in _query.Query<InventoryItem>()
+            var query = (from store in queryProvider.Query<Animal>()
                          select store)
-              .Fetch(x => x.Product);
+              .FetchChild(x => x.Owner);
 
-            // Act & Assert
-            Assert.DoesNotThrow(() => query.FirstOrDefault());
+            Assert.That(() => query.ToList(), Is.Not.Null);
         }
 
-        [Test]
-        public void Fetch_returns_non_null_result()
+        [Test, AutoMoqData]
+        public void FetchChild_returns_non_null_result(DataQuery queryProvider)
         {
-            // Arrange
-            var query = (from store in _query.Query<InventoryItem>()
+            var query = (from store in queryProvider.Query<Animal>()
                          select store)
-              .Fetch(x => x.Product);
+              .FetchChild(x => x.Owner);
 
-            // Act & Assert
-            Assert.NotNull(query.FirstOrDefault());
+            Assert.That(() => query.ToList(), Throws.Nothing);
         }
 
-        [Test]
-        public void FetchManyThenFetch_does_not_raise_exception()
+        [Test, AutoMoqData]
+        public void ToLazy_does_not_raise_exception(DataQuery queryProvider)
         {
-            // Arrange
-            var query = (from store in _query.Query<Store>()
+            var query1 = (from store in queryProvider.Query<Animal>()
                          select store)
-              .FetchMany(x => x.Inventory)
-              .ThenFetch(x => x.Product);
+              .ToLazy();
+            var query2 = (from store in queryProvider.Query<Person>()
+                         select store)
+              .ToLazy();
 
-            // Act & Assert
-            Assert.DoesNotThrow(() => query.ToList());
+            Assert.That(() => query2.Value, Throws.Nothing, "Query 2");
+            Assert.That(() => query1.Value, Throws.Nothing, "Query 1");
         }
 
-        [Test]
-        public void FetchManyThenFetch_returns_non_null_result()
+        [Test, AutoMoqData]
+        public void ToLazy_returns_non_null_result(DataQuery queryProvider)
         {
-            // Arrange
-            var query = (from store in _query.Query<Store>()
-                         select store)
-              .FetchMany(x => x.Inventory)
-              .ThenFetch(x => x.Product);
-
-            // Act & Assert
-            Assert.NotNull(query.ToList());
-        }
-
-        [Test]
-        public void FetchManyThenFetchMany_does_not_raise_exception()
-        {
-            // Arrange
-            var query = (from store in _query.Query<Store>()
-                         select store)
-              .FetchMany(x => x.Inventory)
-              .ThenFetchMany(x => x.Batches);
-
-            // Act & Assert
-            Assert.DoesNotThrow(() => query.ToList());
-        }
-
-        [Test]
-        public void FetchManyThenFetchMany_returns_non_null_result()
-        {
-            // Arrange
-            var query = (from store in _query.Query<Store>()
-                         select store)
-              .FetchMany(x => x.Inventory)
-              .ThenFetchMany(x => x.Batches);
-
-            // Act & Assert
-            Assert.NotNull(query.ToList());
-        }
-
-        [Test]
-        public void ToFuture_does_not_raise_exception()
-        {
-            // Arrange
-            var query1 = (from store in _query.Query<Store>()
+            var query1 = (from store in queryProvider.Query<Animal>()
                           select store)
-              .ToFuture();
-            var query2 = (from item in _query.Query<InventoryItem>()
-                          select item)
-              .ToFuture();
-
-            // Act & Assert
-            Assert.DoesNotThrow(() => query2.ToList(), "Query 2");
-            Assert.DoesNotThrow(() => query1.ToList(), "Query 1");
-        }
-
-        [Test]
-        public void ToFuture_returns_non_null_results()
-        {
-            // Arrange
-            var query1 = (from store in _query.Query<Store>()
+              .ToLazy();
+            var query2 = (from store in queryProvider.Query<Person>()
                           select store)
-              .ToFuture();
-            var query2 = (from item in _query.Query<InventoryItem>()
-                          select item)
-              .ToFuture();
+              .ToLazy();
 
-            // Act & Assert
-            Assert.AreEqual(9, query2.Count(), "Count of inventory items");
-            Assert.AreEqual(3, query1.Count(), "Count of stores");
+            Assert.That(() => query2.Value, Is.Not.Null, "Query 2");
+            Assert.That(() => query1.Value, Is.Not.Null, "Query 1");
         }
 
-        [Test]
-        public void ToFutureValue_does_not_raise_exception()
+        [Test, AutoMoqData]
+        public void ToLazyValue_does_not_raise_exception(DataQuery queryProvider)
         {
-            // Arrange
-            var query1 = (from store in _query.Query<Store>()
-                          from item in store.Inventory
-                          where item != null
-                          select store.Name)
-              .ToFutureValue();
-            var query2 = (from item in _query.Query<InventoryItem>()
-                          select item.Quantity)
-              .ToFutureValue();
+            var query1 = (from store in queryProvider.Query<Animal>()
+                          select store)
+              .ToLazyValue(x => x.Count());
+            var query2 = (from store in queryProvider.Query<Person>()
+                          select store)
+              .ToLazyValue(x => x.Any());
 
-            // Act & Assert
-            Assert.DoesNotThrow(() => { var foo = query2.Value; }, "Query 2");
-            Assert.DoesNotThrow(() => { var foo = query1.Value; }, "Query 1");
+            Assert.That(() => query2.Value, Throws.Nothing, "Query 2");
+            Assert.That(() => query1.Value, Throws.Nothing, "Query 1");
         }
 
-        [Test]
-        public void ToFutureValue_returns_non_null_results()
+        [Test, AutoMoqData]
+        public void ToLazyValue_returns_non_null_result(DataQuery queryProvider)
         {
-            // Arrange
-            var query1 = (from store in _query.Query<Store>()
-                          from item in store.Inventory
-                          where item != null
-                          select store.Name)
-              .ToFutureValue();
-            var query2 = (from item in _query.Query<InventoryItem>()
-                          select item.Quantity)
-              .ToFutureValue();
+            var query1 = (from store in queryProvider.Query<Animal>()
+                          select store)
+              .ToLazyValue(x => x.Count());
+            var query2 = (from store in queryProvider.Query<Person>()
+                          select store)
+              .ToLazyValue(x => x.Any());
 
-            // Act & Assert
-            Assert.NotNull(query2.Value, "First product price");
-            Assert.NotNull(query1.Value, "Store name");
+            Assert.That(() => query2.Value, Is.Not.Null, "Query 2");
+            Assert.That(() => query1.Value, Is.Not.Null, "Query 1");
         }
-
-
-        #endregion
     }
 }
 

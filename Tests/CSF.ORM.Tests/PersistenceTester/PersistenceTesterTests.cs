@@ -1,0 +1,200 @@
+﻿using System;
+using AutoFixture.NUnit3;
+using CSF.ORM;
+using CSF.PersistenceTester.Impl;
+using Moq;
+using NUnit.Framework;
+
+namespace CSF.PersistenceTester
+{
+    [TestFixture,Parallelizable]
+    public class PersistenceTesterTests
+    {
+        #region setup actions
+
+        [Test,AutoMoqData]
+        public void GetTestResult_executes_setup_action_if_it_was_provided([Frozen, NoRecursion] SampleEntity entity,
+                                                                           PersistenceTestSpec<SampleEntity> spec)
+        {
+            bool executed = false;
+            spec.Setup = session =>
+            {
+                executed = true;
+            };
+            var sut = new PersistenceTester<SampleEntity>(spec);
+
+            sut.GetTestResult();
+
+            Assert.That(executed, Is.True);
+        }
+
+        [Test, AutoMoqData]
+        public void GetTestResult_does_not_record_error_for_setup_action_if_it_was_not_provided([Frozen, NoRecursion] SampleEntity entity,
+                                                                                                [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec)
+        {
+            var sut = new PersistenceTester<SampleEntity>(spec);
+
+            var result = sut.GetTestResult();
+
+            Assert.That(result?.SetupException, Is.Null);
+        }
+
+        [Test, AutoMoqData]
+        public void GetTestResult_records_error_for_setup_action_if_it_throws([Frozen,NoRecursion] SampleEntity entity,
+                                                                              PersistenceTestSpec<SampleEntity> spec)
+        {
+            spec.Setup = session =>
+            {
+                throw new InvalidOperationException("Sample exception");
+            };
+            var sut = new PersistenceTester<SampleEntity>(spec);
+
+            var result = sut.GetTestResult();
+
+            Assert.That(result?.SetupException, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(result?.SetupException?.Message, Is.EqualTo("Sample exception"));
+        }
+
+        #endregion
+
+        #region saving the entity
+
+        [Test, AutoMoqData]
+        public void GetTestResult_saves_the_entity_within_a_transaction([Frozen] IDataConnection session,
+                                                                        IGetsTransaction tranFactory,
+                                                                        IPersister persister,
+                                                                        [Frozen] ITransaction tran,
+                                                                        [Frozen,NoRecursion] SampleEntity entity,
+                                                                        [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,
+                                                                        object id)
+        {
+            bool transactionOpen = false;
+
+            var sut = new PersistenceTester<SampleEntity>(spec);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
+            Mock.Get(session)
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
+                .Callback(() => transactionOpen = true)
+                .Returns(tran);
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
+                .Callback(() => Assert.That(transactionOpen, Is.True, "The save operation must occur whilst the transaction is open"))
+                .Returns(id);
+            Mock.Get(tran)
+                .Setup(x => x.Dispose())
+                .Callback(() => transactionOpen = false);
+
+            sut.GetTestResult();
+
+            Mock.Get(persister).Verify(x => x.Add(entity, null), Times.Once);
+        }
+
+        [Test, AutoMoqData]
+        public void GetTestResult_records_error_if_save_returns_null([Frozen] IDataConnection session,
+                                                                     IGetsTransaction tranFactory,
+                                                                     IPersister persister,
+                                                                     [Frozen] ITransaction tran,
+                                                                     [Frozen,NoRecursion] SampleEntity entity,
+                                                                     [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec)
+        {
+            var sut = new PersistenceTester<SampleEntity>(spec);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
+            Mock.Get(session)
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
+                .Returns(tran);
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
+                .Returns(() => null);
+
+            var result = sut.GetTestResult();
+
+            Assert.That(result?.SaveException, Is.InstanceOf<InvalidOperationException>());
+        }
+
+        #endregion
+
+        #region comparing the retrieved entity
+
+        [Test, AutoMoqData]
+        public void GetTestResult_evicts_the_entity_retrieves_it_and_compares_it([Frozen] IDataConnection session,
+                                                                     IGetsTransaction tranFactory,
+                                                                                 [Frozen] ITransaction tran,
+                                                                     IPersister persister,
+                                                                     IQuery query,
+                                                                                 [Frozen, NoRecursion] SampleEntity entity,
+                                                                                 [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,
+                                                                                 object id)
+        {
+            var evicted = false;
+
+            var sut = new PersistenceTester<SampleEntity>(spec);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
+            Mock.Get(session)
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
+                .Returns(tran);
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(session).Setup(x => x.GetQuery()).Returns(query);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
+                .Returns(id);
+            Mock.Get(session)
+                .Setup(x => x.EvictFromCache(entity))
+                .Callback(() => evicted = true);
+
+            var retrievedEntity = new SampleEntity();
+            Mock.Get(query)
+                .Setup(x => x.Get<SampleEntity>(id))
+                .Returns(() => evicted? retrievedEntity : entity);
+
+            sut.GetTestResult();
+
+            Mock.Get(spec.EqualityRule).Verify(x => x.GetEqualityResult(entity, retrievedEntity), Times.Once);
+        }
+
+        [Test, AutoMoqData]
+        public void GetTestResult_records_error_if_retrieval_raises_an_exception([Frozen] IDataConnection session,
+                                                                     IGetsTransaction tranFactory,
+                                                                                 [Frozen] ITransaction tran,
+                                                                                 [Frozen, NoRecursion] SampleEntity entity,
+                                                                     IPersister persister,
+                                                                     IQuery query,
+                                                                                 [NoAutoProperties] PersistenceTestSpec<SampleEntity> spec,
+                                                                                 object id)
+        {
+            var sut = new PersistenceTester<SampleEntity>(spec);
+            Mock.Get(spec.SessionProvider).Setup(x => x.GetConnection()).Returns(session);
+            Mock.Get(session)
+                .Setup(x => x.GetTransactionFactory())
+                .Returns(tranFactory);
+            Mock.Get(tranFactory)
+                .Setup(x => x.GetTransaction())
+                .Returns(tran);
+            Mock.Get(session).Setup(x => x.GetPersister()).Returns(persister);
+            Mock.Get(session).Setup(x => x.GetQuery()).Returns(query);
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, null))
+                .Returns(id);
+
+            Mock.Get(query)
+                .Setup(x => x.Get<SampleEntity>(id))
+                .Throws<ApplicationException>();
+
+            var result = sut.GetTestResult();
+
+            Assert.That(result?.ComparisonException, Is.InstanceOf<ApplicationException>());
+        }
+
+        #endregion
+    }
+}

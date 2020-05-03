@@ -1,10 +1,10 @@
 ﻿//
-// Animal.cs
+// EntityTypeFromIdentityTypeProviderTests.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
 //
-// Copyright (c) 2017 Craig Fowler
+// Copyright (c) 2020 Craig Fowler
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,22 +24,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace CSF.ORM.Stubs
+using CSF.Entities.Stubs;
+using CSF.Entities;
+using NUnit.Framework;
+
+namespace CSF.ORM.Entities
 {
-  public class Animal
-  {
-    public long Identity
+    [TestFixture,Parallelizable]
+    public class EntityTypeFromIdentityTypeProviderTests
     {
-      get;
-      set;
-    }
+        [Test, AutoMoqData]
+        public void GetEntityType_returns_correct_entity_type_for_generic_identity_interface(EntityTypeFromIdentityTypeProvider sut)
+        {
+            Assert.That(sut.GetEntityType(typeof(IIdentity<Cat>)), Is.EqualTo(typeof(Cat)));
+        }
 
-    public string Name
-    {
-      get;
-      set;
-    }
+        [Test, AutoMoqData]
+        public void GetEntityType_returns_correct_entity_type_for_generic_identity_class(EntityTypeFromIdentityTypeProvider sut)
+        {
+            Assert.That(sut.GetEntityType(typeof(Identity<long,Cat>)), Is.EqualTo(typeof(Cat)));
+        }
 
-        public Person Owner { get; set; }
+        [Test, AutoMoqData]
+        public void GetEntityType_returns_null_for_nongeneric_identity_interface(EntityTypeFromIdentityTypeProvider sut)
+        {
+            Assert.That(sut.GetEntityType(typeof(IIdentity)), Is.Null);
+        }
     }
 }

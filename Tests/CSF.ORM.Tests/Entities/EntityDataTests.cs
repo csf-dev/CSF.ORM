@@ -28,11 +28,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
 using CSF.Entities;
-using CSF.ORM.Tests.Stubs;
+using CSF.ORM.Stubs;
 using Moq;
 using NUnit.Framework;
 
-namespace CSF.ORM.Tests.Entities
+namespace CSF.ORM.Entities
 {
     [TestFixture, Parallelizable]
     public class EntityDataTests
@@ -40,6 +40,10 @@ namespace CSF.ORM.Tests.Entities
         [Test, AutoMoqData]
         public void Add_adds_entity_using_identity_if_not_null([Frozen] IPersister persister, EntityData sut, Car entity)
         {
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, It.IsAny<object>()))
+                .Returns((Car e, object obj) => obj);
+
             entity.Identity = 5;
             sut.Add(entity);
 
@@ -49,6 +53,10 @@ namespace CSF.ORM.Tests.Entities
         [Test, AutoMoqData]
         public void Add_adds_entity_without_identity_if_it_is_null([Frozen] IPersister persister, EntityData sut, Car entity)
         {
+            Mock.Get(persister)
+                .Setup(x => x.Add(entity, It.IsAny<object>()))
+                .Returns((Car e, object obj) => obj);
+
             entity.Identity = 0;
             sut.Add(entity);
 
@@ -69,6 +77,10 @@ namespace CSF.ORM.Tests.Entities
         [Test, AutoMoqData]
         public async Task AddAsync_adds_entity_using_identity_if_not_null([Frozen] IPersister persister, EntityData sut, Car entity)
         {
+            Mock.Get(persister)
+                .Setup(x => x.AddAsync(entity, It.IsAny<object>(), It.IsAny<CancellationToken>()))
+                .Returns((Car e, object obj, CancellationToken t) => Task.FromResult(obj));
+
             entity.Identity = 5;
             await sut.AddAsync(entity);
 
@@ -78,6 +90,10 @@ namespace CSF.ORM.Tests.Entities
         [Test, AutoMoqData]
         public async Task AddAsync_adds_entity_without_identity_if_it_is_null([Frozen] IPersister persister, EntityData sut, Car entity)
         {
+            Mock.Get(persister)
+                .Setup(x => x.AddAsync(entity, It.IsAny<object>(), It.IsAny<CancellationToken>()))
+                .Returns((Car e, object obj, CancellationToken t) => Task.FromResult(obj));
+
             entity.Identity = 0;
             await sut.AddAsync(entity);
 

@@ -12,7 +12,7 @@
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions</Title>
     <Description>Types which relate to the usage of an ORM, so that a business logic project does not need to depend upon the ORM directly.</Description>
-    <ReleaseVersion>2.0.2</ReleaseVersion>
+    <ReleaseVersion>2.0.3</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
