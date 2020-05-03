@@ -40,7 +40,7 @@ namespace CSF.ORM
     {
         readonly IQuery query;
         readonly IPersister persister;
-        readonly IParsesIdentity parser = new IdentityParser();
+        readonly ICreatesIdentity idFactory = new IdentityFactory();
 
         /// <summary>
         /// Add the specified entity.
@@ -57,11 +57,11 @@ namespace CSF.ORM
             if(identity != null)
             {
                 idValue = persister.Add(entity, identity.Value);
-                return ReferenceEquals(idValue, null)? null : (IIdentity<TEntity>) parser.Parse(typeof(TEntity), idValue);
+                return ReferenceEquals(idValue, null)? null : (IIdentity<TEntity>) idFactory.Create(typeof(TEntity), idValue);
             }
 
             idValue = persister.Add(entity);
-            return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
+            return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>) idFactory.Create(typeof(TEntity), idValue);
         }
 
         /// <summary>
@@ -172,11 +172,11 @@ namespace CSF.ORM
             if (identity != null)
             {
                 idValue = await persister.AddAsync(entity, identity.Value, token);
-                return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
+                return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)idFactory.Create(typeof(TEntity), idValue);
             }
 
             idValue = await persister.AddAsync(entity, null, token);
-            return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)parser.Parse(typeof(TEntity), idValue);
+            return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)idFactory.Create(typeof(TEntity), idValue);
         }
 
         /// <summary>

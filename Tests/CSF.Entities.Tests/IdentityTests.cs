@@ -104,6 +104,12 @@ namespace CSF.Entities.Tests
             var identity = new Identity<long, Cat>(5);
             Assert.That(identity.ToString(), Is.EqualTo("[Cat#5]"));
         }
+
+        [Test, AutoMoqData]
+        public void Create_does_not_throw_when_a_compatible_identity_value_is_provided()
+        {
+            Assert.That(() => Identity.Create<LongIdEntity>(5), Throws.Nothing);
+        }
     }
 }
 

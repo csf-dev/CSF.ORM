@@ -1,5 +1,5 @@
 ﻿//
-// IdentityParser.cs
+// LongIdEntity.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -24,32 +24,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace CSF.Entities
+namespace CSF.Entities.Tests.Stubs
 {
-    /// <summary>
-    /// A service which creates an identity using a parsed identity value, changing/converting its type if required.
-    /// </summary>
-    public class IdentityParser : IParsesIdentity
+    public class LongIdEntity : Entity<long>
     {
-        static readonly ICreatesIdentity identityFactory = new IdentityFactory();
-
-        /// <summary>
-        /// Parse an object value and create from it an identity instance for the specified entity type.
-        /// </summary>
-        /// <returns>The identity, or a <c>null</c> reference if the identity value is null or cannot be parsed.</returns>
-        /// <param name="entityType">The entity type.</param>
-        /// <param name="value">The identity value.</param>
-        public IIdentity Parse(Type entityType, object value)
-        {
-            try
-            {
-                return identityFactory.Create(entityType, value);
-            }
-            catch(ArgumentException e)
-            {
-                if (e.ParamName == "identityValue") return null;
-                throw;
-            }
-        }
     }
 }

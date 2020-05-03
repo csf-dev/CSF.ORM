@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using CSF.Entities.Tests.Stubs;
 using NUnit.Framework;
 
@@ -54,6 +55,18 @@ namespace CSF.Entities.Tests
         public void Create_returns_null_when_value_is_default_of_data_type(IdentityFactory sut)
         {
             Assert.That(() => sut.Create(typeof(Cat), typeof(int), 0), Is.Null);
+        }
+
+        [Test, AutoMoqData]
+        public void Create_does_not_throw_when_a_compatible_identity_value_is_provided(IdentityFactory sut)
+        {
+            Assert.That(() => sut.Create(typeof(LongIdEntity), 5), Throws.Nothing);
+        }
+
+        [Test, AutoMoqData]
+        public void Create_throws_ArgumentException_when_identity_value_is_not_compatible_type(IdentityFactory sut)
+        {
+            Assert.That(() => sut.Create(typeof(LongIdEntity), "Foo"), Throws.InstanceOf<ArgumentException>());
         }
     }
 }
