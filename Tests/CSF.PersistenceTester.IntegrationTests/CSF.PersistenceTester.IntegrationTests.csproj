@@ -44,6 +44,7 @@
     </PackageReference>
     <PackageReference Include="NunitXml.TestLogger" Version="2.1.41" />
     <PackageReference Include="CSF.NHibernate4.MonoSafeSQLite20Driver" Version="7.0.0" />
+    <PackageReference Include="CSF.EqualityRules" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NUnit\CSF.PersistenceTester.NUnit.csproj" />

@@ -35,13 +35,6 @@ namespace CSF.PersistenceTester.Tests.NHibernate
         {
             Id(x => x.Identity);
             Property(x => x.StringProperty);
-            //Set(x => x.RelatedEntities, m => {
-            //    m.Inverse(true);
-            //    m.Key(k => {
-            //        k.Column("RelatedEntityId");
-            //    });
-            //    m.Cascade(Cascade.None);
-            //});
         }
     }
 }

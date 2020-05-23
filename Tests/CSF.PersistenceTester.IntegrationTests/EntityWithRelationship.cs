@@ -32,6 +32,5 @@ namespace CSF.PersistenceTester.Tests
     {
         public virtual long Identity { get; set; }
         public virtual string StringProperty { get; set; }
-        public virtual ISet<SampleEntity> RelatedEntities { get; set; }
     }
 }

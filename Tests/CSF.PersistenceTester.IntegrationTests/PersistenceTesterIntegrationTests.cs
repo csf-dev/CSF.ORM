@@ -21,7 +21,16 @@ namespace CSF.PersistenceTester.Tests
             var result = TestPersistence.UsingConnectionProvider(factory)
                 .WithSetup(s => CreateSchema(s, schemaCreator))
                 .WithEntity(entity)
-                .WithEqualityRule(r => r.ForAllOtherProperties());
+                .WithEqualityRule((EqualityBuilder<SampleEntity> r) =>
+                {
+                    return r
+                        .ForProperty(x => x.RelatedEntity,
+                                     c => c.UsingComparer(new EqualityBuilder<EntityWithRelationship>()
+                                                              .ForProperty(x => x.Identity)
+                                                              .ForAllOtherProperties(p => p.Ignore())
+                                                              .Build()))
+                        .ForAllOtherProperties();
+                });
 
             Assert.That(() =>
             {
@@ -86,30 +95,6 @@ namespace CSF.PersistenceTester.Tests
                 Assert.That(result, Persisted.Successfully());
             }, Throws.InstanceOf<AssertionException>());
             Assert.That(result?.SaveException, Is.Not.Null);
-        }
-
-        [Test, AutoMoqData]
-        public void Persistence_test_raises_AssertionException_for_improperly_mapped_associated_entity([NoRecursion] EntityWithRelationship entity,
-                                                                                                       [NoRecursion] SampleEntity relatedEntity,
-                                                                                                       ConnectionFactoryProvider factoryProvider,
-                                                                                                       SchemaCreator schemaCreator)
-        {
-            entity.RelatedEntities.Clear();
-
-            var factory = factoryProvider.GetConnectionFactory();
-            var result = TestPersistence.UsingConnectionProvider(factory)
-                .WithSetup(s => {
-                    CreateSchema(s, schemaCreator);
-                    relatedEntity.RelatedEntity = entity;
-                    s.GetPersister().Add(relatedEntity);
-                })
-                .WithEntity(entity)
-                .WithEqualityRule(r => r.ForAllOtherProperties());
-
-            Assert.That(() =>
-            {
-                Assert.That(result, Persisted.Successfully());
-            }, Throws.InstanceOf<AssertionException>());
         }
 
         void CreateSchema(IDataConnection c, SchemaCreator schemaCreator)

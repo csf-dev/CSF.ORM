@@ -12,7 +12,7 @@ namespace CSF.PersistenceTester.Tests.NHibernate
             ManyToOne(x => x.RelatedEntity, m =>
             {
                 m.Column("RelatedEntityId");
-                m.Cascade(Cascade.None);
+                m.Cascade(Cascade.Persist);
             });
         }
     }
