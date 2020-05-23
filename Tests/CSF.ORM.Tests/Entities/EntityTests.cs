@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using CSF.Entities.Stubs;
 using CSF.Entities;
+using System;
 
 namespace CSF.ORM.Entities
 {
@@ -52,6 +53,15 @@ namespace CSF.ORM.Entities
                             castIdentity.IdentityValue = newIdentity;
                             return castIdentity.IdentityValue;
                         }, Is.EqualTo(newIdentity));
+        }
+
+        [Test, AutoMoqData]
+        public void Set_IdentityValue_throws_when_an_invalid_value_is_provided(LongIdEntity entity)
+        {
+            Assert.That(() => {
+                IEntity castIdentity = entity;
+                castIdentity.IdentityValue = "Not a number";
+            }, Throws.Exception);
         }
     }
 }
