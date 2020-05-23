@@ -34,6 +34,12 @@ namespace CSF.ORM.InMemory
         readonly bool throwOnRollback;
 
         /// <summary>
+        /// Gets a value indicating whether a transaction is currently active, this implementation always returns <c>false</c>.
+        /// </summary>
+        /// <value>Always <c>false</c>.</value>
+        public bool IsTransactionActive => false;
+
+        /// <summary>
         /// Begins the transaction.
         /// </summary>
         /// <returns>The transaction.</returns>

@@ -240,6 +240,33 @@ namespace Test.CSF.ORM.NHibernate
             Assert.That(async () => await _query.Query<Store>().ToListAsync(), Throws.Nothing);
         }
 
+        [Test]
+        public void Session_IsTransactionActive_returns_false_before_transaction_started()
+        {
+            IGetsDataConnection sessionFactoryAdapter = new SessionFactoryAdapter(_sessionFactory);
+
+            using (var session = sessionFactoryAdapter.GetConnection())
+            {
+                var tranFactory = session.GetTransactionFactory();
+                Assert.That(() => tranFactory.IsTransactionActive, Is.False);
+            }
+        }
+
+        [Test]
+        public void Session_IsTransactionActive_returns_true_after_transaction_started()
+        {
+            IGetsDataConnection sessionFactoryAdapter = new SessionFactoryAdapter(_sessionFactory);
+
+            using (var session = sessionFactoryAdapter.GetConnection())
+            {
+                var tranFactory = session.GetTransactionFactory();
+                using (var tran = tranFactory.GetTransaction())
+                {
+                    Assert.That(() => tranFactory.IsTransactionActive, Is.True);
+                }
+            }
+        }
+
         #endregion
     }
 }

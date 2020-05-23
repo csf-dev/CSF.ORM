@@ -47,6 +47,12 @@ namespace CSF.ORM.NHibernate
         public object NativeImplementation => session;
 
         /// <summary>
+        /// Gets a value indicating whether a transaction is currently active, created by this provider.
+        /// </summary>
+        /// <value><c>true</c> if is transaction is active; otherwise, <c>false</c>.</value>
+        public bool IsTransactionActive => HasExistingTransaction;
+
+        /// <summary>
         /// Gets a persister object from the current connection.
         /// </summary>
         /// <returns>The persister.</returns>
