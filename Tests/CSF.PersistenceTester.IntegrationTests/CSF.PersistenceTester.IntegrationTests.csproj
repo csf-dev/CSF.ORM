@@ -42,16 +42,13 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NunitXml.TestLogger" Version="2.1.41" />
+    <PackageReference Include="CSF.NHibernate4.MonoSafeSQLite20Driver" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NUnit\CSF.PersistenceTester.NUnit.csproj" />
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
     <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impl\" />
-    <Folder Include="Builder\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="NHibernate\CreateSchema.sql" />
