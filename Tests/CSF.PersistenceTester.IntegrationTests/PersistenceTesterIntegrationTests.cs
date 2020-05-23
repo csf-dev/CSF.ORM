@@ -5,6 +5,7 @@ using CSF.EqualityRules;
 using System.Linq;
 using CSF.ORM;
 using NHibernate;
+using CSF.PersistenceTester.Tests.Autofixture;
 
 namespace CSF.PersistenceTester.Tests
 {
@@ -12,7 +13,7 @@ namespace CSF.PersistenceTester.Tests
     public class PersistenceTesterIntegrationTests
     {
         [Test, AutoMoqData]
-        public void Persistence_test_passes_for_a_correctly_mapped_entity(SampleEntity entity,
+        public void Persistence_test_passes_for_a_correctly_mapped_entity([NoRecursion] SampleEntity entity,
                                                                           ConnectionFactoryProvider factoryProvider,
                                                                           SchemaCreator schemaCreator)
         {
@@ -29,7 +30,7 @@ namespace CSF.PersistenceTester.Tests
         }
 
         [Test, AutoMoqData]
-        public void Persistence_test_fails_when_the_setup_throws_an_exception(SampleEntity entity,
+        public void Persistence_test_fails_when_the_setup_throws_an_exception([NoRecursion] SampleEntity entity,
                                                                               ConnectionFactoryProvider factoryProvider,
                                                                               SchemaCreator schemaCreator)
         {
@@ -85,6 +86,30 @@ namespace CSF.PersistenceTester.Tests
                 Assert.That(result, Persisted.Successfully());
             }, Throws.InstanceOf<AssertionException>());
             Assert.That(result?.SaveException, Is.Not.Null);
+        }
+
+        [Test, AutoMoqData]
+        public void Persistence_test_raises_AssertionException_for_improperly_mapped_associated_entity([NoRecursion] EntityWithRelationship entity,
+                                                                                                       [NoRecursion] SampleEntity relatedEntity,
+                                                                                                       ConnectionFactoryProvider factoryProvider,
+                                                                                                       SchemaCreator schemaCreator)
+        {
+            entity.RelatedEntities.Clear();
+
+            var factory = factoryProvider.GetConnectionFactory();
+            var result = TestPersistence.UsingConnectionProvider(factory)
+                .WithSetup(s => {
+                    CreateSchema(s, schemaCreator);
+                    relatedEntity.RelatedEntity = entity;
+                    s.GetPersister().Add(relatedEntity);
+                })
+                .WithEntity(entity)
+                .WithEqualityRule(r => r.ForAllOtherProperties());
+
+            Assert.That(() =>
+            {
+                Assert.That(result, Persisted.Successfully());
+            }, Throws.InstanceOf<AssertionException>());
         }
 
         void CreateSchema(IDataConnection c, SchemaCreator schemaCreator)

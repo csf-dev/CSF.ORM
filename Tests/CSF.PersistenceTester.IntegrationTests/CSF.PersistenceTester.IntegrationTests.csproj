@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
     <ReleaseVersion>2.0.3</ReleaseVersion>
+    <RootNamespace>CSF.PersistenceTester.Tests</RootNamespace>
   </PropertyGroup>
    
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
@@ -58,4 +59,5 @@
       <LogicalName>CreateSchema.sql</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+  <Import Project="..\..\Tools\EnableNet45BuildOnUnix.targets" />
 </Project>
