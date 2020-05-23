@@ -34,6 +34,25 @@ namespace CSF.ORM.Entities
             var entity = new Person();
             Assert.That(() => ((IEntity)entity).HasIdentity, Is.False);
         }
+
+        [Test, AutoMoqData]
+        public void Set_IdentityValue_does_not_throw_for_value_which_may_implicitly_cast_to_identity_value_type(int newIdentity, LongIdEntity entity)
+        {
+            Assert.That(() => {
+                            IEntity castIdentity = entity;
+                            castIdentity.IdentityValue = newIdentity;
+                        }, Throws.Nothing);
+        }
+
+        [Test, AutoMoqData]
+        public void Set_IdentityValue_using_value_which_implicitly_casts_to_identity_value_type_sets_correct_value(int newIdentity, LongIdEntity entity)
+        {
+            Assert.That(() => {
+                            IEntity castIdentity = entity;
+                            castIdentity.IdentityValue = newIdentity;
+                            return castIdentity.IdentityValue;
+                        }, Is.EqualTo(newIdentity));
+        }
     }
 }
 
