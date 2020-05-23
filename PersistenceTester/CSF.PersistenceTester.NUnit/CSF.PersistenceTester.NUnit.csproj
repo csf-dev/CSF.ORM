@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" Version="[3.6.0,4.0.0)" />
-    <PackageReference Include="CSF.EqualityRules" Version="1.0.0" />
+    <PackageReference Include="CSF.EqualityRules" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Runtime" Condition="$(TargetFramework.StartsWith('net4'))" />

@@ -5,6 +5,7 @@ using CSF.EqualityRules;
 using System.Linq;
 using CSF.ORM;
 using NHibernate;
+using CSF.PersistenceTester.Tests.Autofixture;
 
 namespace CSF.PersistenceTester.Tests
 {
@@ -12,7 +13,7 @@ namespace CSF.PersistenceTester.Tests
     public class PersistenceTesterIntegrationTests
     {
         [Test, AutoMoqData]
-        public void Persistence_test_passes_for_a_correctly_mapped_entity(SampleEntity entity,
+        public void Persistence_test_passes_for_a_correctly_mapped_entity([NoRecursion] SampleEntity entity,
                                                                           ConnectionFactoryProvider factoryProvider,
                                                                           SchemaCreator schemaCreator)
         {
@@ -20,7 +21,16 @@ namespace CSF.PersistenceTester.Tests
             var result = TestPersistence.UsingConnectionProvider(factory)
                 .WithSetup(s => CreateSchema(s, schemaCreator))
                 .WithEntity(entity)
-                .WithEqualityRule(r => r.ForAllOtherProperties());
+                .WithEqualityRule((EqualityBuilder<SampleEntity> r) =>
+                {
+                    return r
+                        .ForProperty(x => x.RelatedEntity,
+                                     c => c.UsingComparer(new EqualityBuilder<EntityWithRelationship>()
+                                                              .ForProperty(x => x.Identity)
+                                                              .ForAllOtherProperties(p => p.Ignore())
+                                                              .Build()))
+                        .ForAllOtherProperties();
+                });
 
             Assert.That(() =>
             {
@@ -29,7 +39,7 @@ namespace CSF.PersistenceTester.Tests
         }
 
         [Test, AutoMoqData]
-        public void Persistence_test_fails_when_the_setup_throws_an_exception(SampleEntity entity,
+        public void Persistence_test_fails_when_the_setup_throws_an_exception([NoRecursion] SampleEntity entity,
                                                                               ConnectionFactoryProvider factoryProvider,
                                                                               SchemaCreator schemaCreator)
         {

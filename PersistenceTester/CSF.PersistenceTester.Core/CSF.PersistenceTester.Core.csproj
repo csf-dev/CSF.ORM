@@ -43,7 +43,7 @@
     <Folder Include="Impl\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CSF.EqualityRules" Version="1.0.0" />
+    <PackageReference Include="CSF.EqualityRules" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
