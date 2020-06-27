@@ -63,7 +63,7 @@ namespace CSF.ORM.InMemory
         /// <summary>
         /// Commit this transaction to the back-end using an asynchronous API, where available.
         /// </summary>
-        public void CommitAsync() => Task.Run(() => Commit());
+        public Task CommitAsync() => Task.Run(() => Commit());
 
         /// <summary>
         /// Rollback this instance.
@@ -83,7 +83,7 @@ namespace CSF.ORM.InMemory
         /// <summary>
         /// Roll the transaction back and abort changes using an asynchronous API, where available.
         /// </summary>
-        public void RollbackAsync() => Task.Run(() => Rollback());
+        public Task RollbackAsync() => Task.Run(() => Rollback());
 
         /// <summary>
         /// Releases all resource used by the <see cref="NoOpTransaction"/> object.

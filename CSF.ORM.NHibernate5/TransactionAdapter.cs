@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using nh = NHibernate;
 
 namespace CSF.ORM.NHibernate
@@ -57,14 +58,15 @@ namespace CSF.ORM.NHibernate
         /// <summary>
         /// Commit this transaction to the back-end using an asynchronous API, where available.
         /// </summary>
-        public void CommitAsync()
+        public Task CommitAsync()
         {
             AssertNotFinalised();
 
             if (mayCommitAndDispose)
-                transaction.CommitAsync();
+                return transaction.CommitAsync();
 
             IsFinal = true;
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -84,17 +86,16 @@ namespace CSF.ORM.NHibernate
         /// <summary>
         /// Roll the transaction back and abort changes using an asynchronous API, where available.
         /// </summary>
-        public void RollbackAsync()
+        public Task RollbackAsync()
         {
             if (transaction.WasRolledBack || IsFinal || disposedValue)
             {
                 IsFinal = true;
-                return;
+                return Task.CompletedTask;
             }
 
-            transaction.RollbackAsync();
-
             IsFinal = true;
+            return transaction.RollbackAsync();
         }
 
         void AssertNotFinalised()

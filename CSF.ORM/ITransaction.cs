@@ -24,6 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Threading.Tasks;
+
 namespace CSF.ORM
 {
     /// <summary>
@@ -44,11 +46,11 @@ namespace CSF.ORM
         /// <summary>
         /// Commit this transaction to the back-end using an asynchronous API, where available.
         /// </summary>
-        void CommitAsync();
+        Task CommitAsync();
 
         /// <summary>
         /// Roll the transaction back and abort changes using an asynchronous API, where available.
         /// </summary>
-        void RollbackAsync();
+        Task RollbackAsync();
     }
 }
