@@ -1,5 +1,5 @@
 ﻿//
-// NoOpTransactionCreator.cs
+// NoRecursionAttribute.cs
 //
 // Author:
 //       Craig Fowler <craig@csf-dev.com>
@@ -23,35 +23,27 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
+using System.Linq;
+using System.Reflection;
+using AutoFixture;
+using AutoFixture.NUnit3;
 
-namespace CSF.ORM.InMemory
+namespace CSF.PersistenceTester.Tests.Autofixture
 {
-    /// <summary>
-    /// A no-operation dummy/fake transaction creator.
-    /// </summary>
-    public class NoOpTransactionCreator : IGetsTransaction
+    public class NoRecursionAttribute : CustomizeAttribute
     {
-        readonly bool throwOnRollback;
+        public override ICustomization GetCustomization(ParameterInfo parameter)
+            => new NoRecursionCustomization();
 
-        /// <summary>
-        /// Gets a value indicating whether a transaction is currently active, this implementation always returns <c>false</c>.
-        /// </summary>
-        /// <value>Always <c>false</c>.</value>
-        public bool IsTransactionActive => false;
-
-        /// <summary>
-        /// Begins the transaction.
-        /// </summary>
-        /// <returns>The transaction.</returns>
-        public ITransaction GetTransaction() => new NoOpTransaction(throwOnRollback);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NoOpTransactionCreator"/> class.
-        /// </summary>
-        /// <param name="throwOnRollback">If set to <c>true</c> throw on rollback.</param>
-        public NoOpTransactionCreator(bool throwOnRollback = false)
+        class NoRecursionCustomization : ICustomization
         {
-            this.throwOnRollback = throwOnRollback;
+            public void Customize(IFixture fixture)
+            {
+                foreach (var behaviour in fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList())
+                    fixture.Behaviors.Remove(behaviour);
+                fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            }
         }
     }
 }

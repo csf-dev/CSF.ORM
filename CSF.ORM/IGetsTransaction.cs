@@ -32,6 +32,12 @@ namespace CSF.ORM
     public interface IGetsTransaction
     {
         /// <summary>
+        /// Gets a value indicating whether a transaction is currently active, created by this provider.
+        /// </summary>
+        /// <value><c>true</c> if is transaction is active; otherwise, <c>false</c>.</value>
+        bool IsTransactionActive { get; }
+
+        /// <summary>
         /// Attempts to get a new transaction, perhaps starting a new one.
         /// </summary>
         /// <returns>The transaction.</returns>

@@ -59,7 +59,7 @@ namespace CSF.ORM.NHibernate
         /// <summary>
         /// Commit this transaction to the back-end using an asynchronous API, where available.
         /// </summary>
-        public void CommitAsync() => Task.Run(() => Commit());
+        public Task CommitAsync() => Task.Run(() => Commit());
 
         /// <summary>
         /// Rollback this instance.
@@ -78,7 +78,7 @@ namespace CSF.ORM.NHibernate
         /// <summary>
         /// Roll the transaction back and abort changes using an asynchronous API, where available.
         /// </summary>
-        public void RollbackAsync() => Task.Run(() => Rollback());
+        public Task RollbackAsync() => Task.Run(() => Rollback());
 
         #region IDisposable Support
         /// <summary>

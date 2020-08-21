@@ -1,4 +1,5 @@
-﻿using NHibernate.Mapping.ByCode.Conformist;
+﻿using NHibernate.Mapping.ByCode;
+using NHibernate.Mapping.ByCode.Conformist;
 
 namespace CSF.PersistenceTester.Tests.NHibernate
 {
@@ -8,6 +9,11 @@ namespace CSF.PersistenceTester.Tests.NHibernate
         {
             Id(x => x.Identity);
             Property(x => x.StringProperty);
+            ManyToOne(x => x.RelatedEntity, m =>
+            {
+                m.Column("RelatedEntityId");
+                m.Cascade(Cascade.Persist);
+            });
         }
     }
 }

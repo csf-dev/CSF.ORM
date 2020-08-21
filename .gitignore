@@ -13,3 +13,4 @@ packages/*/*
 *.csproj.user
 Tests/*/TestResults/
 *.DotSettings.user
+Tests/**/*.db

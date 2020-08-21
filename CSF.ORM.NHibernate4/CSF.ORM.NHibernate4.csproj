@@ -12,7 +12,7 @@
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions: Implementation for NHibernate 4</Title>
     <Description>Implementation of the ORM abstractions for users of NHibernate version 4.x.</Description>
-    <ReleaseVersion>2.0.3</ReleaseVersion>
+    <ReleaseVersion>3.0.0</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

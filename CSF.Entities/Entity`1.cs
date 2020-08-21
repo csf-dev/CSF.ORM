@@ -66,7 +66,19 @@ namespace CSF.Entities
         object IEntity.IdentityValue
         {
             get { return IdentityValue; }
-            set { IdentityValue = (TIdentity) value; }
+            set { IdentityValue = ToIdentityType(value); }
+        }
+
+        /// <summary>
+        /// Converts a specified <paramref name="value"/> to the <typeparamref name="TIdentity"/> type.
+        /// </summary>
+        /// <returns>The converted value.</returns>
+        /// <param name="value">The value to convert.</param>
+        TIdentity ToIdentityType(object value)
+        {
+            var formatter = System.Globalization.CultureInfo.InvariantCulture;
+            var converted = Convert.ChangeType(value, typeof(TIdentity), formatter);
+            return (TIdentity)converted;
         }
 
         Type IEntity.IdentityType => typeof(TIdentity);

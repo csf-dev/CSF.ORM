@@ -18,7 +18,7 @@
     <PackageId>CSF.PersistenceTester</PackageId>
     <Title>ORM persistence tester</Title>
     <Description>A utility for testing object/entity persistence when using an ORM.</Description>
-    <ReleaseVersion>2.0.3</ReleaseVersion>
+    <ReleaseVersion>3.0.0</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <SonarQubeTestProject>false</SonarQubeTestProject>
@@ -43,7 +43,7 @@
     <Folder Include="Impl\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CSF.EqualityRules" Version="1.0.0" />
+    <PackageReference Include="CSF.EqualityRules" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />

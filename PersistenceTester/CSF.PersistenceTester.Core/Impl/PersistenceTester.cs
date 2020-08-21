@@ -1,4 +1,5 @@
 ﻿using System;
+using CSF.EqualityRules;
 using CSF.ORM;
 
 namespace CSF.PersistenceTester.Impl
@@ -97,6 +98,7 @@ namespace CSF.PersistenceTester.Impl
                     return new PersistenceTestResult(typeof(T)) { SavedObjectNotFound = true };
 
                 var equalityResult = spec.EqualityRule.GetEqualityResult(spec.Entity, retrieved);
+                EnsureEqualityResultMayBeReportedUpon(equalityResult);
 
                 return new PersistenceTestResult(typeof(T))
                 {
@@ -113,6 +115,30 @@ namespace CSF.PersistenceTester.Impl
             finally
             {
                 conn?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// If either the persisted value or the retrieved value are NHibernate proxies, then we probably won't
+        /// be able to use <see cref="Object.ToString()"/> later-on, once the connection has been terminated.
+        /// This method ensures that both values can be converted to string now, while we still have the connection.
+        /// </summary>
+        /// <param name="equalityResult">An equality result.</param>
+        void EnsureEqualityResultMayBeReportedUpon(EqualityResult equalityResult)
+        {
+            foreach(var item in equalityResult.RuleResults)
+            {
+                try { item.ValueA?.ToString(); }
+                catch(Exception e)
+                {
+                    throw new PersistenceTestingException($"An exception was raised when pre-converting the persisted value {item.Name} to string.", e);
+                }
+
+                try { item.ValueB?.ToString(); }
+                catch (Exception e)
+                {
+                    throw new PersistenceTestingException($"An exception was raised when pre-converting the retrieved value {item.Name} to string.", e);
+                }
             }
         }
 
