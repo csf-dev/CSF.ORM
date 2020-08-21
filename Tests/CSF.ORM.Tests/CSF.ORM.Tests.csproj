@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <ReleaseVersion>2.0.3</ReleaseVersion>
+    <ReleaseVersion>3.0.0</ReleaseVersion>
     <RootNamespace>CSF.ORM</RootNamespace>
   </PropertyGroup>
 
