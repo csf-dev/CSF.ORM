@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
-    <ReleaseVersion>2.0.3</ReleaseVersion>
+    <ReleaseVersion>3.0.0</ReleaseVersion>
     <RootNamespace>CSF.PersistenceTester.Tests</RootNamespace>
   </PropertyGroup>
    

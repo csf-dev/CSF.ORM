@@ -18,7 +18,7 @@
     <PackageId>CSF.PersistenceTester.NUnit</PackageId>
     <Title>ORM persistence tester: NUnit integration</Title>
     <Description>An integration for the ORM persistence tester and NUnit 3.x.  Provides an NUnit constraint for asserting that the test passed.</Description>
-    <ReleaseVersion>2.0.3</ReleaseVersion>
+    <ReleaseVersion>3.0.0</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <SonarQubeTestProject>false</SonarQubeTestProject>
