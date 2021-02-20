@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -23,8 +23,10 @@
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <SonarQubeTestProject>false</SonarQubeTestProject>
   </PropertyGroup>
-  
-  <Import Project="..\..\Tools\EnableNet45BuildOnUnix.targets" />
+    
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'" />
+  </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.NUnit.xml</DocumentationFile>
