@@ -4,7 +4,7 @@
     <TargetFramework Condition="'$(Configuration)' != 'NetFramework'">netcoreapp3.1</TargetFramework>
     <TargetFramework Condition="'$(Configuration)' == 'NetFramework'">net472</TargetFramework>
     <OutputType>Library</OutputType>
-    <ReleaseVersion>3.0.0</ReleaseVersion>
+    <ReleaseVersion>3.0.1</ReleaseVersion>
     <RootNamespace>CSF.PersistenceTester.Tests</RootNamespace>
   </PropertyGroup>
    

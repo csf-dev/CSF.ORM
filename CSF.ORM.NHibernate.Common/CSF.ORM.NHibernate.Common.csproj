@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45;net461</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <ReleaseVersion>3.0.0</ReleaseVersion>
+    <ReleaseVersion>3.0.1</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
