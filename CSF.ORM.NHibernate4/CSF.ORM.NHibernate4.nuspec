@@ -28,10 +28,6 @@
         <dependency id="CSF.ORM" version="[3.0.0,4.0.0)" />
         <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0)" />
         <dependency id="NHibernate" version="[4.0.0.4000,5.0.0)" />
-        <dependency id="System.Configuration.ConfigurationManager" version="4.4.0" />
-        <dependency id="System.Data.SQLite.Core" version="1.0.112" />
-        <dependency id="System.Security.Permissions" version="4.4.0" />
-        <dependency id="System.ServiceModel.Primitives" version="4.4.0" />
       </group>
     </dependencies>
     <frameworkAssemblies>

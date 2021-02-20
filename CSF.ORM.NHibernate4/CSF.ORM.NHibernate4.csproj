@@ -61,12 +61,6 @@
     <Reference Include="System.Configuration" Condition="$(TargetFramework.StartsWith('net4'))" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" Condition="$(TargetFramework) == 'netstandard2.0'" />
-    <PackageReference Include="System.Security.Permissions" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
    <PackageReference Include="NHibernate" Version="4.0.0.4000">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
