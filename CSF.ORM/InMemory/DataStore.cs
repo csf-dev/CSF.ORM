@@ -36,7 +36,7 @@ namespace CSF.ORM.InMemory
         /// <summary>
         /// Gets a synchronisation object under which the current instance may be locked.
         /// </summary>
-        public readonly ReaderWriterLockSlim SyncRoot;
+        public ReaderWriterLockSlim SyncRoot { get; }
 
         /// <summary>
         /// Gets the collection of items in the data store.

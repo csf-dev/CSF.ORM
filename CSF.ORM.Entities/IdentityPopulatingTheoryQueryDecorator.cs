@@ -91,7 +91,8 @@ namespace CSF.ORM
         /// <typeparam name="TQueried">The type of object to retrieve.</typeparam>
         public async Task<TQueried> TheoriseAsync<TQueried>(object identityValue, CancellationToken token = default(CancellationToken)) where TQueried : class
         {
-            var output = await wrapped.TheoriseAsync<TQueried>(identityValue, token);
+            var output = await wrapped.TheoriseAsync<TQueried>(identityValue, token)
+                .ConfigureAwait(false);
 
             if (output is IEntity entity && !entity.HasIdentity)
                 entity.IdentityValue = identityValue;

@@ -79,7 +79,7 @@ namespace CSF.Entities
             return (IIdentity)Activator.CreateInstance(closedIdentityType, new[] { convertedValue });
         }
 
-        object GetDefaultValue(Type identityType)
+        static object GetDefaultValue(Type identityType)
             => identityType.IsValueType ? Activator.CreateInstance(identityType) : null;
     }
 }

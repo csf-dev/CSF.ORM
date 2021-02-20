@@ -74,7 +74,7 @@ namespace CSF.Entities
         /// </summary>
         /// <returns>The converted value.</returns>
         /// <param name="value">The value to convert.</param>
-        TIdentity ToIdentityType(object value)
+        static TIdentity ToIdentityType(object value)
         {
             var formatter = System.Globalization.CultureInfo.InvariantCulture;
             var converted = Convert.ChangeType(value, typeof(TIdentity), formatter);

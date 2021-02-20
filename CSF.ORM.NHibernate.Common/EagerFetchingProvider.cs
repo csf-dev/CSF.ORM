@@ -129,7 +129,7 @@ namespace CSF.ORM.NHibernate
             return new QueryableWithFetchingAdapter<TQueried, TGrandchild>(nhFetchRequest);
         }
 
-        IQueryable<T> GetUnderlyingQueryIfAvailable<T>(IQueryable<T> query)
+        static IQueryable<T> GetUnderlyingQueryIfAvailable<T>(IQueryable<T> query)
             => (query is IProvidesQueryable<T> queryProvider) ? queryProvider.GetQueryable() : query;
 
         INhFetchRequest<TQueried, TFetched> GetNhFetchRequest<TQueried, TFetched>(IQueryable<TQueried> query)

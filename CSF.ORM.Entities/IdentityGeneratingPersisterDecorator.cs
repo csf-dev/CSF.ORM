@@ -94,15 +94,17 @@ namespace CSF.ORM
         public async Task<object> AddAsync<T>(T item, object identity = null, CancellationToken token = default(CancellationToken)) where T : class
         {
             if (identity != null)
-                return await wrapped.AddAsync<T>(item, identity, token);
+                return await wrapped.AddAsync<T>(item, identity, token).ConfigureAwait(false);
 
             if (item is IEntity entity)
             {
                 identityGenerator.UpdateWithIdentity(entity);
-                return await wrapped.AddAsync<T>((T)entity, entity.IdentityValue, token);
+                return await wrapped.AddAsync<T>((T)entity, entity.IdentityValue, token)
+                    .ConfigureAwait(false);
             }
 
-            return await wrapped.AddAsync<T>(item, identity, token);
+            return await wrapped.AddAsync<T>(item, identity, token)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
