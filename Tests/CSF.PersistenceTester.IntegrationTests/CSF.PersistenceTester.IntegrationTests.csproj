@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework Condition="'$(Configuration)' != 'NetFramework'">netcoreapp3.1</TargetFramework>
+    <TargetFramework Condition="'$(Configuration)' == 'NetFramework'">net472</TargetFramework>
     <OutputType>Library</OutputType>
     <ReleaseVersion>3.0.0</ReleaseVersion>
     <RootNamespace>CSF.PersistenceTester.Tests</RootNamespace>
@@ -9,16 +10,8 @@
    
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
-  
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug_SingleTarget</OutputPath>
-    <DefineConstants></DefineConstants>
-    <NoWarn></NoWarn>
-    <NoStdLib>false</NoStdLib>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NetFramework|AnyCPU' " />
+
   <ItemGroup> 
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="AutoFixture.NUnit3" Version="4.11.0" />
@@ -32,25 +25,32 @@
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-    <PackageReference Include="NHibernate" Version="4.0.0.4000">
+    <PackageReference Include="NHibernate" Version="4.0.0.4000" Condition="'$(Configuration)' == 'NetFramework'">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
-    <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
+    <PackageReference Include="NHibernate" Version="5.3.5" Condition="'$(Configuration)' != 'NetFramework'">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
+    <PackageReference Include="Iesi.Collections" Version="4.0.0.4000" Condition="'$(Configuration)' == 'NetFramework'">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="Iesi.Collections" Version="4.0.4" Condition="'$(Configuration)' != 'NetFramework'" />
     <PackageReference Include="coverlet.msbuild" Version="2.8.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NunitXml.TestLogger" Version="2.1.41" />
-    <PackageReference Include="CSF.NHibernate4.MonoSafeSQLite20Driver" Version="7.0.0" />
+    <PackageReference Include="CSF.NHibernate4.MonoSafeSQLite20Driver" Version="7.0.0" Condition="'$(Configuration)' == 'NetFramework'" />
     <PackageReference Include="CSF.EqualityRules" Version="2.0.0" />
+    <PackageReference Include="CSF.Reflection" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.NUnit\CSF.PersistenceTester.NUnit.csproj" />
     <ProjectReference Include="..\..\PersistenceTester\CSF.PersistenceTester.Core\CSF.PersistenceTester.Core.csproj" />
     <ProjectReference Include="..\..\CSF.ORM\CSF.ORM.csproj" />
-    <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" />
+    <ProjectReference Include="..\..\CSF.ORM.NHibernate4\CSF.ORM.NHibernate4.csproj" Condition="'$(Configuration)' == 'NetFramework'" />
+    <ProjectReference Include="..\..\CSF.ORM.NHibernate5\CSF.ORM.NHibernate5.csproj" Condition="'$(Configuration)' != 'NetFramework'" />
+    <ProjectReference Include="..\..\CSF.ORM.NHibernate.Common\CSF.ORM.NHibernate.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="NHibernate\CreateSchema.sql" />

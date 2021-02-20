@@ -1,13 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
   <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <PackageId>CSF.ORM.NHibernate5</PackageId>
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions: Implementation for NHibernate 5</Title>
@@ -33,10 +26,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate5.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate5.xml</DocumentationFile>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
     
   <ItemGroup>

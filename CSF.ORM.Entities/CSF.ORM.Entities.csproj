@@ -1,14 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-
-  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-    
   <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageId>CSF.ORM.Entities</PackageId>
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions: Entity integration</Title>
@@ -36,10 +29,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.Entities.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.Entities.xml</DocumentationFile>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSF.Entities\CSF.Entities.csproj" />

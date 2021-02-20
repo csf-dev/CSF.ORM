@@ -10,8 +10,13 @@
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "group": "build",
-            "presentation": { "reveal": "silent" },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
             "problemMatcher": "$msCompile"
         },
         {
@@ -21,6 +26,21 @@
             "args": [
                 "test",
                 "/property:GenerateFullPaths=true"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        }
+        {
+            "label": "test with .NET Framework 4.7.2",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "test",
+                "/property:GenerateFullPaths=true",
+                "-c:NetFramework"
             ],
             "group": "test",
             "problemMatcher": "$msCompile"
