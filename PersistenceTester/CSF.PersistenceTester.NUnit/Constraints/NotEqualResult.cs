@@ -18,7 +18,7 @@ namespace CSF.PersistenceTester.Constraints
                 WriteFailingRule(writer, failure);
         }
 
-        void WriteFailingRule(MessageWriter writer, EqualityRuleResult ruleResult)
+        static void WriteFailingRule(MessageWriter writer, EqualityRuleResult ruleResult)
         {
             if (ruleResult.Exception != null)
                 writer.WriteLine($"{RuleName(ruleResult)} Threw an unexpected exception whilst performing the comparison.{Environment.NewLine}{ruleResult.Exception}");

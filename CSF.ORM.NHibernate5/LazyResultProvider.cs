@@ -30,6 +30,13 @@ using System.Linq.Expressions;
 using NHibernate.Linq;
 using NhQueryProvider = NHibernate.Linq.DefaultQueryProvider;
 
+/* Note that SonarQube will mark this file up as being a duplicate of the NHibernate 4 version.
+ * They cannot be consolidated into the common project though, because the method signatures of
+ * the NH 4 & 5 versions of methods on the LinqExtensionMethods class are different.
+ *
+ * Trying to consolidate these two versions of the class leads to MissingMethodException errors.
+ */
+
 namespace CSF.ORM.NHibernate
 {
     /// <summary>

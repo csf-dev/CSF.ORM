@@ -132,7 +132,7 @@ namespace CSF.ORM.NHibernate
         static IQueryable<T> GetUnderlyingQueryIfAvailable<T>(IQueryable<T> query)
             => (query is IProvidesQueryable<T> queryProvider) ? queryProvider.GetQueryable() : query;
 
-        INhFetchRequest<TQueried, TFetched> GetNhFetchRequest<TQueried, TFetched>(IQueryable<TQueried> query)
+        static INhFetchRequest<TQueried, TFetched> GetNhFetchRequest<TQueried, TFetched>(IQueryable<TQueried> query)
             => GetUnderlyingQueryIfAvailable(query) as INhFetchRequest<TQueried, TFetched>;
 
     }
