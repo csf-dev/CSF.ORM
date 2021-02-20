@@ -16,17 +16,14 @@
     <dependencies>
       <group targetFramework=".NETFramework4.6.1">
         <dependency id="CSF.ORM" version="[3.0.0,4.0.0)" />
-        <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0)" />
         <dependency id="NHibernate" version="[5.0.0,6.0.0)" />
       </group>
       <group targetFramework=".NETCoreApp2.0">
         <dependency id="CSF.ORM" version="[3.0.0,4.0.0)" />
-        <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0)" />
         <dependency id="NHibernate" version="[5.0.0,6.0.0)" />
       </group>
       <group targetFramework=".NETStandard2.0">
         <dependency id="CSF.ORM" version="[3.0.0,4.0.0)" />
-        <dependency id="Iesi.Collections" version="[4.0.0.4000,5.0.0)" />
         <dependency id="NHibernate" version="[5.0.0,6.0.0)" />
       </group>
     </dependencies>
