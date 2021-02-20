@@ -5,7 +5,7 @@
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions: Implementation for NHibernate 5</Title>
     <Description>Implementation of the ORM abstractions for users of NHibernate version 5.x.</Description>
-    <ReleaseVersion>3.0.0</ReleaseVersion>
+    <ReleaseVersion>3.0.1</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
