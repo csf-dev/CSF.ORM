@@ -23,7 +23,9 @@ namespace CSF.PersistenceTester.Tests.NHibernate
             var config = new Configuration();
 
             config.DataBaseIntegration(db => {
+#if NET472
                 db.Driver<CSF.NHibernate.MonoSafeSQLite20Driver>();
+#endif
                 db.Dialect<SQLiteDialect>();
                 db.ConnectionString = "Data Source=CSF.PersistenceTester.IntegrationTests.db;Version=3;";
                 db.ConnectionReleaseMode = ConnectionReleaseMode.OnClose;

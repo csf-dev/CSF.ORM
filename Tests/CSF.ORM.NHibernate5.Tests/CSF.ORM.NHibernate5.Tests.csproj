@@ -1,21 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <ReleaseVersion>3.0.0</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <IntermediateOutputPath>obj\Debug_SingleTarget</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug_SingleTarget</OutputPath>
-    <DefineConstants></DefineConstants>
-    <NoWarn></NoWarn>
-    <NoStdLib>false</NoStdLib>
-  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.11.0" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.11.0" />

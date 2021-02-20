@@ -1,12 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
   <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageId>CSF.Entities</PackageId>
     <Authors>craigfowler</Authors>
     <Title>Entity &amp; identity types</Title>
@@ -30,12 +25,10 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.Entities.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.Entities.xml</DocumentationFile>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-  </PropertyGroup>
     
-  <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'" />
+  </ItemGroup>
   
   <ItemGroup>
     <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\ExceptionMessages.resx">
