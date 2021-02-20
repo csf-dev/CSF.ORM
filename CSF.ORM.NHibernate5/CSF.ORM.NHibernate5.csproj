@@ -1,18 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
   <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <PackageId>CSF.ORM.NHibernate5</PackageId>
     <Authors>craigfowler</Authors>
     <Title>ORM abstractions: Implementation for NHibernate 5</Title>
     <Description>Implementation of the ORM abstractions for users of NHibernate version 5.x.</Description>
-    <ReleaseVersion>3.0.0</ReleaseVersion>
+    <ReleaseVersion>3.0.1</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -34,12 +27,10 @@
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate5.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.ORM.NHibernate5.xml</DocumentationFile>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-  </PropertyGroup>
     
-  <Import Project="..\Tools\EnableNet45BuildOnUnix.targets" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'" />
+  </ItemGroup>
   
   <ItemGroup>
     <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\ExceptionMessages.resx">
@@ -61,12 +52,6 @@
     <Reference Include="System.Configuration" Condition="$(TargetFramework.StartsWith('net4'))" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" Condition="$(TargetFramework) == 'netstandard2.0'" />
-    <PackageReference Include="System.Security.Permissions" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.4.0" Condition="$(TargetFramework) == 'netstandard2.0'">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
     <PackageReference Include="NHibernate" Version="5.0.0">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>

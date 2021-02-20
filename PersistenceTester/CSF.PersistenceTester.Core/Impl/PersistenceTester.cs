@@ -124,7 +124,7 @@ namespace CSF.PersistenceTester.Impl
         /// This method ensures that both values can be converted to string now, while we still have the connection.
         /// </summary>
         /// <param name="equalityResult">An equality result.</param>
-        void EnsureEqualityResultMayBeReportedUpon(EqualityResult equalityResult)
+        static void EnsureEqualityResultMayBeReportedUpon(EqualityResult equalityResult)
         {
             foreach(var item in equalityResult.RuleResults)
             {

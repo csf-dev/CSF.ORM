@@ -18,7 +18,7 @@ namespace CSF.PersistenceTester.Constraints
                 WriteFailingRule(writer, failure);
         }
 
-        void WriteFailingRule(MessageWriter writer, EqualityRuleResult ruleResult)
+        static void WriteFailingRule(MessageWriter writer, EqualityRuleResult ruleResult)
         {
             if (ruleResult.Exception != null)
                 writer.WriteLine($"{RuleName(ruleResult)} Threw an unexpected exception whilst performing the comparison.{Environment.NewLine}{ruleResult.Exception}");
@@ -26,12 +26,12 @@ namespace CSF.PersistenceTester.Constraints
                 writer.WriteLine($"{RuleName(ruleResult)} Expected {Format(ruleResult.ValueA)} but got {Format(ruleResult.ValueB)}");
         }
 
-        string RuleName(EqualityRuleResult ruleResult)
+        static string RuleName(EqualityRuleResult ruleResult)
         {
             return $">>> [{ruleResult.Name,20}]:";
         }
 
-        string Format(object value)
+        static string Format(object value)
         {
             if (ReferenceEquals(value, null)) return "<null>";
             if (value is string || value is char) return $"\"{value}\"";

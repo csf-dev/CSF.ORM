@@ -35,7 +35,7 @@ namespace CSF.PersistenceTester.Constraints
             return new NotEqualResult(this, testResult.EqualityResult);
         }
 
-        ConstraintResult GetTypeCheckResult<TActual>(TActual actual)
+        static ConstraintResult GetTypeCheckResult<TActual>(TActual actual)
         {
             var constraint = new InstanceOfTypeConstraint(typeof(PersistenceTestResult));
             var result = constraint.ApplyTo(actual);
@@ -43,7 +43,7 @@ namespace CSF.PersistenceTester.Constraints
             return result;
         }
 
-        ConstraintResult GetNullCheckResult(PersistenceTestResult actual)
+        static ConstraintResult GetNullCheckResult(PersistenceTestResult actual)
         {
             var constraint = new NotConstraint(new NullConstraint());
             var result = constraint.ApplyTo(actual);

@@ -1,13 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Condition="'$(Configuration)' != 'Debug_SingleTarget'">
-    <TargetFrameworks>netstandard2.0;net45;netcoreapp2.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug_SingleTarget'">
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-    
   <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <RootNamespace>CSF.PersistenceTester</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\CSF-Software-OSS.snk</AssemblyOriginatorKeyFile>
@@ -18,13 +12,15 @@
     <PackageId>CSF.PersistenceTester.NUnit</PackageId>
     <Title>ORM persistence tester: NUnit integration</Title>
     <Description>An integration for the ORM persistence tester and NUnit 3.x.  Provides an NUnit constraint for asserting that the test passed.</Description>
-    <ReleaseVersion>3.0.0</ReleaseVersion>
+    <ReleaseVersion>3.0.1</ReleaseVersion>
     <Version>$(ReleaseVersion)</Version>
     <PackageVersion>$(ReleaseVersion)</PackageVersion>
     <SonarQubeTestProject>false</SonarQubeTestProject>
   </PropertyGroup>
-  
-  <Import Project="..\..\Tools\EnableNet45BuildOnUnix.targets" />
+    
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'" />
+  </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.NUnit.xml</DocumentationFile>
@@ -33,10 +29,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.NUnit.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_SingleTarget|AnyCPU' ">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CSF.PersistenceTester.NUnit.xml</DocumentationFile>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" Version="[3.6.0,4.0.0)" />

@@ -22,7 +22,7 @@ namespace CSF.PersistenceTester.Constraints
             writer.WriteLine(Exception);
         }
 
-        string GetStageDescription(TestStage stage)
+        static string GetStageDescription(TestStage stage)
         {
             switch (stage)
             {

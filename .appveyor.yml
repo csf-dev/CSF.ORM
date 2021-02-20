@@ -1,5 +1,8 @@
 version: '{branch}-{build}'
-image: Visual Studio 2017
+image: Visual Studio 2019
+
+environment:
+    JAVA_HOME: "C:\\Program Files\\Java\\jdk13"
 
 init:
     - cmd: git config --global core.autocrlf true
@@ -18,6 +21,7 @@ build_script:
 
 test_script:
     - cmd: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=\"json,opencover\" /p:CoverletOutput=\"TestResults/\"  --test-adapter-path:. --logger:\"nunit\"
+    - cmd: dotnet test -c NetFramework
 
 after_test:
     - cmd: dotnet-sonarscanner end /d:"sonar.login=%SONARCLOUD_SECRET_KEY%"

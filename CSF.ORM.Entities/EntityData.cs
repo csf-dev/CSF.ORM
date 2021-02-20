@@ -162,21 +162,17 @@ namespace CSF.ORM
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            return AddAsyncInternal(entity, token);
+            return AddInternalAsync(entity, token);
         }
 
-        async Task<IIdentity<TEntity>> AddAsyncInternal<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
+        async Task<IIdentity<TEntity>> AddInternalAsync<TEntity>(TEntity entity, CancellationToken token = default(CancellationToken)) where TEntity : class, IEntity
         {
-            var identity = entity.GetIdentity();
-            object idValue;
-            if (identity != null)
-            {
-                idValue = await persister.AddAsync(entity, identity.Value, token);
-                return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)idFactory.Create(typeof(TEntity), idValue);
-            }
+            var currentIdentity = entity.GetIdentity();
+            var currentIdentityValue = (currentIdentity != null)? currentIdentity.Value : null;
 
-            idValue = await persister.AddAsync(entity, null, token);
-            return ReferenceEquals(idValue, null) ? null : (IIdentity<TEntity>)idFactory.Create(typeof(TEntity), idValue);
+            var newIdentityValue = await persister.AddAsync(entity, currentIdentityValue, token)
+                .ConfigureAwait(false);
+            return (newIdentityValue is null) ? null : (IIdentity<TEntity>) idFactory.Create(typeof(TEntity), newIdentityValue);
         }
 
         /// <summary>
