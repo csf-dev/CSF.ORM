@@ -60,5 +60,7 @@
       <LogicalName>CreateSchema.sql</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
-  <Import Project="..\..\Tools\EnableNet45BuildOnUnix.targets" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'" />
+  </ItemGroup>
 </Project>
