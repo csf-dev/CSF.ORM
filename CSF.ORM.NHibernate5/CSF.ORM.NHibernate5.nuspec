@@ -11,7 +11,7 @@
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
     <projectUrl>https://github.com/csf-dev/CSF.ORM</projectUrl>
     <description>Implementation of the ORM abstractions for users of NHibernate version 5.x.</description>
-    <copyright>Copyright 2020 - CSF Software Limited</copyright>
+    <copyright>Copyright 2021 - CSF Software Limited</copyright>
     <repository url="https://github.com/csf-dev/CSF.ORM" />
     <dependencies>
       <group targetFramework=".NETFramework4.6.1">
@@ -30,9 +30,6 @@
         <dependency id="NHibernate" version="[5.0.0,6.0.0)" />
       </group>
     </dependencies>
-    <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.6.1" />
-    </frameworkAssemblies>
   </metadata>
   <files>
     <file src="bin/Release/**/CSF.ORM.NHibernate*.dll" target="lib" />
