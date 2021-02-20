@@ -32,7 +32,7 @@
                 "isDefault": true
             },
             "problemMatcher": "$msCompile"
-        }
+        },
         {
             "label": "test with .NET Framework 4.7.2",
             "command": "dotnet",
