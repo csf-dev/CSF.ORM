@@ -9,10 +9,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
 
   <ItemGroup>
-   <PackageReference Include="NHibernate" Version="4.0.0.4000">
+   <PackageReference Include="NHibernate" Version="5.4.9">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
-    <PackageReference Include="Iesi.Collections" Version="4.0.0.4000">
+    <PackageReference Include="Iesi.Collections" Version="4.0.4">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="AutoFixture" Version="4.11.0" />
@@ -34,7 +34,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NunitXml.TestLogger" Version="2.1.41" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="All" />
     <PackageReference Include="CSF.NHibernate4.MonoSafeSQLite20Driver" Version="7.0.0" />
   </ItemGroup>
     
